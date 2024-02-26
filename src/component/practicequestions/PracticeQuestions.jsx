@@ -18,53 +18,16 @@ const PracticeQuestions = () => {
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
-      let route = "";
-      let subTopicRoute = subTopic;
-      if (subTopic === "S.I_AND_C.I")
-        subTopicRoute = "simple_interest_and_compound_interest";
-      if (subTopic === "NUMBER_OR_ALPHABET_SERIES")
-        subTopicRoute = "number_alphabet_series";
-      if (topic === "QUANTITATIVE_APTITUDE") route = "math";
-      if (topic === "DATA_INTERPRETATION") route = "di";
-      if (topic === "VERBAL_ABILITY_AND_READING_COMPREHENSION") route = "varc";
-      if (topic === "LOGICAL_REASONING") route = "lr";
-      let version = "v2";
-      if (
-        topic === "VERBAL_ABILITY_AND_READING_COMPREHENSION" &&
-        subTopic === "READING_COMPREHENSION"
-      ) {
-        version = "v1";
-        subTopicRoute = "";
-      }
-
-      if (
-        topic === "VERBAL_ABILITY_AND_READING_COMPREHENSION" &&
-        (subTopic === "IDIOMS_AND_PHRASES" ||
-          subTopic === "SYNONYMS" ||
-          subTopic === "ANTONYMS" ||
-          subTopic === "ONE_WORD_SUBSTITUTION")
-      ) {
-        subTopicRoute = `sub/vocabulary/${subTopic.toLowerCase()}`;
-      }
-      if (topic === "DATA_INTERPRETATION") {
-        version = "v1";
-      }
-      if (
-        topic === "LOGICAL_REASONING" &&
-        (subTopic === "MISCELLANEOUS" || subTopic === "ARRANGEMENTS")
-      ) {
-        version = "v1";
-      }
-      const lastSubTopic = localStorage.getItem("currentSubTopic");
-      if (lastSubTopic && lastSubTopic !== subTopic) {
-        localStorage.removeItem("currentPage");
-      }
       localStorage.setItem("currentSubTopic", subTopic);
+      const params = {
+        topic: subTopic,
+        // topic : "Reading_Comprehension"
+      };
       try {
-        const response = await axios.get(
-          `${API}/${route}/question/${version}/${subTopicRoute.toLowerCase()}`
-        );
-        setData(response.data);
+        const response = await axios.get(`${API}/question/mock_test/`, {
+          params: params,
+        });
+        setData(response.data.data);
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
@@ -74,14 +37,15 @@ const PracticeQuestions = () => {
     fetchData();
   }, [topic, subTopic]);
 
+
   if (isLoading) {
     return <TietLoader />;
   }
 
   return (
     <section className="question-practice">
-      {data.length > 0 ? (
-        <section className="testknock-mock-test">
+      {data ? (
+        <section className="testknock-mock-test w-100">
           <div className="d-flex justify-content-center align-items-center">
             <div className="testknock-left">
               <div className="text-center test-title">
@@ -119,7 +83,7 @@ const PracticeQuestions = () => {
           </div>
         </section>
       ) : (
-        <NoData />
+        <NoData/>
       )}
     </section>
   );

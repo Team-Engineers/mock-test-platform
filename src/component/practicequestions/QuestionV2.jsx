@@ -17,28 +17,6 @@ const QuestionV2 = ({ data }) => {
   const [questionStatus, setQuestionStatus] = useState(
     Array(data?.length).fill("not_visited")
   );
-  const [selectedOptionsPara, setSelectedOptionsPara] = useState(
-    Array(data?.length)
-      .fill()
-      .map((_, dataIndex) =>
-        Array(data[dataIndex]?.questions?.length).fill(undefined)
-      )
-  );
-
-  const [optionsUIPara, setOptionsUIPara] = useState(
-    Array(data?.length)
-      .fill()
-      .map((_, dataIndex) =>
-        Array(data[dataIndex]?.questions?.length).fill(undefined)
-      )
-  );
-  const [questionStatusPara, setQuestionStatusPara] = useState(
-    Array(data?.length)
-      .fill()
-      .map((_, dataIndex) =>
-        Array(data[dataIndex]?.questions?.length).fill("not_visited")
-      )
-  );
 
   const [counts, setCounts] = useState({
     not_visited: 0,
@@ -50,8 +28,6 @@ const QuestionV2 = ({ data }) => {
 
   const [currentPage, setCurrentPage] = useState(0);
   const { topic } = useParams();
-
-  const paraQuestions = data[0]?.paragraph ? data[0]?.questions?.length : 0;
 
   useEffect(() => {
     const storedPage = localStorage.getItem("currentPage");
@@ -79,23 +55,6 @@ const QuestionV2 = ({ data }) => {
     };
   }, []);
   // console.log("quesitonStatus[currentPage] is ", questionStatus[currentPage])
-
-  const generatePageNumbersPara = () => {
-    const totalLength = Math.ceil(data.length);
-    const pages = [];
-    let numberOfQuestions = 0;
-    for (let i = 0; i < totalLength; i++) {
-      const questionSet = data[i];
-      numberOfQuestions += questionSet.questions.length;
-    }
-    for (let i = 0; i < numberOfQuestions; i++) {
-      pages.push(i);
-    }
-
-    totalPages = numberOfQuestions;
-
-    return pages;
-  };
 
   const handleOptionSelect = (questionIndex, optionIndex) => {
     const updatedSelectedOptions = [...selectedOptions];
@@ -129,48 +88,6 @@ const QuestionV2 = ({ data }) => {
     const updatedStatusArray = [...questionStatus];
     updatedStatusArray[questionIndex] = "not_answered";
     setQuestionStatus(updatedStatusArray);
-  };
-
-  const handleOptionSelectPara = (itemIndex, questionIndex, optionIndex) => {
-    const updatedSelectedOptionsPara = [...selectedOptionsPara];
-    updatedSelectedOptionsPara[itemIndex] = [...selectedOptionsPara[itemIndex]];
-    updatedSelectedOptionsPara[itemIndex][questionIndex] = optionIndex;
-    setSelectedOptionsPara(updatedSelectedOptionsPara);
-
-    const updatedOptionsUIPara = [...optionsUIPara];
-    updatedOptionsUIPara[itemIndex] = [...optionsUIPara[itemIndex]];
-    updatedOptionsUIPara[itemIndex][questionIndex] = optionIndex;
-    setOptionsUIPara(updatedOptionsUIPara);
-
-    const currentStatus = questionStatusPara[itemIndex][questionIndex];
-    if (currentStatus === "not_visited") {
-      const updatedStatusArray = [...questionStatusPara];
-      updatedStatusArray[itemIndex] = [...questionStatusPara[itemIndex]];
-      updatedStatusArray[itemIndex][questionIndex] = "not_answered";
-      setQuestionStatusPara(updatedStatusArray);
-    }
-  };
-
-  const handleClearResponsePara = () => {
-    const itemIndex = Math.floor(currentPage / paraQuestions);
-    const questionIndex = currentPage % paraQuestions;
-
-    const updatedSelectedOptionsPara = [...selectedOptionsPara];
-    updatedSelectedOptionsPara[itemIndex] = [...selectedOptionsPara[itemIndex]];
-
-    updatedSelectedOptionsPara[itemIndex][questionIndex] = undefined;
-    setSelectedOptionsPara(updatedSelectedOptionsPara);
-
-    const updatedOptionsUIPara = [...optionsUIPara];
-    updatedOptionsUIPara[itemIndex] = [...optionsUIPara[itemIndex]];
-    updatedOptionsUIPara[itemIndex][questionIndex] = undefined;
-
-    setOptionsUIPara(updatedOptionsUIPara);
-
-    const updatedStatusArray = [...questionStatusPara];
-    updatedStatusArray[itemIndex] = [...questionStatusPara[itemIndex]];
-    updatedStatusArray[itemIndex][questionIndex] = "not_answered";
-    setQuestionStatusPara(updatedStatusArray);
   };
 
   const generatePageNumbers = () => {
@@ -238,65 +155,6 @@ const QuestionV2 = ({ data }) => {
     localStorage.setItem("currentPage", pageIndex);
   };
 
-  const handleReviewNextPara = () => {
-    const itemIndex = Math.floor(currentPage / paraQuestions);
-    const questionIndex = currentPage % paraQuestions;
-
-    const updatedStatusArray = [...questionStatusPara];
-    updatedStatusArray[itemIndex] = [...questionStatusPara[itemIndex]];
-
-    if (optionsUIPara[itemIndex][questionIndex] !== undefined) {
-      updatedStatusArray[itemIndex][questionIndex] = "review_answered";
-    } else {
-      updatedStatusArray[itemIndex][questionIndex] = "review";
-    }
-    setQuestionStatusPara(updatedStatusArray);
-    const pageIndex = currentPage + 1;
-    setSelectedOptions([]);
-    setCurrentPage(pageIndex % totalPages);
-    window.scrollTo(0, 0);
-    localStorage.setItem("currentPage", pageIndex);
-  };
-
-  const handleUnMarkNextPara = () => {
-    const itemIndex = Math.floor(currentPage / paraQuestions);
-    const questionIndex = currentPage % paraQuestions;
-
-    const updatedStatusArray = [...questionStatusPara];
-    updatedStatusArray[itemIndex] = [...questionStatusPara[itemIndex]];
-    if (optionsUIPara[itemIndex][questionIndex] !== undefined) {
-      updatedStatusArray[itemIndex][questionIndex] = "answered";
-    } else {
-      updatedStatusArray[itemIndex][questionIndex] = "not_answered";
-    }
-    setQuestionStatusPara(updatedStatusArray);
-    const pageIndex = currentPage + 1;
-    setSelectedOptions([]);
-    setCurrentPage(pageIndex % totalPages);
-    window.scrollTo(0, 0);
-    localStorage.setItem("currentPage", pageIndex);
-  };
-
-  const handleSaveNextPara = () => {
-    const itemIndex = Math.floor(currentPage / paraQuestions);
-    const questionIndex = currentPage % paraQuestions;
-
-    const updatedStatusArray = [...questionStatusPara];
-    updatedStatusArray[itemIndex] = [...questionStatusPara[itemIndex]];
-    if (optionsUIPara[itemIndex][questionIndex] !== undefined) {
-      updatedStatusArray[itemIndex][questionIndex] = "answered";
-    } else {
-      if (updatedStatusArray[itemIndex][questionIndex] === undefined)
-        updatedStatusArray[itemIndex][questionIndex] = "not_answered";
-    }
-    setQuestionStatusPara(updatedStatusArray);
-    const pageIndex = currentPage + 1;
-    setSelectedOptions([]);
-    setCurrentPage(pageIndex % totalPages);
-    window.scrollTo(0, 0);
-    localStorage.setItem("currentPage", pageIndex);
-  };
-
   const handlePageChange = (pageIndex) => {
     setSelectedOptions([]);
     setCurrentPage(pageIndex % totalPages);
@@ -312,215 +170,168 @@ const QuestionV2 = ({ data }) => {
       answered: 0,
       not_answered: 0,
     };
-    if (data[0]?.paragraph) {
-      for (let i = 0; i < questionStatusPara.length; i++) {
-        for (let j = 0; j < questionStatusPara[i].length; j++) {
-          const status = questionStatusPara[i][j];
-          switch (status) {
-            case "not_visited":
-              new_count.not_visited++;
-              break;
-            case "review_answered":
-              new_count.review_answered++;
-              break;
-            case "review":
-              new_count.review++;
-              break;
-            case "answered":
-              new_count.answered++;
-              break;
-            case "not_answered":
-              new_count.not_answered++;
-              break;
-            default:
-              break;
-          }
-        }
-      }
-    } else {
-      for (let j = 0; j < questionStatus.length; j++) {
-        const status = questionStatus[j];
+    for (let j = 0; j < questionStatus.length; j++) {
+      const status = questionStatus[j];
 
-        switch (status) {
-          case "not_visited":
-            new_count.not_visited++;
-            break;
-          case "review_answered":
-            new_count.review_answered++;
-            break;
-          case "review":
-            new_count.review++;
-            break;
-          case "answered":
-            new_count.answered++;
-            break;
-          case "not_answered":
-            new_count.not_answered++;
-            break;
-          default:
-            break;
-        }
+      switch (status) {
+        case "not_visited":
+          new_count.not_visited++;
+          break;
+        case "review_answered":
+          new_count.review_answered++;
+          break;
+        case "review":
+          new_count.review++;
+          break;
+        case "answered":
+          new_count.answered++;
+          break;
+        case "not_answered":
+          new_count.not_answered++;
+          break;
+        default:
+          break;
       }
     }
     return new_count;
-  }, [questionStatusPara, data, questionStatus, data[0]?.paragraph]);
+  }, [ questionStatus]);
 
   useEffect(() => {
-    if (data[0]?.paragraph) {
-      const itemIndex = Math.floor(currentPage / paraQuestions);
-      const questionIndex = currentPage % paraQuestions;
-      const updatedCounts = countStatusOccurrences();
-      setCounts(updatedCounts);
-      const currentStatus = questionStatusPara[itemIndex][questionIndex];
-      if (currentStatus === "not_visited") {
-        const updatedStatusArray = [...questionStatusPara];
-        updatedStatusArray[itemIndex] = [...questionStatusPara[itemIndex]];
-        updatedStatusArray[itemIndex][questionIndex] = "not_answered";
-        setQuestionStatusPara(updatedStatusArray);
-      }
-    } else {
-      const questionIndex = currentPage;
-      const updatedCounts = countStatusOccurrences();
-      setCounts(updatedCounts);
-      const currentStatus = questionStatus[questionIndex];
-      if (currentStatus === "not_visited") {
-        const updatedStatusArray = [...questionStatus];
-        updatedStatusArray[questionIndex] = "not_answered";
-        setQuestionStatus(updatedStatusArray);
-      }
+    const questionIndex = currentPage;
+    const updatedCounts = countStatusOccurrences();
+    setCounts(updatedCounts);
+    const currentStatus = questionStatus[questionIndex];
+    if (currentStatus === "not_visited") {
+      const updatedStatusArray = [...questionStatus];
+      updatedStatusArray[questionIndex] = "not_answered";
+      setQuestionStatus(updatedStatusArray);
     }
-  }, [
-    currentPage,
-    countStatusOccurrences,
-    data,
-    data[0]?.paragraph,
-    paraQuestions,
-    questionStatus,
-    questionStatusPara,
-  ]);
+  }, [currentPage, countStatusOccurrences, data, questionStatus]);
 
   return (
     <section className="question-practice-v2">
-      {data.paragraph || data[0].paragraph ? (
-        data.paragraph ? (
-          data
-        ) : (
-          <div className=" w-100 d-flex">
-            <div className={`testknock-left ${showPallet ? "" : "w-100"}`}>
-              <div className="border-wrapper">
-                <div className="question-box paragraph overflow-y-scroll ms-2">
-                  <div className="question-number-container">
-                    <span
-                      className={`question-number id-${
-                        data[Math.floor(currentPage / paraQuestions)]._id
-                      }`}
-                    >
-                      Question No. {`${currentPage + 1} `}
-                    </span>
-                  </div>
+      {data[currentPage]?.questionTextAndImages[0]?.text[0] ? (
+        <div className=" w-100 d-flex parawala">
+          <div className={`testknock-left ${showPallet ? "" : "w-100"}`}>
+            <div className="border-wrapper">
+              <div className="question-box paragraph overflow-y-scroll ms-2">
+                <div className="question-number-container">
+                  <span
+                    className={`question-number id-${data[currentPage]?._id}`}
+                  >
+                    Question No. {`${currentPage + 1} `}
+                  </span>
+                </div>
 
-                  <div className="question-option para-type">
-                    <div className="question item-passage">
-                      <h6 className="mb-3 ">
-                        <strong>Direction:</strong> Read the following passage
-                        carefully and answer the questions that follow.
-                      </h6>
-                      <div className="d-flex justify-content-start align-items-center gap-3">
-                        <div className="question-text ">
-                          {data[
-                            Math.floor(currentPage / paraQuestions)
-                          ].paragraph.map((paragraph, paraindex) => (
-                            <MathText
-                              className="mb-2"
-                              key={paraindex}
-                              text={paragraph}
-                              textTag="h6"
-                            />
-                          ))}
-                        </div>
-                      </div>
-                      <div className="d-flex justify-content-center align-items-center gap-3 mt-3">
-                        {data[Math.floor(currentPage / paraQuestions)].images &&
-                          data[
-                            Math.floor(currentPage / paraQuestions)
-                          ].images.map((image, imageIndex) => (
-                            <img
-                              className="question-image"
-                              key={imageIndex}
-                              src={image}
-                              alt={`Img ${imageIndex + 1}`}
-                            />
-                          ))}
+                <div className="question-option para-type">
+                  <div className="question item-passage">
+                    <div className="mb-3">
+                      <strong>Direction:</strong>
+                      {data[currentPage].description?.map((desc, descIndex) => (
+                        <MathText
+                          className="question-text mb-2"
+                          key={descIndex}
+                          text={desc}
+                          textTag="h6"
+                        />
+                      ))}
+                    </div>
+
+                    <div className="d-flex gap-3">
+                      <div className="question-text ">
+                        {data[currentPage]?.questionTextAndImages?.map(
+                          (textAndImages, textAndImagesIndex) => (
+                            <div
+                              className="d-flex flex-column"
+                              key={textAndImagesIndex}
+                            >
+                              {textAndImages?.text.map((text, textIndex) => (
+                                <MathText
+                                  className="question-text mb-2"
+                                  key={textIndex}
+                                  text={text}
+                                  textTag="h6"
+                                />
+                              ))}
+                              {textAndImages?.image ? (
+                                <img
+                                  className="question-image"
+                                  key={textAndImagesIndex}
+                                  src={textAndImages?.image}
+                                  alt={`Img ${textAndImagesIndex + 1}`}
+                                />
+                              ) : (
+                                ""
+                              )}
+                            </div>
+                          )
+                        )}
                       </div>
                     </div>
-                    <div className="item-content ">
-                      <div className="options-container">
-                        <div className="options-grid">
-                          <div className="question-box">
-                            <div className="question-option">
-                              <div className="d-flex justify-content-start align-items-center gap-3 mb-3">
-                                <div>
+                  </div>
+                  <div className="item-content ">
+                    <div className="options-container">
+                      <div className="options-grid">
+                        <div className="question-box">
+                          <div className="question-option">
+                            <div className="d-flex justify-content-start align-items-center gap-3 mb-3">
+                              <div>
+                                <div className="d-flex justify-content-center align-items-center flex-column">
                                   {data[
-                                    Math.floor(currentPage / paraQuestions)
-                                  ].questions[
-                                    currentPage % paraQuestions
-                                  ].text.map((text, textIndex) => (
-                                    <MathText
-                                      className="question-text mb-2"
-                                      key={textIndex}
-                                      text={text}
-                                      textTag="h6"
-                                    />
-                                  ))}
+                                    currentPage
+                                  ]?.subQuestions[0]?.questionTextAndImages?.map(
+                                    (textAndImages, textAndImagesIndex) => (
+                                      <div
+                                        className="d-flex justify-content-center align-items-center flex-column"
+                                        key={textAndImagesIndex}
+                                      >
+                                        {textAndImages?.text.map(
+                                          (text, textIndex) => (
+                                            <MathText
+                                              className="question-text mb-2"
+                                              key={textIndex}
+                                              text={text}
+                                              textTag="h6"
+                                            />
+                                          )
+                                        )}
+                                        {textAndImages?.image ? (
+                                          <img
+                                            className="question-image"
+                                            key={textAndImagesIndex}
+                                            src={textAndImages?.image}
+                                            alt={`Img ${
+                                              textAndImagesIndex + 1
+                                            }`}
+                                          />
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                    )
+                                  )}
+                                  {/* fetching all options here */}
                                 </div>
                               </div>
-                              <div className="d-flex justify-content-center align-items-center gap-3 mb-3">
-                                {data[Math.floor(currentPage / paraQuestions)]
-                                  .questions[currentPage % paraQuestions]
-                                  .images &&
-                                  data[
-                                    Math.floor(currentPage / paraQuestions)
-                                  ].questions[
-                                    currentPage % paraQuestions
-                                  ].images.map((image, imageIndex) => (
-                                    <img
-                                      className="question-image"
-                                      key={imageIndex}
-                                      src={image}
-                                      alt={`Img ${imageIndex + 1}`}
-                                    />
-                                  ))}
-                              </div>
-                              {data[
-                                Math.floor(currentPage / paraQuestions)
-                              ].questions[
-                                currentPage % paraQuestions
-                              ].options.map((option, optionIndex) => (
+                            </div>
+
+                            {/* fetching all options here */}
+                            {data[currentPage]?.subQuestions[0]?.options?.map(
+                              (option, optionIndex) => (
                                 <div
                                   key={optionIndex}
+                                  className="option-box"
                                   onClick={() =>
-                                    handleOptionSelectPara(
-                                      Math.floor(currentPage / paraQuestions),
-                                      currentPage % paraQuestions,
-                                      optionIndex
-                                    )
+                                    handleOptionSelect(currentPage, optionIndex)
                                   }
-                                  className={`option-box`}
                                 >
                                   <div className="optionitem">
                                     <input
                                       type="radio"
-                                      name={`question-${Math.floor(
-                                        currentPage / paraQuestions
-                                      )}`}
+                                      name={`question-${currentPage}`}
                                       id={optionIndex}
                                       checked={
-                                        optionsUIPara[
-                                          Math.floor(
-                                            currentPage / paraQuestions
-                                          )
-                                        ][currentPage % paraQuestions] ===
-                                        optionIndex
+                                        optionsUI[currentPage] === optionIndex
                                       }
                                     />
                                   </div>
@@ -528,9 +339,12 @@ const QuestionV2 = ({ data }) => {
                                     for={optionIndex}
                                     className="optionLabel"
                                   >
-                                    <div className="d-flex justify-content-start gap-3 w-100 align-items-center">
-                                      <h6>{option.text}</h6>
-                                      {option.image ? (
+                                    <div className="d-flex align-items-center justify-content-start gap-3 w-100 align-items-center ">
+                                      <MathText
+                                        text={option?.text}
+                                        textTag="h6"
+                                      />
+                                      {option?.image ? (
                                         <img
                                           className="question-image"
                                           src={option.image}
@@ -542,8 +356,8 @@ const QuestionV2 = ({ data }) => {
                                     </div>
                                   </label>
                                 </div>
-                              ))}
-                            </div>
+                              )
+                            )}
                           </div>
                         </div>
                       </div>
@@ -551,127 +365,119 @@ const QuestionV2 = ({ data }) => {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="button-container">
+              <div className="d-flex justify-content-between align-items-center mx-2">
+                <div className="d-flex align-center gap-3 p-2">
+                  {questionStatus[currentPage] === "review_answered" ||
+                  questionStatus[currentPage] === "review" ? (
+                    <button className="test-button" onClick={handleUnMarkNext}>
+                      Unmark and Next
+                    </button>
+                  ) : (
+                    <button className="test-button" onClick={handleReviewNext}>
+                      Mark for review & next
+                    </button>
+                  )}
 
-              <div className="button-container">
-                <div className="d-flex justify-content-between align-items-center mx-2">
-                  <div className="d-flex align-center gap-3 p-2">
-                    {questionStatusPara[
-                      Math.floor(currentPage / paraQuestions)
-                    ][currentPage % paraQuestions] === "review_answered" ||
-                    questionStatusPara[Math.floor(currentPage / paraQuestions)][
-                      currentPage % paraQuestions
-                    ] === "review" ? (
-                      <button
-                        className="test-button"
-                        onClick={handleUnMarkNextPara}
-                      >
-                        Unmark and Next
-                      </button>
-                    ) : (
-                      <button
-                        className="test-button"
-                        onClick={handleReviewNextPara}
-                      >
-                        Mark for review & next
-                      </button>
-                    )}
-
-                    {/* {optionsUIPara[Math.floor(currentPage / paraQuestions)][
-                      currentPage % paraQuestions
-                    ] !== undefined ? ( */}
+                  {/* {optionsUI[currentPage] !== undefined ? ( */}
+                  <>
                     <button
-                      className="test-button"
-                      onClick={handleClearResponsePara}
+                      className="test-button d-none d-md-block"
+                      onClick={handleClearResponse}
                     >
                       Clear Response
                     </button>
-                    {/* ) : null} */}
-                  </div>
-                  {/* {optionsUIPara[Math.floor(currentPage / paraQuestions)][
-                    currentPage % paraQuestions
-                  ] !== undefined ? ( */}
-                  <button
-                    className="next-button test-button"
-                    onClick={handleSaveNextPara}
-                  >
-                    Save & Next
-                  </button>
-                  {/* ) : null} */}
+                    <div className="text-center  d-md-none d-block">
+                      <span className="sp-link" role="presentation">
+                        ↻ Clear Response
+                      </span>
+                    </div>
+                  </>
+                  {/*  ) : null} */}
                 </div>
+                {/* {optionsUI[currentPage] !== undefined ? ( */}
+                <button
+                  className="next-button test-button"
+                  onClick={handleSaveNext}
+                >
+                  Save & Next
+                </button>
+                {/* ) : null} */}
+              </div>
+
+              <div class={`offline ${isOnline ? "d-none" : "d-block"}`}>
+                <span>You are offline right now. Check your connection.</span>
               </div>
             </div>
-            <div
-              className="testknock-right position-relative"
-              style={{ width: `${showPallet ? "" : "0%"}` }}
-            >
-              <div className="LeftBlock ">
-                <button
-                  className={`toggle-side-bar-btn`}
-                  type="button"
-                  onClick={() => setShowPallet(!showPallet)}
-                >
-                  &gt;
-                </button>
-                <div
-                  className={`question-pallet  ${
-                    showPallet ? "d-block" : "d-none"
-                  }`}
-                >
-                  <div className="Legend">
-                    <div className="legend-block">
-                      <div className="legend-item lg-answered">
-                        <span>{counts.answered}</span> Answered
-                      </div>
-                      <div className="legend-item lg-not_answered">
-                        <span>{counts.not_answered}</span> Not Answered
-                      </div>
-                      <div className="legend-item lg-not_visited">
-                        <span>{counts.not_visited}</span> Not Visited
-                      </div>
-                      <div className="legend-item lg-review">
-                        <span>{counts.review}</span> Marked for Review
-                      </div>
-                      <div className="legend-item lg-review_answered">
-                        <span>{counts.review_answered}</span> Answered &amp;
-                        Marked for Review (will be considered for evaluation)
-                      </div>
+          </div>
+          <div
+            className="testknock-right position-relative"
+            style={{ width: `${showPallet ? "" : "0%"}` }}
+          >
+            <div className="LeftBlock ">
+              <button
+                className={`toggle-side-bar-btn`}
+                type="button"
+                onClick={() => setShowPallet(!showPallet)}
+              >
+                &gt;
+              </button>
+              <div
+                className={`question-pallet  ${
+                  showPallet ? "d-block" : "d-none"
+                }`}
+              >
+                <div className="Legend">
+                  <div className="legend-block">
+                    <div className="legend-item lg-answered">
+                      <span>{counts.answered}</span> Answered
+                    </div>
+                    <div className="legend-item lg-not_answered">
+                      <span>{counts.not_answered}</span> Not Answered
+                    </div>
+                    <div className="legend-item lg-not_visited">
+                      <span>{counts.not_visited}</span> Not Visited
+                    </div>
+                    <div className="legend-item lg-review">
+                      <span>{counts.review}</span> Marked for Review
+                    </div>
+                    <div className="legend-item lg-review_answered">
+                      <span>{counts.review_answered}</span> Answered &amp;
+                      Marked for Review (will be considered for evaluation)
                     </div>
                   </div>
-                  <div className="pallet-section-title">
-                    <div className="qp-title">{topic.split("_").join(" ")}</div>
-                    <div className="qp-label">Choose a Question</div>
-                  </div>
-                  <div className="pallet-list-body">
-                    <div role="presentation" className="pallet-item">
-                      {generatePageNumbersPara().map((pageIndex) => (
-                        <span
-                          id={pageIndex}
-                          key={pageIndex}
-                          className={` ${
-                            questionStatusPara[
-                              Math.floor(pageIndex / paraQuestions)
-                            ][pageIndex % paraQuestions]
-                          }`}
-                          onClick={() => handlePageChange(pageIndex)}
-                        >
-                          {pageIndex + 1}
-                        </span>
-                      ))}
-                    </div>
+                </div>
+                <div className="pallet-section-title">
+                  <div className="qp-title">{topic.split("_").join(" ")}</div>
+                  <div className="qp-label">Choose a Question</div>
+                </div>
+                <div className="pallet-list-body">
+                  <div role="presentation" className="pallet-item">
+                    {generatePageNumbers().map((pageIndex) => (
+                      <span
+                        id={pageIndex}
+                        key={pageIndex}
+                        className={` ${questionStatus[pageIndex]}`}
+                        onClick={() => handlePageChange(pageIndex)}
+                      >
+                        {pageIndex + 1}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        )
+        </div>
       ) : (
-        <div className="w-100 d-flex">
+        <div className="w-100 d-flex normlal">
           <div className={`testknock-left ${showPallet ? "" : "w-100"}`}>
             <div className="border-wrapper">
               <div className="question-box overflow-y-scroll ms-2">
                 <div className="question-number-container">
                   <span
-                    className={`question-number id-${data[currentPage]._id}`}
+                    className={`question-number id-${data[currentPage]?._id}`}
                   >
                     Question No.
                     {`${1 + currentPage} `}
@@ -680,59 +486,73 @@ const QuestionV2 = ({ data }) => {
                 <div className="question-option">
                   <div className="question">
                     <div className="question-text-container">
-                      {data[currentPage].text.map((text, textIndex) => (
-                        <MathText
-                          className="question-text mb-2"
-                          key={textIndex}
-                          text={text}
-                          textTag="h6"
-                        />
-                      ))}
+                      {data[
+                        currentPage
+                      ]?.subQuestions[0]?.questionTextAndImages?.map(
+                        (textAndImages, textAndImagesIndex) => (
+                          <div
+                            className="d-flex flex-column"
+                            key={textAndImagesIndex}
+                          >
+                            {textAndImages?.text.map((text, textIndex) => (
+                              <MathText
+                                className="question-text mb-2"
+                                key={textIndex}
+                                text={text}
+                                textTag="h6"
+                              />
+                            ))}
+                            {textAndImages?.image ? (
+                              <img
+                                className="question-image"
+                                key={textAndImagesIndex}
+                                src={textAndImages?.image}
+                                alt={`Img ${textAndImagesIndex + 1}`}
+                              />
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                        )
+                      )}
                     </div>
                   </div>
-                  <div className="d-flex justify-content-center align-items-center gap-3 mt-3 mb-3">
-                    {data[currentPage].images &&
-                      data[currentPage].images.map((image, imageIndex) => (
-                        <img
-                          className="question-image"
-                          key={imageIndex}
-                          src={image}
-                          alt={`Img ${imageIndex + 1}`}
-                        />
-                      ))}
-                  </div>
-                  {data[currentPage].options.map((option, optionIndex) => (
-                    <div
-                      key={optionIndex}
-                      className="option-box"
-                      onClick={() =>
-                        handleOptionSelect(currentPage, optionIndex)
-                      }
-                    >
-                      <div className="optionitem">
-                        <input
-                          type="radio"
-                          name={`option-${currentPage}`}
-                          id={optionIndex}
-                          checked={optionsUI[currentPage] === optionIndex}
-                        />
-                      </div>
-                      <label for={optionIndex} className="optionLabel">
-                        <div className="d-flex align-items-center justify-content-start gap-3 w-100 align-items-center ">
-                          <MathText text={option.text} textTag="h6" />
-                          {option.image ? (
-                            <img
-                              className="question-image"
-                              src={option.image}
-                              alt={`Img ${optionIndex + 1}`}
-                            />
-                          ) : (
-                            ""
-                          )}
+
+                  {/* fetching all options here */}
+                  {data[currentPage]?.subQuestions[0]?.options?.map(
+                    (option, optionIndex) => (
+                      <div
+                        key={optionIndex}
+                        className="option-box"
+                        onClick={() =>
+                          handleOptionSelect(currentPage, optionIndex)
+                        }
+                      >
+                        <div className="optionitem">
+                          <input
+                            type="radio"
+                            name={`question-${currentPage}`}
+                            id={optionIndex}
+                            checked={optionsUI[currentPage] === optionIndex}
+                          />
                         </div>
-                      </label>
-                    </div>
-                  ))}
+                        <label for={optionIndex} className="optionLabel">
+                          <div className="d-flex  gap-3 w-100 align-items-center ">
+                            <MathText text={option?.text} textTag="h6" />
+                            {option?.image ? (
+                              <img
+                                className="question-image"
+                                src={option.image}
+                                alt={`Img ${optionIndex + 1}`}
+                              />
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                        </label>
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
             </div>
@@ -742,11 +562,11 @@ const QuestionV2 = ({ data }) => {
                 <div className="d-flex align-center gap-3 p-2">
                   {questionStatus[currentPage] === "review_answered" ||
                   questionStatus[currentPage] === "review" ? (
-                    <button className="test-button" onClick={handleReviewNext}>
+                    <button className="test-button" onClick={handleUnMarkNext}>
                       Unmark and Next
                     </button>
                   ) : (
-                    <button className="test-button" onClick={handleUnMarkNext}>
+                    <button className="test-button" onClick={handleReviewNext}>
                       Mark for review & next
                     </button>
                   )}
