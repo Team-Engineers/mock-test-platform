@@ -282,7 +282,7 @@ const QuestionV2 = ({ data }) => {
                                   ]?.subQuestions[0]?.questionTextAndImages?.map(
                                     (textAndImages, textAndImagesIndex) => (
                                       <div
-                                        className="d-flex justify-content-center align-items-center flex-column"
+                                        className="d-flex flex-column"
                                         key={textAndImagesIndex}
                                       >
                                         {textAndImages?.text.map(
