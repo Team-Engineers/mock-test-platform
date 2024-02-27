@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./question.css";
 import { MathText } from "../mathJax/MathText";
 import { useParams } from "react-router-dom";
@@ -27,7 +27,7 @@ const QuestionV2 = ({ data }) => {
   });
 
   const [currentPage, setCurrentPage] = useState(0);
-  const { topic } = useParams();
+  const { subTopic } = useParams();
 
   useEffect(() => {
     const storedPage = localStorage.getItem("currentPage");
@@ -54,7 +54,6 @@ const QuestionV2 = ({ data }) => {
       localStorage.removeItem("currentPage");
     };
   }, []);
-  // console.log("quesitonStatus[currentPage] is ", questionStatus[currentPage])
 
   const handleOptionSelect = (questionIndex, optionIndex) => {
     const updatedSelectedOptions = [...selectedOptions];
@@ -194,7 +193,7 @@ const QuestionV2 = ({ data }) => {
       }
     }
     return new_count;
-  }, [ questionStatus]);
+  }, [questionStatus]);
 
   useEffect(() => {
     const questionIndex = currentPage;
@@ -380,7 +379,6 @@ const QuestionV2 = ({ data }) => {
                     </button>
                   )}
 
-                  {/* {optionsUI[currentPage] !== undefined ? ( */}
                   <>
                     <button
                       className="test-button d-none d-md-block"
@@ -394,16 +392,13 @@ const QuestionV2 = ({ data }) => {
                       </span>
                     </div>
                   </>
-                  {/*  ) : null} */}
                 </div>
-                {/* {optionsUI[currentPage] !== undefined ? ( */}
                 <button
                   className="next-button test-button"
                   onClick={handleSaveNext}
                 >
                   Save & Next
                 </button>
-                {/* ) : null} */}
               </div>
 
               <div class={`offline ${isOnline ? "d-none" : "d-block"}`}>
@@ -449,7 +444,9 @@ const QuestionV2 = ({ data }) => {
                   </div>
                 </div>
                 <div className="pallet-section-title">
-                  <div className="qp-title">{topic.split("_").join(" ")}</div>
+                  <div className="qp-title">
+                    {subTopic.split("_").join(" ")}
+                  </div>
                   <div className="qp-label">Choose a Question</div>
                 </div>
                 <div className="pallet-list-body">
@@ -640,7 +637,9 @@ const QuestionV2 = ({ data }) => {
                   </div>
                 </div>
                 <div className="pallet-section-title">
-                  <div className="qp-title">{topic.split("_").join(" ")}</div>
+                  <div className="qp-title">
+                    {subTopic.split("_").join(" ")}
+                  </div>
                   <div className="qp-label">Choose a Question</div>
                 </div>
                 <div className="pallet-list-body">

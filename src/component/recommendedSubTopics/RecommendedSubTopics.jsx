@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { subtopicsData } from "../../utils/constants";
 import Calculator from "../practicequestions/Calculator";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
@@ -59,12 +58,11 @@ const Box2 = styled.h6`
   padding: 4px 8px;
   margin-bottom: 0px;
   text-transform: uppercase;
-  font-weight: ${(props) => (props.isCurrentTopic ? "bolder" : "normal")};
   overflow-wrap: break-word;
 `;
 
 const RecommendedSubTopics = () => {
-  const { topic, subTopic } = useParams();
+  const { subTopic } = useParams();
   const [showCalculator, setShowCalculator] = useState(false);
 
   const [timeLeft, setTimeLeft] = useState(1800);
@@ -127,30 +125,13 @@ const RecommendedSubTopics = () => {
       >
         <MarginTop>
           <Wrapper>
-            {subtopicsData[topic].map((currentTopic, subIndex) => (
-              <Link
-                to={`/${topic.split(" ").join("_")}/${currentTopic
-                  .split(" ")
-                  .join("_")}`}
-                key={subIndex}
-              >
-                <TopicCard
-                  isCurrentTopic={
-                    subTopic.split("_").join(" ") === currentTopic
-                  }
-                >
-                  <Box>
-                    <Box2
-                      isCurrentTopic={
-                        currentTopic === subTopic.split("_").join(" ")
-                      }
-                    >
-                      {currentTopic}
-                    </Box2>
-                  </Box>
-                </TopicCard>
-              </Link>
-            ))}
+            <TopicCard isCurrentTopic={true}>
+              <Box>
+                <Box2 isCurrentTopic={true}>
+                  {subTopic.split("_").join(" ")}
+                </Box2>
+              </Box>
+            </TopicCard>
           </Wrapper>
         </MarginTop>
         <div class="ct-icons pe-3">

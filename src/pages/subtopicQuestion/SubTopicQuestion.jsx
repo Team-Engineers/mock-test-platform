@@ -75,7 +75,7 @@ const SubTopicQuestion = () => {
  
   return (
     <div>
-      <DisableCopyPaste />
+      {/* <DisableCopyPaste /> */}
       <Instruction />
     </div>
   );
