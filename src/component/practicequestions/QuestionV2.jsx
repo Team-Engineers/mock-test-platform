@@ -27,7 +27,7 @@ const QuestionV2 = ({ data }) => {
   });
 
   const [currentPage, setCurrentPage] = useState(0);
-  const { subTopic } = useParams();
+  const { topic } = useParams();
 
   useEffect(() => {
     const storedPage = localStorage.getItem("currentPage");
@@ -467,7 +467,7 @@ const QuestionV2 = ({ data }) => {
                 </div>
                 <div className="pallet-section-title">
                   <div className="qp-title">
-                    {subTopic.split("_").join(" ")}
+                    {topic.split("_").join(" ")}
                   </div>
                   <div className="qp-label">Choose a Question</div>
                 </div>
@@ -660,7 +660,7 @@ const QuestionV2 = ({ data }) => {
                 </div>
                 <div className="pallet-section-title">
                   <div className="qp-title">
-                    {subTopic.split("_").join(" ")}
+                    {topic.split("_").join(" ")}
                   </div>
                   <div className="qp-label">Choose a Question</div>
                 </div>

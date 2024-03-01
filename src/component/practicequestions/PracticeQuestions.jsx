@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { API } from "../../utils/constants";
 import QuestionV2 from "./QuestionV2";
 import axios from "axios";
-import RecommendedSubTopics from "../recommendedSubTopics/RecommendedSubTopics";
+import RecommendedSubTopics from '../recommendedSubTopics/RecommendedSubTopics';
 import TietLoader from "../Loader/Loader";
 import NoData from "../Loader/NoData";
 
@@ -20,7 +20,8 @@ const PracticeQuestions = () => {
     const fetchData = async () => {
       localStorage.setItem("currentSubTopic", subTopic);
       const params = {
-        topic: subTopic,
+        topic: topic,
+        subTopic : subTopic
         // topic : "Reading_Comprehension"
       };
       try {
