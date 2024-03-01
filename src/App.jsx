@@ -17,13 +17,8 @@ const App = () => {
         <ScrollToTop />
         <Routes>
           <Route element={<PrivateRoutes />}>
-            <Route path="/:topic/:subTopic" element={<SubTopicQuestion />} />
           </Route>
-          {isUserSignedIn() ? (
-            <Route exact path="/" element={<Nopage />} />
-          ) : (
-            <Route path="*" element={<Nopage />} />
-          )}
+          <Route path="/:topic/:subTopic" element={<SubTopicQuestion />} />
 
           <Route path="*" element={<Nopage />} />
         </Routes>
