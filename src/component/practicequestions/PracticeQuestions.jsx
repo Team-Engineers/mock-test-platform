@@ -4,9 +4,10 @@ import { useParams } from "react-router-dom";
 import { API } from "../../utils/constants";
 import QuestionV2 from "./QuestionV2";
 import axios from "axios";
-import RecommendedSubTopics from '../recommendedSubTopics/RecommendedSubTopics';
+import RecommendedSubTopics from "../recommendedSubTopics/RecommendedSubTopics";
 import TietLoader from "../Loader/Loader";
 import NoData from "../Loader/NoData";
+import Logo from "../../assets/images/logo.png";
 
 const PracticeQuestions = () => {
   const [data, setData] = useState([]);
@@ -21,7 +22,7 @@ const PracticeQuestions = () => {
       localStorage.setItem("currentSubTopic", subTopic);
       const params = {
         topic: topic,
-        subTopic : subTopic
+        subTopic: subTopic,
         // topic : "Reading_Comprehension"
       };
       try {
@@ -38,7 +39,6 @@ const PracticeQuestions = () => {
     fetchData();
   }, [topic, subTopic]);
 
-
   if (isLoading) {
     return <TietLoader />;
   }
@@ -50,7 +50,10 @@ const PracticeQuestions = () => {
           <div className="d-flex justify-content-center align-items-center">
             <div className="testknock-left">
               <div className="text-center test-title">
-                TESTKNOCK TEST PLATFORM
+                <div className="d-flex justify-content-center align-items-center gap-2">
+                  <img src={Logo} alt = "cuet-testknock-logo" className="img-fluid" style = {{height : "25px" }}/>
+                  TESTKNOCK TEST PLATFORM
+                </div>
               </div>
             </div>
             <div className="ps-2 testknock-right">
@@ -84,7 +87,7 @@ const PracticeQuestions = () => {
           </div>
         </section>
       ) : (
-        <NoData/>
+        <NoData />
       )}
     </section>
   );
