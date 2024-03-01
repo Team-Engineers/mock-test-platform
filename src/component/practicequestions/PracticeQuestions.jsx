@@ -8,12 +8,16 @@ import RecommendedSubTopics from "../recommendedSubTopics/RecommendedSubTopics";
 import TietLoader from "../Loader/Loader";
 import NoData from "../Loader/NoData";
 import Logo from "../../assets/images/logo.png";
+import InstructionModal from "../instruction/InstructionContentModal";
+import QuestionPaperModal from "./QuestionPaperModal";
 
 const PracticeQuestions = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  // const [calcMinimize, setCalcMinimize] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(false);
+  const [showQuestionPaperModal, setShowQuestionPaperModal] = useState(false);
   const { topic, subTopic } = useParams();
+
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
@@ -21,7 +25,7 @@ const PracticeQuestions = () => {
     const fetchData = async () => {
       localStorage.setItem("currentSubTopic", subTopic);
       const params = {
-        topic: topic,
+        topic: topic.toLowerCase(),
         subTopic: subTopic,
         // topic : "Reading_Comprehension"
       };
@@ -39,57 +43,86 @@ const PracticeQuestions = () => {
     fetchData();
   }, [topic, subTopic]);
 
+  const toggleInstructions = () => {
+    setShowInstructions(!showInstructions);
+    setShowQuestionPaperModal(false);
+  };
+
+  const toggleQuestionPaperModal = () => {
+    setShowQuestionPaperModal(!showQuestionPaperModal);
+    setShowInstructions(false);
+  };
+
   if (isLoading) {
     return <TietLoader />;
   }
 
   return (
-    <section className="question-practice">
-      {data ? (
-        <section className="testknock-mock-test w-100">
-          <div className="d-flex justify-content-center align-items-center">
-            <div className="testknock-left">
-              <div className="text-center test-title">
-                <div className="d-flex justify-content-center align-items-center gap-2">
-                  <img src={Logo} alt = "cuet-testknock-logo" className="img-fluid" style = {{height : "25px" }}/>
-                  TESTKNOCK TEST PLATFORM
-                </div>
-              </div>
-            </div>
-            <div className="ps-2 testknock-right">
-              <div className=" d-flex justify-content-center align-items-center gap-3">
-                <div className="text-nowrap">Question Paper</div>
-                <div>Instructions</div>
-              </div>
-            </div>
-          </div>
-          <div className="d-flex">
-            <div className="testknock-left pe-0">
-              <RecommendedSubTopics />
-            </div>
-            <div className="ps-0 testknock-right">
-              <div className="ct-right">
-                <div className="ct-profile-image">
-                  <img
-                    src="https://kananprep-assets.s3.ap-south-1.amazonaws.com/testengine/testengine-items/catlayout/NewCandidateImage.jpg"
-                    alt="profile"
-                  />
-                </div>
-                <div className="ct-profile-details">
-                  <div className="ct-username">{user?.name}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-100">
-            <QuestionV2 data={data} />
-          </div>
-        </section>
-      ) : (
-        <NoData />
+    <>
+      {showInstructions && (
+        <InstructionModal
+          toggleInstruction={toggleInstructions}
+          isOpen={showInstructions}
+        />
       )}
-    </section>
+      <QuestionPaperModal
+        isOpen={showQuestionPaperModal}
+        toggleQuestionPaper={toggleQuestionPaperModal}
+        data={data}
+      />
+      {
+        <section className="question-practice">
+          {data ? (
+            <section className="testknock-mock-test w-100">
+              <div className="d-flex justify-content-center align-items-center">
+                <div className="testknock-left">
+                  <div className="text-center test-title">
+                    <div className="d-flex justify-content-center align-items-center gap-2">
+                      <img src={Logo} alt="cuet-testknock-logo" style = {{height : "25px"}} />
+                      TESTKNOCK TEST PLATFORM
+                    </div>
+                  </div>
+                </div>
+                <div className="ps-2 testknock-right">
+                  <div className="d-flex justify-content-center align-items-center gap-3">
+                    <div className="text-nowrap gap-2 d-flex justify-content-center align-items-center ">
+                      <button className="modal-button" onClick={toggleQuestionPaperModal}>
+                        Question Paper
+                      </button>
+                      <button className="modal-button" onClick={toggleInstructions}>Instructions</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="d-flex">
+                <div className="testknock-left pe-0">
+                  <RecommendedSubTopics />
+                </div>
+                <div className="ps-0 testknock-right">
+                  <div className="ct-right">
+                    <div className="ct-profile-image">
+                      <img
+                        src="https://kananprep-assets.s3.ap-south-1.amazonaws.com/testengine/testengine-items/catlayout/NewCandidateImage.jpg"
+                        alt="profile"
+                      />
+                    </div>
+                    <div className="ct-profile-details">
+                      <div className="ct-username">{user.name}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-100">
+                <QuestionV2 data={data} />
+              </div>
+            </section>
+          ) : (
+            <NoData />
+          )}
+        </section>
+      }
+    </>
   );
 };
 

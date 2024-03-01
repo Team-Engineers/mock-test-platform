@@ -8,6 +8,7 @@ const QuestionV2 = ({ data }) => {
   let totalPages = 0;
   const [isOnline, setIsOnline] = useState(true);
   const [showPallet, setShowPallet] = useState(true);
+  // const [allQuestions, setAllQuestions] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState(
     Array(data?.length).fill(undefined)
   );

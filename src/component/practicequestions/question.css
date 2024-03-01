@@ -64,6 +64,13 @@
   background-color: none;
 }
 
+.question-practice .modal-button{
+  padding: 3px;
+  margin-top: 2px;
+  border-radius: 5px;
+  border: 1px solid #bababa;
+}
+
 /* .question-practice .question-box {
   padding-right: 12px;
 } */
@@ -301,7 +308,7 @@
 }
 
 .question-practice-v2 .LeftBlock {
-    z-index: 2;
+    z-index: 0;
     position: absolute;
     bottom: 0px;
     top: 0px;
