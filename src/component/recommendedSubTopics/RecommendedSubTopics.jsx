@@ -65,7 +65,7 @@ const RecommendedSubTopics = () => {
   const { subTopic } = useParams();
   const [showCalculator, setShowCalculator] = useState(false);
 
-  const [timeLeft, setTimeLeft] = useState(1800);
+  const [timeLeft, setTimeLeft] = useState(7200);
   const [timerExpired, setTimerExpired] = useState(false);
 
   useEffect(() => {
@@ -169,11 +169,11 @@ const RecommendedSubTopics = () => {
       </div>
       <div class="ct-marks-sections">
         <span class="ct-mark-right">
-          Marks for correct answer <span class="text-success">3</span>
+          Marks for correct answer <span class="text-success">5</span>
         </span>
         <span class="ms-1 me-1">|</span>
         <span>
-          Negative Marks <span class="text-danger"> 0</span>
+          Negative Marks <span class="text-danger"> -1</span>
         </span>
       </div>
     </section>
