@@ -72,7 +72,7 @@ const PracticeQuestions = () => {
                   />
                 </div>
                 <div className="ct-profile-details">
-                  <div className="ct-username">{user.name}</div>
+                  <div className="ct-username">{user?.name}</div>
                 </div>
               </div>
             </div>

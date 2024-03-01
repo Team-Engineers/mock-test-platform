@@ -39,7 +39,7 @@
     transform: translateY(-160px);
     height: 160px;
     width: 2px;
-    background-color: #00ffc0;
+    background-color: #bc85ff;
 }
 
 @keyframes drop{
@@ -111,7 +111,7 @@
 .notfound .notfound-404 {
     height: 210px;
     line-height: 210px;
-    color: #79090b;
+    color: #5648fc;
 }
 
 .notfound .notfound-404 h1 {
@@ -119,7 +119,7 @@
     font-size: 188px;
     font-weight: 700;
     margin: 0;
-    text-shadow: 4px 4px 0 #00ffc0;
+    text-shadow: 4px 4px 0 #bc85ff;
 }
 
 .notfound h2 {
@@ -127,14 +127,14 @@
     font-size: 42px;
     font-weight: 700;
     margin: 0;
-    color: #79090b;
+    color: #5648fc;
     text-transform: uppercase;
     letter-spacing: 1.6px;
 }
 
 .notfound p {
     font-family: lato,sans-serif;
-    color: #79090b;
+    color: #5648fc;
     font-weight: 400;
     margin-top: 20px;
     margin-bottom: 25px;
@@ -144,11 +144,11 @@
     font-family: lato,sans-serif;
     padding: 10px 30px;
     display: inline-block;
-    color: #79090b;
+    color: #5648fc;
     font-weight: 400;
     text-transform: uppercase;
-    -webkit-box-shadow: 0 0 0 2px #79090b, 2px 2px 0 2px #00ffc0;
-    box-shadow: 0 0 0 2px #79090b, 2px 2px 0 2px #00ffc0;
+    -webkit-box-shadow: 0 0 0 2px #5648fc, 2px 2px 0 2px #bc85ff;
+    box-shadow: 0 0 0 2px #5648fc, 2px 2px 0 2px #bc85ff;
     text-decoration: none;
     -webkit-transition: .2s all;
     transition: .2s all;
@@ -176,15 +176,15 @@
 }
 
 .notfound-social>a:hover {
-    background-color: #00ffc0;
-    -webkit-box-shadow: 0 0 0 0 #79090b, 0 0 0 2px #00ffc0;
-    box-shadow: 0 0 0 0 #79090b, 0 0 0 2px #00ffc0;
+    background-color: #bc85ff;
+    -webkit-box-shadow: 0 0 0 0 #5648fc, 0 0 0 2px #bc85ff;
+    box-shadow: 0 0 0 0 #5648fc, 0 0 0 2px #bc85ff;
 }
 
 .notfound a:hover {
     
-    background-color: #79090b;
+    background-color: #5648fc;
     color: white;
-    -webkit-box-shadow: 0 0 0 0 #79090b, 0 0 0 2px #00ffc0;
-    box-shadow: 0 0 0 0 #79090b, 0 0 0 2px #00ffc0;
+    -webkit-box-shadow: 0 0 0 0 #5648fc, 0 0 0 2px #bc85ff;
+    box-shadow: 0 0 0 0 #5648fc, 0 0 0 2px #bc85ff;
 }

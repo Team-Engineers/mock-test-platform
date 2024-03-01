@@ -21,8 +21,8 @@ const Nopage = () => {
             The page you are looking for might have been removed had its name
             changed or is temporarily unavailable.
           </p>
-          <Link to="/">Homepage</Link>
-          <div class="notfound-social">
+          <Link to="https://cuet-alpha.vercel.app/">Homepage</Link>
+          <div class="notfound-social d-none">
             <a href="https://www.facebook.com/officialTIET">
               <i class="fa fa-facebook"></i>
             </a>
