@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./question.css";
 import { MathText } from "../mathJax/MathText";
 import { useParams } from "react-router-dom";
@@ -115,6 +115,7 @@ const QuestionV2 = ({ data }) => {
     setSelectedOptions([]);
     setCurrentPage(pageIndex % totalPages);
     window.scrollTo(0, 0);
+    scrollToQuestion(pageIndex % totalPages);
     localStorage.setItem("currentPage", pageIndex);
   };
 
@@ -133,6 +134,7 @@ const QuestionV2 = ({ data }) => {
     setSelectedOptions([]);
     setCurrentPage(pageIndex % totalPages);
     window.scrollTo(0, 0);
+    scrollToQuestion(pageIndex % totalPages);
     localStorage.setItem("currentPage", pageIndex);
   };
 
@@ -151,6 +153,7 @@ const QuestionV2 = ({ data }) => {
     setSelectedOptions([]);
     setCurrentPage(pageIndex % totalPages);
     window.scrollTo(0, 0);
+    scrollToQuestion(pageIndex % totalPages);
     localStorage.setItem("currentPage", pageIndex);
   };
 
@@ -194,6 +197,25 @@ const QuestionV2 = ({ data }) => {
     }
     return new_count;
   }, [questionStatus]);
+
+  const scrollToQuestion = (pageIndex) => {
+    const questionElement = document.getElementById(pageIndex);
+
+    if (questionElement) {
+      const palletContainer = document.querySelector(".pallet-list-body");
+      const palletContainerRect = palletContainer.getBoundingClientRect();
+      const questionElementRect = questionElement.getBoundingClientRect();
+      if (
+        questionElementRect.top < palletContainerRect.top ||
+        questionElementRect.bottom > palletContainerRect.bottom
+      ) {
+        palletContainer.scrollTo({
+          top: questionElement.offsetTop - palletContainer.offsetTop,
+          behavior: "smooth",
+        });
+      }
+    }
+  };
 
   useEffect(() => {
     const questionIndex = currentPage;

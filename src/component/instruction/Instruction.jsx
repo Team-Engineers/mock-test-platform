@@ -5,11 +5,31 @@ import questionSymbol from "../../assets/images/question_symbol.jpeg";
 import forward from "../../assets/images/forward.png";
 import backward from "../../assets/images/backward.png";
 import PracticeQuestions from "../practicequestions/PracticeQuestions";
+import { useParams } from "react-router-dom";
 const Instruction = () => {
   const [ready, setReady] = useState(false);
   const candidateName = JSON.parse(localStorage.getItem("user"));
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [begin, setBegin] = useState(false);
+  const { subTopic } = useParams();
+  let totalQuestion = "60";
+  let time = "60";
+  let marks = "300"
+  if (subTopic.toLowerCase() === "general_english") {
+    totalQuestion = "50";
+    time = "45";
+    marks = "200"
+  }
+  console.log("topic", totalQuestion, time);
+  // let totalQuestion =
+  // let time = subTopic.toLowerCase() === "general_english" ? "45" : "60"
+  // if(time){
+  //   console.log("45mis")
+
+  // }else{
+  //   console.log("60mis")
+  // }
+
   return (
     <>
       {isButtonClicked === false ? (
@@ -22,106 +42,145 @@ const Instruction = () => {
                 {ready ? (
                   <>
                     <div class="ct-ins-wrapper">
+                      <div className=" d-flex justify-content-between align-items-center">
+                        <strong>Duration: {time} Mins</strong>
+                        <strong>Maximum Marks : {marks}</strong>
+                      </div>
                       <div class="ct-ins-page">
                         <p>
                           <p></p>
                           <p>
                             <br />
                             <strong>
-                              Other Important Instructions for Candidate:
+                              Read the following instructions carefully.
                             </strong>
                             <br />
                             &nbsp;
                           </p>
                           <p>
-                            1. Go through the various symbols used in the test
-                            and understand their meaning before you start the
-                            test.
+                            1. The Test contains {totalQuestion} questions out
+                            of which {totalQuestion - 10} questions are to be
+                            attempted.
                           </p>
-                          <p>2. This question paper consists of 3 sections:</p>
-                          <table border="1" cellspacing="0" cellpadding="0">
-                            <tbody>
-                              <tr>
-                                <td width="133">
-                                  <p align="center">
-                                    <strong>Section</strong>
-                                  </p>
-                                </td>
-                                <td valign="top" width="354">
-                                  <p>
-                                    <strong>Test</strong>
-                                  </p>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td width="133">
-                                  <p align="center">I</p>
-                                </td>
-                                <td width="354">
-                                  <p>
-                                    Verbal Ability &amp; Reading Comprehension
-                                  </p>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td width="133">
-                                  <p align="center">II</p>
-                                </td>
-                                <td width="354">
-                                  <p>
-                                    Data Interpretation &amp; Logical Reasoning
-                                  </p>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td width="133">
-                                  <p align="center">III</p>
-                                </td>
-                                <td width="354">
-                                  <p>Quantitative Ability</p>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
+                          <p>
+                            2. The candidate can not attempt more than{" "}
+                            {totalQuestion - 10} Questions, however they can
+                            change the already attempted Question among the{" "}
+                            {totalQuestion} Questions.
+                          </p>
+
                           <p>&nbsp;</p>
                           <p>
-                            3. For Data Interpretation &amp; Logical Reasoning,
-                            each situation/scenario may consist of a block of
-                            multiple questions. Similarly for Reading
-                            Comprehension, each passage may consist of a block
-                            of multiple questions.
+                            3.Each question has 4 options out of which only one
+                            is correct.Each question has 4 options out of which
+                            only one is correct.
                           </p>
                           <p>
-                            4. In MCQ-type questions, candidates will be given 3
-                            (three) marks for each correct answer, -1 (minus
-                            one) mark for each wrong answer and 0 (zero) marks
-                            for each un-attempted question
+                            4. You have to finish the test in {time} minutes.
                           </p>
                           <p>
-                            5.In Non- MCQ type questions, candidates will be
-                            given 3 (three) marks for each correct answer, and 0
-                            (zero) marks for each&nbsp;wrong&nbsp;and
-                            un-attempted question. There will be&nbsp;no
-                            negative mark&nbsp;for Non-MCQ type questions.
+                            5.You will be awarded 5 marks for each correct
+                            answer and there will be 1 negative marking
                           </p>
                           <p>
-                            6.MCQ-type questions will have choices out of which
-                            only one will be the correct answer. The computer
-                            allotted to you at the test centre runs on a
-                            specialized software that permits you to select only
-                            one answer for MCQ-type questions. The candidate has
-                            to choose the correct answer by clicking on the
-                            radio button (o) placed just before the option. For
-                            Non-MCQ type questions, type in the answer in the
-                            space provided on the screen using the on-screen
-                            keyboard.
+                            6.There is no penalty for the questions that you
+                            have not attempted.
                           </p>
                           <p>
-                            7. No external/ physical calculator is allowed,
-                            however an on-screen calculator in the system will
-                            be provided
+                            7. Once you start the test, you will not be allowed
+                            to reattempt it. Make sure that you complete the
+                            test before you submit the test and/or close the
+                            browser.
+                            <br />
+                            <br />
                           </p>
                         </p>
+                        <u>
+                          <b>About Question Paper:</b>
+                        </u>
+                        <br />
+                        <br />1 The Question Paper consists of multiple choice
+                        objective type questions with 4 options out of which
+                        only 1 is correct.
+                        <br />
+                        <br />2 There is a TIMER (Clock) available on the TOP
+                        RIGHT HAND CORNER of the Screen; you are requested to
+                        keep an eye on it for knowing the time remaining for the
+                        completion of the exam.
+                        <br />
+                        <br />3 The questions can be answered in any order
+                        within the given time frame. The candidate should click
+                        with the mouse on the correct choice, from 4 options
+                        given. In case, the candidate does not wish to attempt
+                        any question, it can be left blank.
+                        <br />
+                        <br />4 The candidate can change the option of a
+                        question later by selecting a new option in case he/she
+                        wishes to. In case candidate does not want to answer the
+                        question, he/she can deselect the answer by clicking{" "}
+                        <button  className="test-button">
+                          Clear
+                        </button>{" "}
+                        provided against the question.
+                        <br />
+                        <br />
+                        5 The question palette at the right of the screen shows
+                        the following status of each of the questions numbered
+                        <br />
+                        <br />
+                        <ul class="que-ans-states">
+                          <li>
+                            <span class="label skipped"></span> You have not
+                            answered the question.
+                          </li>
+                          <li>
+                            <span class="label attempted"></span> You have
+                            answered the question.
+                          </li>
+                          <li>
+                            <span class="label bookmarked"></span> You have NOT
+                            answered the question, but have marked the question
+                            for review.
+                          </li>
+                          <li>
+                            <span class="label attempted bookmarked"></span> You
+                            have answered the question, but marked it for
+                            review.
+                          </li>
+                        </ul>
+                        <br />
+                        <b>
+                          PS: Questions which are attempted and marked for
+                          review would be treated as attempted questions only as
+                          long as the candidate does not{" "}
+                          <button class="test-button ">
+                            Clear
+                          </button>{" "}
+                          the option selected.
+                        </b>
+                        <br />
+                        <br />6 On the completion of the test duration, even if
+                        the candidate does not click on an answer or does not
+                        click on the{" "}
+                        <button type="button" class="btn btn-success">
+                          Submit Test
+                        </button>{" "}
+                        button, a NIL result will be saved automatically by the
+                        computer.
+                        <br />
+                        <br />7 The candidate will only be able to submit the
+                        test on completion of the stipulated {time} Minutes. In
+                        case a candidate not completed his/her test at the
+                        completion of stipulated {time} Minutes, the system
+                        shall automatically submit the test.
+                        <br />
+                        <br />
+                        <div align="center">
+                          <b>"ALL THE BEST"</b>
+                          <br />
+                        </div>
+                        <br />
+                        <br />
                       </div>
                     </div>
                     <div class="ct-inst-footer">
@@ -172,51 +231,36 @@ const Instruction = () => {
                   </>
                 ) : (
                   <>
-                    <div class="ct-ins-wrapper">
+                    <div class="ct-ins-wrapper" style={{maxHeight : "80vh"}}>
                       <div class="ct-ins-page">
                         <p>
                           <p>
                             <strong>General Instructions for Candidate:</strong>
+                            <br />
                           </p>
                           <p>
-                            1.Total duration of the test is 120 minutes and the
-                            test has three sections.
+                            1. The clock will be set at the server. The
+                            countdown timer at the top right corner of screen
+                            will display the remaining time available for you to
+                            complete the examination. When the timer reaches
+                            zero, the examination will end by itself. You need
+                            not terminate the examination or submit your paper.
                           </p>
+
                           <p>
                             <br />
-                            2. The time allotted to each Section is 40 minutes
-                            As soon as you start answering a section the clock
-                            (displayed on the top right corner of the screen)
-                            will start ticking. On completion of 40 minutes, the
-                            clock will stop, the particular section will be
-                            locked, and the section will be auto-submitted. You
-                            can then move to the next Section and start
-                            answering. The same process will be repeated for all
-                            three Sections. On submission of all three sections
-                            a summary of your answers will be displayed on the
-                            screen
-                          </p>
-                          <p>
-                            <br />
-                            3. The question paper will have a mix of Multiple
+                            2. The question paper will have a mix of Multiple
                             Choice Question (MCQ) type with options and non-MCQ
                             type
                             <br />
                             <br />
-                            4. Your clock will be set at the server. The
-                            countdown timer at the top right corner of screen
-                            will display the remaining time available for you to
-                            complete the Section.&nbsp;When the timer reaches
-                            zero, the test for the Section will end by itself.
-                            <br />
-                            <br />
-                            5.You will&nbsp;not be allowed&nbsp;to use any
+                            3.You will&nbsp;not be allowed&nbsp;to use any
                             calculator or any other computing machine or device.
                             An on-screen calculator will be provided, which can
                             be used for computing..
                             <br />
                             <br clear="all" />
-                            6. The Question Palette displayed on the right side
+                            4. The Question Palette displayed on the right side
                             of screen will show the status of each question
                             using one of the following symbol.
                           </p>
@@ -236,7 +280,7 @@ const Instruction = () => {
                             modified by the candidate.
                             <br />
                             <br />
-                            7. You can click on the "&lt;&nbsp;" arrow which
+                            5. You can click on the "&lt;&nbsp;" arrow which
                             appears to the left of question palette to collapse
                             the question palette thereby maximizing the question
                             window. To view the question palette again, you can
@@ -244,7 +288,9 @@ const Instruction = () => {
                             side of question window.
                             <br />
                             <br />
-                            8.&nbsp;To answer a question, do the following:
+                            <strong>
+                              6.&nbsp;To answer a question, do the following:
+                            </strong>
                             <br />
                             <br />
                             a. Click on the question number in the Question
@@ -275,6 +321,8 @@ const Instruction = () => {
                             another question by clicking on a question number
                             and not click ‘Save &amp; Next’ or ‘Mark for Review
                             &amp; Next’ button.
+                            <br />
+                            <br />
                           </p>
                           <p>
                             d. You will be able to view all the questions of a
@@ -284,12 +332,10 @@ const Instruction = () => {
                             respective section
                             <br />
                             <br />
-                            <br />
-                            <br />
                             Changing the response:
                             <br />
                             <br />
-                            9.&nbsp;Procedure for changing the response of a
+                            7.&nbsp;Procedure for changing the response of a
                             question:
                             <br />
                             <br />
@@ -307,25 +353,35 @@ const Instruction = () => {
                             Next’&nbsp;button.
                             <br />
                             <br />
-                            10 Navigating through sections:
-                            <br />
-                            <br />
-                            The test has three Sections: I. Verbal Ability and
-                            Reading Comprehension (VARC), II. Data
-                            Interpretation &amp; Logical Reasoning (DILR) and
-                            III. Quantitative Ability (QA), which will be
-                            administered in the same order as above.The section
-                            you are currently viewing is highlighted.
                           </p>
                           <p>
-                            11.
-                            <strong>
-                              Only those students who appear for the test in the
-                              specified Proctored Window period and&nbsp; submit
-                              the test within 2 hours after the launch will be
-                              eligible for a rank. The Test Engine captures the
-                              Start and End time for this purpose.
-                            </strong>
+                            8. Note that ONLY Questions for which answers are
+                            saved or marked for review after answering will be
+                            considered for evaluation.
+                            <br />
+                            <br />
+                          </p>
+                          <p>
+                            9. Sections in this question paper are displayed on
+                            the top bar of the screen. Questions in a Section
+                            can be viewed by clicking on the name of that
+                            Section. The Section you are currently viewing will
+                            be highlighted.
+                            <br />
+                            <br />
+                          </p>
+                          <p>
+                            10. After clicking the Save & Next button for the
+                            last question in a Section, you will automatically
+                            be taken to the first question of the same Section
+                            in sequence.
+                            <br />
+                            <br />
+                          </p>
+                          <p>
+                            11. You can move the mouse cursor over the name of a
+                            Section to view the answering status for that
+                            Section.
                           </p>
                           <p>&nbsp;</p>
                           <p>&nbsp;</p>
@@ -334,7 +390,7 @@ const Instruction = () => {
                         </p>
                       </div>
                     </div>
-                    <div class="ct-inst-footer">
+                    <div class="ct-inst-footer" style={{maxHeight :"58vh"}}>
                       <div class="ct-inst-button">
                         <button
                           class="btn btn-mark btn-right"
@@ -353,7 +409,7 @@ const Instruction = () => {
                 <div class="ct-inst-profileimage">
                   <img src={TestProfile} alt="profile" />
                 </div>
-                <div class="ct-inst-profilename">{candidateName.name}</div>
+                <div class="ct-inst-profilename">{candidateName?.name}</div>
               </div>
             </div>
           </div>
