@@ -15,5 +15,4 @@ const PrivateRoutes = () => {
   return isUserSignedIn() ? <Outlet /> : <Navigate to="/login" />;
 };
 
-// {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NTNjMDJmNjdiYzE0MTM2NWE2NGE2YyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwODk2Mzk1OSwiZXhwIjoxNzA5Mzk1OTU5fQ.vd_2XfE9tzwlh_R5deaWuwyeyGZfK1idFjt1g_R62W4","expiry":1709395960292}
 export default PrivateRoutes;
