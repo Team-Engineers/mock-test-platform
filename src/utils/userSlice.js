@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import PROFILEPIC_URL from "../assets/images/user.jpg";
 
 const userSlice = createSlice({
     name: "user",
@@ -7,7 +6,6 @@ const userSlice = createSlice({
         email: "",
         name: "",
         password: "",
-        profilePic: PROFILEPIC_URL,
         isAdmin: "",
         branch: "",
         year: "",

@@ -41,7 +41,6 @@ const MarginTop = styled.div`
   top: 0;
   position: sticky;
   display: block;
-  overflow: auto;
   white-space: nowrap;
   padding: 10px;
   height: 7vh;
@@ -62,19 +61,15 @@ const Box2 = styled.h6`
 `;
 
 const RecommendedSubTopics = () => {
-  const { subTopic } = useParams();
-  let totalQuestion = "60";
+  const { topic } = useParams();
   let time = "60";
-  let marks = "300";
-  if (subTopic.toLowerCase() === "general_english") {
-    totalQuestion = "50";
+  if (topic.toLowerCase() === "general_english_mock_test") {
     time = "45";
-    marks = "200";
   }
-  
+
   const [showCalculator, setShowCalculator] = useState(false);
 
-  const [timeLeft, setTimeLeft] = useState(time*60);
+  const [timeLeft, setTimeLeft] = useState(time * 60);
   const [timerExpired, setTimerExpired] = useState(false);
 
   useEffect(() => {
@@ -136,9 +131,7 @@ const RecommendedSubTopics = () => {
           <Wrapper>
             <TopicCard isCurrentTopic={true}>
               <Box>
-                <Box2 isCurrentTopic={true}>
-                  {subTopic.split("_").join(" ")}
-                </Box2>
+                <Box2 isCurrentTopic={true}>{topic.split("_").join(" ")}</Box2>
               </Box>
             </TopicCard>
           </Wrapper>

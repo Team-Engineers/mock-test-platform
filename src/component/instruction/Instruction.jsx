@@ -15,7 +15,7 @@ const Instruction = () => {
   let totalQuestion = "60";
   let time = "60";
   let marks = "300"
-  if (subTopic.toLowerCase() === "general_english") {
+  if (subTopic.toLowerCase() === "general_english_mock_test") {
     totalQuestion = "50";
     time = "45";
     marks = "200"

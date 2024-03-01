@@ -19,6 +19,8 @@
     color: #676568;
     background: #bce8f5;
     padding-left: 10px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .instruction .ct-ins-wrapper {
