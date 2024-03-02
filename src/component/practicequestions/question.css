@@ -95,6 +95,7 @@
   align-items: center;
   gap: 0.3rem;
   margin-top: 0.7rem;
+  cursor : pointer
 }
 
 .question-practice .options-grid .incorrect {
@@ -659,7 +660,7 @@
 }
 
 .ct-right {
-  width: 18%;
+  width: 100%;
   border-left: 1px solid #c3c3c1;
   height: 112px;
   position: relative;

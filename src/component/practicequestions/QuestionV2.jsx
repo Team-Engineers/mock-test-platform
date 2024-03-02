@@ -182,7 +182,7 @@ const QuestionV2 = ({ data }) => {
   };
 
   const handleSaveNext = () => {
-    console.log("attempted count object", attemptedCount);
+    // console.log("attempted count object", attemptedCount);
     if (attemptedCount >= totalQuestion - 10) {
       setShowModal(true);
       console.log("attempted maximum quesion");
@@ -296,9 +296,9 @@ const QuestionV2 = ({ data }) => {
     }
   }, [currentPage, countStatusOccurrences, data, questionStatus]);
 
-  const testSubmitted = useSelector(
-    (state) => state.user.mock_test.testSubmitted
-  );
+  // const testSubmitted = useSelector(
+  //   (state) => state.user.mock_test.testSubmitted
+  // );
 
   // console.log("optionui of question", optionsUI);
   // console.log("questionstauts of question", questionStatus);

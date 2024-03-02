@@ -50,7 +50,7 @@ const PracticeQuestions = () => {
     };
 
     fetchData();
-  }, [topic, subTopic]);
+  }, [topic, subTopic,dispatch]);
 
   const toggleInstructions = () => {
     setShowInstructions(!showInstructions);
@@ -70,7 +70,7 @@ const PracticeQuestions = () => {
     return <CuetLoader />;
   }
 
-  console.log("testSubmitted",testSubmitted)
+  // console.log("testSubmitted",testSubmitted)
 
   return (
     <>

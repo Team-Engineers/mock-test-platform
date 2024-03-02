@@ -91,11 +91,11 @@ const RecommendedSubTopics = () => {
   const updateTimeTaken = useCallback(() => {
     let timeTaken = time * 60;
     if (timeLeft !== 0) timeTaken = timeLeft;
-    console.log("submitting test to true");
+    // console.log("submitting test to true");
     dispatch(setTestCompleted({ testSubmitted: true }));
     localStorage.setItem("optionsUI", JSON.stringify(optionsUI));
     localStorage.setItem("questionStatus", JSON.stringify(questionStatus));
-    console.log("time is in which test is compelte", timeTaken);
+    // console.log("time is in which test is compelte", timeTaken);
     localStorage.setItem("timeTaken", timeTaken);
   }, [dispatch, timeLeft, time, optionsUI, questionStatus]);
 
