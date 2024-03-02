@@ -12,6 +12,8 @@ const Instruction = () => {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [begin, setBegin] = useState(false);
   const { subTopic } = useParams();
+  localStorage.removeItem('user');
+  localStorage.removeItem('currentPage')
   let totalQuestion = "60";
   let time = "60";
   let marks = "300"
@@ -20,7 +22,7 @@ const Instruction = () => {
     time = "45";
     marks = "200"
   }
-  console.log("topic", totalQuestion, time);
+  // console.log("topic", totalQuestion, time);
   // let totalQuestion =
   // let time = subTopic.toLowerCase() === "general_english" ? "45" : "60"
   // if(time){

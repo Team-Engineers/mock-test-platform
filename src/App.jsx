@@ -39,7 +39,7 @@ const SubTopicQuestionWithId = () => {
         const response = await axios.get(`${USERAPI}/users/find/${id}`);
         localStorage.setItem("user", JSON.stringify(response.data));
       } catch (err) {
-        console.log("err", err);
+        // console.log("err", err);
       }
     };
     fetchUser();
