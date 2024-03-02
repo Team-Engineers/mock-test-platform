@@ -10,8 +10,9 @@ import Logo from "../../assets/images/logo.png";
 import InstructionModal from "../instruction/InstructionContentModal";
 import QuestionPaperModal from "./QuestionPaperModal";
 import CuetLoader from "../Loader/Loader";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setTestCompleted } from "../../utils/userSlice";
+import AnswerScreen from "../AnswerScreen/AnswerScreen";
 
 const PracticeQuestions = () => {
   const [data, setData] = useState([]);
@@ -42,8 +43,6 @@ const PracticeQuestions = () => {
           truncatedData = response.data.data.slice(0, 60);
         }
         setData(truncatedData);
-
-        // console.log("response", response.data.data.slice(0, 60));
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
@@ -51,7 +50,7 @@ const PracticeQuestions = () => {
     };
 
     fetchData();
-  }, [topic, subTopic, dispatch]);
+  }, [topic, subTopic]);
 
   const toggleInstructions = () => {
     setShowInstructions(!showInstructions);
@@ -63,9 +62,15 @@ const PracticeQuestions = () => {
     setShowInstructions(false);
   };
 
+  const testSubmitted = useSelector(
+    (state) => state.user.mock_test.testSubmitted
+  );
+
   if (isLoading) {
     return <CuetLoader />;
   }
+
+  console.log("testSubmitted",testSubmitted)
 
   return (
     <>
@@ -136,7 +141,12 @@ const PracticeQuestions = () => {
               </div>
 
               <div className="w-100">
-                <QuestionV2 data={data} />
+                {testSubmitted ? (
+                  <AnswerScreen data={data} />
+                  // <div className=""></div>
+                ) : (
+                  <QuestionV2 data={data} />
+                )}
               </div>
             </section>
           ) : (

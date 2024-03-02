@@ -1,0 +1,52 @@
+.answer-screen .pallet-list-body {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  gap: 10px; /* Gap between grid items */
+}
+.answer-screen .question-number.attempted {
+  border-color: green; /* Border color for attempted questions */
+}
+
+.answer-screen .question-number.not-attempted {
+  border-color: yellow; /* Border color for not-attempted questions */
+}
+
+.answer-screen .question-grid-container {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(50px, 1fr)
+  ); /* Adjust the size of grid cells as needed */
+  gap: 5px; /* Adjust the gap between cells as needed */
+}
+
+.answer-screen .question-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px; /* Adjust the height of cells as needed */
+  border: 1px solid #000; /* Border style for cells */
+}
+
+.answer-screen .question-grid-wrapper {
+  /* Add scrolling to the grid */
+  overflow: auto;
+  /* Limit the size of the grid */
+  max-width: 100%; /* Take full width of container */
+  max-height: 50%; /* Take full height of container */
+}
+
+.answer-screen .question-grid-container {
+  display: grid;
+  grid-gap: 5px; /* Adjust gap between cells */
+  /* Add other grid container styles as needed */
+}
+
+.answer-screen .question-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px; /* Adjust the height of cells as needed */
+  border: 1px solid #000; /* Border style for cells */
+  /* Add other cell styles as needed */
+}

@@ -3,10 +3,14 @@ import "./question.css";
 import { MathText } from "../mathJax/MathText";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CustomModal from "../popupmodal/CustomModal";
+import { setTestCompleted } from "../../utils/userSlice";
 
 const QuestionV2 = ({ data }) => {
+  const dispatch = useDispatch();
+  // const storeOptionsUI = useSelector((state) => state.user.mock_test.optionsUI);
+  // console.log("storeoptionui", storeOptionsUI);
   // const timeTaken = useSelector((state) => state.user.mock_test.timeTaken);
   // console.log(
   //   "timetaken is",
@@ -98,6 +102,7 @@ const QuestionV2 = ({ data }) => {
     updatedOptionsUI[questionIndex] = undefined;
     setOptionsUI(updatedOptionsUI);
 
+    console.log(updatedOptionsUI);
     const updatedStatusArray = [...questionStatus];
     updatedStatusArray[questionIndex] = "not_answered";
     setQuestionStatus(updatedStatusArray);
@@ -136,6 +141,12 @@ const QuestionV2 = ({ data }) => {
       window.scrollTo(0, 0);
       scrollToQuestion(pageIndex % totalPages);
       localStorage.setItem("currentPage", pageIndex);
+      dispatch(
+        setTestCompleted({
+          optionsUI: optionsUI,
+          questionStatus: updatedStatusArray,
+        })
+      );
     }
   };
 
@@ -161,6 +172,12 @@ const QuestionV2 = ({ data }) => {
       window.scrollTo(0, 0);
       scrollToQuestion(pageIndex % totalPages);
       localStorage.setItem("currentPage", pageIndex);
+      dispatch(
+        setTestCompleted({
+          optionsUI: optionsUI,
+          questionStatus: updatedStatusArray,
+        })
+      );
     }
   };
 
@@ -171,7 +188,6 @@ const QuestionV2 = ({ data }) => {
       console.log("attempted maximum quesion");
       return;
     } else {
-      console.log("why it is runnig still");
       const questionIndex = currentPage;
 
       const updatedStatusArray = [...questionStatus];
@@ -188,6 +204,12 @@ const QuestionV2 = ({ data }) => {
       window.scrollTo(0, 0);
       scrollToQuestion(pageIndex % totalPages);
       localStorage.setItem("currentPage", pageIndex);
+      dispatch(
+        setTestCompleted({
+          optionsUI: optionsUI,
+          questionStatus: updatedStatusArray,
+        })
+      );
     }
   };
 
@@ -236,6 +258,7 @@ const QuestionV2 = ({ data }) => {
     // } else {
     //   setShowModal(false);
     // }
+
     return new_count;
   }, [questionStatus]);
 
@@ -272,6 +295,13 @@ const QuestionV2 = ({ data }) => {
       setQuestionStatus(updatedStatusArray);
     }
   }, [currentPage, countStatusOccurrences, data, questionStatus]);
+
+  const testSubmitted = useSelector(
+    (state) => state.user.mock_test.testSubmitted
+  );
+
+  // console.log("optionui of question", optionsUI);
+  // console.log("questionstauts of question", questionStatus);
 
   return (
     <section className="question-practice-v2">

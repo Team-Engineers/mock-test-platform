@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Calculator from "../practicequestions/Calculator";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setTestCompleted } from "../../utils/userSlice";
 const TopicCard = styled.li`
   height: fit-content;
@@ -84,23 +84,31 @@ const RecommendedSubTopics = () => {
   }, [timeLeft]);
 
   const dispatch = useDispatch();
+  const optionsUI = useSelector((state) => state.user.mock_test.optionsUI);
+  const questionStatus = useSelector(
+    (state) => state.user.mock_test.questionStatus
+  );
+  const updateTimeTaken = useCallback(() => {
+    let timeTaken = time * 60;
+    if (timeLeft !== 0) timeTaken = timeLeft;
+    console.log("submitting test to true");
+    dispatch(setTestCompleted({ testSubmitted: true }));
+    localStorage.setItem("optionsUI", JSON.stringify(optionsUI));
+    localStorage.setItem("questionStatus", JSON.stringify(questionStatus));
+    console.log("time is in which test is compelte", timeTaken);
+    localStorage.setItem("timeTaken", timeTaken);
+  }, [dispatch, timeLeft, time, optionsUI, questionStatus]);
 
   useEffect(() => {
     // Check if time left is 0
     if (timeLeft === 0) {
       setTimerExpired(true);
       alert("Timer is over!");
-      dispatch(setTestCompleted({ timeTaken: time * 60 }));
-    }
-  }, [timeLeft,dispatch,time]);
+      console.log("by default submitting teeset to true");
 
-  const updateTimeTaken = () => {
-    if (timeLeft === 0) {
-      dispatch(setTestCompleted({ timeTaken: time * 60 }));
-    } else {
-      dispatch(setTestCompleted({ timeTaken: timeLeft }));
+      updateTimeTaken();
     }
-  };
+  }, [timeLeft, updateTimeTaken, time]);
 
   const hours = Math.floor(timeLeft / 3600);
   const minutes = Math.floor((timeLeft % 3600) / 60);
