@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Instruction.css";
 import TestProfile from "../../assets/images/test-profile.jpg";
 import questionSymbol from "../../assets/images/question_symbol.jpeg";
@@ -12,24 +12,23 @@ const Instruction = () => {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [begin, setBegin] = useState(false);
   const { subTopic } = useParams();
-  localStorage.removeItem('currentPage')
+  localStorage.removeItem("currentPage");
   let totalQuestion = "60";
   let time = "60";
-  let marks = "300"
+  let marks = "300";
   if (subTopic.toLowerCase() === "general_english_mock_test") {
     totalQuestion = "50";
     time = "45";
-    marks = "200"
+    marks = "200";
   }
-  // console.log("topic", totalQuestion, time);
-  // let totalQuestion =
-  // let time = subTopic.toLowerCase() === "general_english" ? "45" : "60"
-  // if(time){
-  //   console.log("45mis")
-
-  // }else{
-  //   console.log("60mis")
-  // }
+  useEffect(() => {
+    const element = document.querySelector(".ct-ins-wrapper");
+    // console.log("elements what is", element);
+    if (element) {
+      // console.log("it is scrolling");
+      element.scrollTo(0, 0); 
+    }
+  }, [ready]);
 
   return (
     <>
@@ -119,10 +118,8 @@ const Instruction = () => {
                         question later by selecting a new option in case he/she
                         wishes to. In case candidate does not want to answer the
                         question, he/she can deselect the answer by clicking{" "}
-                        <button  className="test-button">
-                          Clear
-                        </button>{" "}
-                        provided against the question.
+                        <button className="test-button">Clear</button> provided
+                        against the question.
                         <br />
                         <br />
                         5 The question palette at the right of the screen shows
@@ -139,13 +136,13 @@ const Instruction = () => {
                             answered the question.
                           </li>
                           <li>
-                            <span className="label bookmarked"></span> You have NOT
-                            answered the question, but have marked the question
-                            for review.
+                            <span className="label bookmarked"></span> You have
+                            NOT answered the question, but have marked the
+                            question for review.
                           </li>
                           <li>
-                            <span className="label attempted bookmarked"></span> You
-                            have answered the question, but marked it for
+                            <span className="label attempted bookmarked"></span>{" "}
+                            You have answered the question, but marked it for
                             review.
                           </li>
                         </ul>
@@ -154,10 +151,8 @@ const Instruction = () => {
                           PS: Questions which are attempted and marked for
                           review would be treated as attempted questions only as
                           long as the candidate does not{" "}
-                          <button className="test-button ">
-                            Clear
-                          </button>{" "}
-                          the option selected.
+                          <button className="test-button ">Clear</button> the
+                          option selected.
                         </b>
                         <br />
                         <br />6 On the completion of the test duration, even if
@@ -232,7 +227,10 @@ const Instruction = () => {
                   </>
                 ) : (
                   <>
-                    <div className="ct-ins-wrapper" style={{maxHeight : "80vh"}}>
+                    <div
+                      className="ct-ins-wrapper"
+                      style={{ maxHeight: "80vh" }}
+                    >
                       <div className="ct-ins-page">
                         <p>
                           <p>
@@ -391,7 +389,10 @@ const Instruction = () => {
                         </p>
                       </div>
                     </div>
-                    <div className="ct-inst-footer" style={{maxHeight :"58vh"}}>
+                    <div
+                      className="ct-inst-footer"
+                      style={{ maxHeight: "58vh" }}
+                    >
                       <div className="ct-inst-button">
                         <button
                           className="btn btn-mark btn-right"
