@@ -28,11 +28,11 @@ const PrivateRoutes = () => {
         await axios.get(`${USERAPI}/users/find/${id}`);
         setIsAuthorized(true);
         setIsLoading(false);
-        console.log("User is authorized for mock test");
+        // console.log("User is authorized for mock test");
       } catch (err) {
         setIsAuthorized(false);
         setIsLoading(false);
-        console.log("User not found or not authorized for mock test");
+        // console.log("User not found or not authorized for mock test");
         localStorage.clear();
       }
     };
