@@ -1,9 +1,8 @@
 import React from "react";
-import Loading from "../../assets/images/loader.gif";
-
-const TietLoader = () => {
+import "./loader.css"
+const CuetLoader = () => {
   const loaderStyles = {
-    position: "fixed",  
+    position: "fixed",
     top: 0,
     left: 0,
     width: "100%",
@@ -12,20 +11,19 @@ const TietLoader = () => {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 9999, 
-    overflow : "hidden",
-  };
-
-  const imageStyles = {
-    width: "250px", 
-    height: "250px", 
+    zIndex: 9999,
+    overflow: "hidden",
   };
 
   return (
     <div style={loaderStyles}>
-      <img src={Loading} style={imageStyles} alt="Loading" />
+      <div class="three-body">
+        <div class="three-body__dot"></div>
+        <div class="three-body__dot"></div>
+        <div class="three-body__dot"></div>
+      </div>
     </div>
   );
 };
 
-export default TietLoader;
+export default CuetLoader;

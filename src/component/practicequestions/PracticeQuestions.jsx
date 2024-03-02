@@ -5,11 +5,11 @@ import { API } from "../../utils/constants";
 import QuestionV2 from "./QuestionV2";
 import axios from "axios";
 import RecommendedSubTopics from "../recommendedSubTopics/RecommendedSubTopics";
-import TietLoader from "../Loader/Loader";
 import NoData from "../Loader/NoData";
 import Logo from "../../assets/images/logo.png";
 import InstructionModal from "../instruction/InstructionContentModal";
 import QuestionPaperModal from "./QuestionPaperModal";
+import CuetLoader from "../Loader/Loader";
 
 const PracticeQuestions = () => {
   const [data, setData] = useState([]);
@@ -54,7 +54,7 @@ const PracticeQuestions = () => {
   };
 
   if (isLoading) {
-    return <TietLoader />;
+    return <CuetLoader />;
   }
 
   return (

@@ -3,8 +3,15 @@ import "./question.css";
 import { MathText } from "../mathJax/MathText";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const QuestionV2 = ({ data }) => {
+  const timeTaken = useSelector((state) => state.user.mock_test.timeTaken);
+  console.log(
+    "timetaken is",
+    Math.floor(timeTaken / 60) + " minus",
+    timeTaken % 60
+  );
   let totalPages = 0;
   const [isOnline, setIsOnline] = useState(true);
   const [showPallet, setShowPallet] = useState(true);
@@ -467,9 +474,7 @@ const QuestionV2 = ({ data }) => {
                   </div>
                 </div>
                 <div className="pallet-section-title">
-                  <div className="qp-title">
-                    {topic.split("_").join(" ")}
-                  </div>
+                  <div className="qp-title">{topic.split("_").join(" ")}</div>
                   <div className="qp-label">Choose a Question</div>
                 </div>
                 <div className="pallet-list-body">
@@ -660,9 +665,7 @@ const QuestionV2 = ({ data }) => {
                   </div>
                 </div>
                 <div className="pallet-section-title">
-                  <div className="qp-title">
-                    {topic.split("_").join(" ")}
-                  </div>
+                  <div className="qp-title">{topic.split("_").join(" ")}</div>
                   <div className="qp-label">Choose a Question</div>
                 </div>
                 <div className="pallet-list-body">

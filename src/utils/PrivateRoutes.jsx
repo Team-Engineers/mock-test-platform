@@ -3,7 +3,7 @@ import { Navigate, Outlet } from "react-router";
 import { useParams } from "react-router-dom";
 import { DEFAULTUSER, USERAPI } from "./constants";
 import axios from "axios";
-import TietLoader from "../component/Loader/Loader";
+import CuetLoader from "../component/Loader/Loader";
 
 const PrivateRoutes = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -14,7 +14,8 @@ const PrivateRoutes = () => {
     const fetchUser = async () => {
       if (
         id === "free" &&
-        topic === "general_english_mock_test" &&
+        (topic === "general_english_mock_test" ||
+          topic === "general_test_mock_test") &&
         subTopic === "1"
       ) {
         localStorage.setItem("user", JSON.stringify(DEFAULTUSER));
@@ -25,7 +26,10 @@ const PrivateRoutes = () => {
       }
 
       try {
-        await axios.get(`${USERAPI}/users/find/${id}`);
+        const response = await axios.get(`${USERAPI}/users/find/${id}`);
+        console.log("response",response)
+        localStorage.setItem("user", JSON.stringify(response.data));
+
         setIsAuthorized(true);
         setIsLoading(false);
         // console.log("User is authorized for mock test");
@@ -41,7 +45,7 @@ const PrivateRoutes = () => {
   }, [id, subTopic, topic]);
 
   if (isLoading) {
-    return <TietLoader />;
+    return <CuetLoader />;
   }
 
   return isAuthorized ? <Outlet /> : <Navigate to="/notfound" />;

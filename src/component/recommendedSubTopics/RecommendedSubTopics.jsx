@@ -4,7 +4,8 @@ import styled from "styled-components";
 import Calculator from "../practicequestions/Calculator";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
-
+import { useDispatch } from "react-redux";
+import { setTestCompleted } from "../../utils/userSlice";
 const TopicCard = styled.li`
   height: fit-content;
   display: flex;
@@ -82,13 +83,24 @@ const RecommendedSubTopics = () => {
     return () => clearInterval(interval);
   }, [timeLeft]);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     // Check if time left is 0
     if (timeLeft === 0) {
       setTimerExpired(true);
       alert("Timer is over!");
+      dispatch(setTestCompleted({ timeTaken: time * 60 }));
     }
-  }, [timeLeft]);
+  }, [timeLeft,dispatch,time]);
+
+  const updateTimeTaken = () => {
+    if (timeLeft === 0) {
+      dispatch(setTestCompleted({ timeTaken: time * 60 }));
+    } else {
+      dispatch(setTestCompleted({ timeTaken: timeLeft }));
+    }
+  };
 
   const hours = Math.floor(timeLeft / 3600);
   const minutes = Math.floor((timeLeft % 3600) / 60);
@@ -110,7 +122,7 @@ const RecommendedSubTopics = () => {
           buttons: [
             {
               label: "Submit",
-              // onClick: () => alert("Click Yes"),
+              onClick: () => updateTimeTaken(),
             },
             {
               label: "Cancel",
