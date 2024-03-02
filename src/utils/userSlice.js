@@ -13,7 +13,9 @@ const userSlice = createSlice({
             selectedOptions : [],
             optionsUI : [],
             questionStatus  : [],
+            totalQuestion : 60
         }
+
     },
     reducers: {
         setSliceEmail: (state, action) => {
@@ -37,6 +39,7 @@ const userSlice = createSlice({
             state.mock_test.selectedOptions = action.payload.selectedOptions;
             state.mock_test.optionsUI = action.payload.optionsUI;
             state.mock_test.questionStatus = action.payload.questionStatus;
+            state.mock_test.totalQuestion = action.payload.totalQuestion;
 
         }
     },

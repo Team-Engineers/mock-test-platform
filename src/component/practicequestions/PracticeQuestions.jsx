@@ -10,6 +10,8 @@ import Logo from "../../assets/images/logo.png";
 import InstructionModal from "../instruction/InstructionContentModal";
 import QuestionPaperModal from "./QuestionPaperModal";
 import CuetLoader from "../Loader/Loader";
+import { useDispatch } from "react-redux";
+import { setTestCompleted } from "../../utils/userSlice";
 
 const PracticeQuestions = () => {
   const [data, setData] = useState([]);
@@ -17,7 +19,7 @@ const PracticeQuestions = () => {
   const [showInstructions, setShowInstructions] = useState(false);
   const [showQuestionPaperModal, setShowQuestionPaperModal] = useState(false);
   const { topic, subTopic } = useParams();
-
+  const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
@@ -27,13 +29,21 @@ const PracticeQuestions = () => {
       const params = {
         topic: topic.toLowerCase(),
         subTopic: subTopic,
-        // topic : "Reading_Comprehension"
       };
       try {
         const response = await axios.get(`${API}/question/mock_test/`, {
           params: params,
         });
-        setData(response.data.data);
+        let truncatedData;
+        if (topic === "general_english_mock_test") {
+          truncatedData = response.data.data.slice(0, 50);
+          dispatch(setTestCompleted({ totalQuestion: "50" }));
+        } else {
+          truncatedData = response.data.data.slice(0, 60);
+        }
+        setData(truncatedData);
+
+        // console.log("response", response.data.data.slice(0, 60));
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
@@ -41,7 +51,7 @@ const PracticeQuestions = () => {
     };
 
     fetchData();
-  }, [topic, subTopic]);
+  }, [topic, subTopic, dispatch]);
 
   const toggleInstructions = () => {
     setShowInstructions(!showInstructions);
@@ -78,7 +88,11 @@ const PracticeQuestions = () => {
                 <div className="testknock-left">
                   <div className="text-center test-title">
                     <div className="d-flex justify-content-center align-items-center gap-2">
-                      <img src={Logo} alt="cuet-testknock-logo" style = {{height : "25px"}} />
+                      <img
+                        src={Logo}
+                        alt="cuet-testknock-logo"
+                        style={{ height: "25px" }}
+                      />
                       TESTKNOCK TEST PLATFORM
                     </div>
                   </div>
@@ -86,10 +100,18 @@ const PracticeQuestions = () => {
                 <div className="ps-2 testknock-right">
                   <div className="d-flex justify-content-center align-items-center gap-3">
                     <div className="text-nowrap gap-2 d-flex justify-content-center align-items-center ">
-                      <button className="modal-button" onClick={toggleQuestionPaperModal}>
+                      <button
+                        className="modal-button"
+                        onClick={toggleQuestionPaperModal}
+                      >
                         Question Paper
                       </button>
-                      <button className="modal-button" onClick={toggleInstructions}>Instructions</button>
+                      <button
+                        className="modal-button"
+                        onClick={toggleInstructions}
+                      >
+                        Instructions
+                      </button>
                     </div>
                   </div>
                 </div>
