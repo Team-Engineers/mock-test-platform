@@ -12,7 +12,6 @@ const Instruction = () => {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [begin, setBegin] = useState(false);
   const { subTopic } = useParams();
-  localStorage.removeItem('user');
   localStorage.removeItem('currentPage')
   let totalQuestion = "60";
   let time = "60";
