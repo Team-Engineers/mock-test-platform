@@ -35,19 +35,19 @@ const Instruction = () => {
     <>
       {isButtonClicked === false ? (
         <section className="instruction">
-          <div class="ct-inst-container">
-            <div class="ct-ins-topbar"></div>
-            <div class="ct-ins-main">
-              <div class="ct-ins-left">
-                <div class="ct-ins-content">Instructions</div>
+          <div className="ct-inst-container">
+            <div className="ct-ins-topbar"></div>
+            <div className="ct-ins-main">
+              <div className="ct-ins-left">
+                <div className="ct-ins-content">Instructions</div>
                 {ready ? (
                   <>
-                    <div class="ct-ins-wrapper">
+                    <div className="ct-ins-wrapper">
                       <div className=" d-flex justify-content-between align-items-center">
                         <strong>Duration: {time} Mins</strong>
                         <strong>Maximum Marks : {marks}</strong>
                       </div>
-                      <div class="ct-ins-page">
+                      <div className="ct-ins-page">
                         <p>
                           <p></p>
                           <p>
@@ -129,22 +129,22 @@ const Instruction = () => {
                         the following status of each of the questions numbered
                         <br />
                         <br />
-                        <ul class="que-ans-states">
+                        <ul className="que-ans-states">
                           <li>
-                            <span class="label skipped"></span> You have not
+                            <span className="label skipped"></span> You have not
                             answered the question.
                           </li>
                           <li>
-                            <span class="label attempted"></span> You have
+                            <span className="label attempted"></span> You have
                             answered the question.
                           </li>
                           <li>
-                            <span class="label bookmarked"></span> You have NOT
+                            <span className="label bookmarked"></span> You have NOT
                             answered the question, but have marked the question
                             for review.
                           </li>
                           <li>
-                            <span class="label attempted bookmarked"></span> You
+                            <span className="label attempted bookmarked"></span> You
                             have answered the question, but marked it for
                             review.
                           </li>
@@ -154,7 +154,7 @@ const Instruction = () => {
                           PS: Questions which are attempted and marked for
                           review would be treated as attempted questions only as
                           long as the candidate does not{" "}
-                          <button class="test-button ">
+                          <button className="test-button ">
                             Clear
                           </button>{" "}
                           the option selected.
@@ -163,7 +163,7 @@ const Instruction = () => {
                         <br />6 On the completion of the test duration, even if
                         the candidate does not click on an answer or does not
                         click on the{" "}
-                        <button type="button" class="btn btn-success">
+                        <button type="button" className="btn btn-success">
                           Submit Test
                         </button>{" "}
                         button, a NIL result will be saved automatically by the
@@ -184,8 +184,8 @@ const Instruction = () => {
                         <br />
                       </div>
                     </div>
-                    <div class="ct-inst-footer">
-                      <div class="ct-inst-agree">
+                    <div className="ct-inst-footer">
+                      <div className="ct-inst-agree">
                         <input
                           type="checkbox"
                           id="ct-inst"
@@ -210,9 +210,9 @@ const Instruction = () => {
                           Non-Disclosure Agreement.
                         </label>
                       </div>
-                      <div class="ct-inst-button">
+                      <div className="ct-inst-button">
                         <button
-                          class="btn btn-mark btn-left"
+                          className="btn btn-mark btn-left"
                           type="button"
                           onClick={() => setReady(false)}
                         >
@@ -220,7 +220,7 @@ const Instruction = () => {
                           <strong>Previous</strong>
                         </button>
                         <button
-                          class="btn btn-submit-side"
+                          className="btn btn-submit-side"
                           type="button"
                           onClick={() => setIsButtonClicked(true)}
                           disabled={!begin}
@@ -232,8 +232,8 @@ const Instruction = () => {
                   </>
                 ) : (
                   <>
-                    <div class="ct-ins-wrapper" style={{maxHeight : "80vh"}}>
-                      <div class="ct-ins-page">
+                    <div className="ct-ins-wrapper" style={{maxHeight : "80vh"}}>
+                      <div className="ct-ins-page">
                         <p>
                           <p>
                             <strong>General Instructions for Candidate:</strong>
@@ -391,10 +391,10 @@ const Instruction = () => {
                         </p>
                       </div>
                     </div>
-                    <div class="ct-inst-footer" style={{maxHeight :"58vh"}}>
-                      <div class="ct-inst-button">
+                    <div className="ct-inst-footer" style={{maxHeight :"58vh"}}>
+                      <div className="ct-inst-button">
                         <button
-                          class="btn btn-mark btn-right"
+                          className="btn btn-mark btn-right"
                           type="button"
                           onClick={() => setReady(true)}
                         >
@@ -406,11 +406,11 @@ const Instruction = () => {
                   </>
                 )}
               </div>
-              <div class="ct-ins-right">
-                <div class="ct-inst-profileimage">
+              <div className="ct-ins-right">
+                <div className="ct-inst-profileimage">
                   <img src={TestProfile} alt="profile" />
                 </div>
-                <div class="ct-inst-profilename">{candidateName?.name}</div>
+                <div className="ct-inst-profilename">{candidateName?.name}</div>
               </div>
             </div>
           </div>

@@ -424,7 +424,7 @@ const QuestionV2 = ({ data }) => {
                 </button>
               </div>
 
-              <div class={`offline ${isOnline ? "d-none" : "d-block"}`}>
+              <div className={`offline ${isOnline ? "d-none" : "d-block"}`}>
                 <span>You are offline right now. Check your connection.</span>
               </div>
             </div>
@@ -617,7 +617,7 @@ const QuestionV2 = ({ data }) => {
                 {/* ) : null} */}
               </div>
 
-              <div class={`offline ${isOnline ? "d-none" : "d-block"}`}>
+              <div className={`offline ${isOnline ? "d-none" : "d-block"}`}>
                 <span>You are offline right now. Check your connection.</span>
               </div>
             </div>

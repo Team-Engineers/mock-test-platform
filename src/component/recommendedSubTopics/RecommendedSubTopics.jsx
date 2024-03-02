@@ -136,9 +136,9 @@ const RecommendedSubTopics = () => {
             </TopicCard>
           </Wrapper>
         </MarginTop>
-        <div class="ct-icons pe-3">
+        <div className="ct-icons pe-3">
           <span
-            class="calc-icon"
+            className="calc-icon"
             role="presentation"
             onClick={() => setShowCalculator(!showCalculator)}
           ></span>
@@ -149,10 +149,10 @@ const RecommendedSubTopics = () => {
           )}
         </div>
       </div>
-      <div class="ct-timer-block">
-        <div class="ct-timer-left">Section</div>
-        <div class="ct-timer-right">
-          <span class="mr-1"> Time Left :</span>
+      <div className="ct-timer-block">
+        <div className="ct-timer-left">Section</div>
+        <div className="ct-timer-right">
+          <span className="mr-1"> Time Left :</span>
           <span id="timer">
             <span>{hours.toString().padStart(2, "0")}</span>:
             <span>{minutes.toString().padStart(2, "0")}</span>:
@@ -169,13 +169,13 @@ const RecommendedSubTopics = () => {
 
         {/* <button onClick={submit()}>Confirm dialog</button> */}
       </div>
-      <div class="ct-marks-sections">
-        <span class="ct-mark-right">
-          Marks for correct answer <span class="text-success">5</span>
+      <div className="ct-marks-sections">
+        <span className="ct-mark-right">
+          Marks for correct answer <span className="text-success">5</span>
         </span>
-        <span class="ms-1 me-1">|</span>
+        <span className="ms-1 me-1">|</span>
         <span>
-          Negative Marks <span class="text-danger"> -1</span>
+          Negative Marks <span className="text-danger"> -1</span>
         </span>
       </div>
     </section>

@@ -6,14 +6,14 @@ const Nopage = () => {
   return (
     <section className="noPage">
       <div id="notfound">
-        <div class="notfound-bg">
+        <div className="notfound-bg">
           <div></div>
           <div></div>
           <div></div>
           <div></div>
         </div>
-        <div class="notfound">
-          <div class="notfound-404">
+        <div className="notfound">
+          <div className="notfound-404">
             <h1>404</h1>
           </div>
           <h2>Page Not Found</h2>
@@ -22,18 +22,18 @@ const Nopage = () => {
             changed or is temporarily unavailable.
           </p>
           <Link to="https://cuet-alpha.vercel.app/">Homepage</Link>
-          <div class="notfound-social d-none">
+          <div className="notfound-social d-none">
             <a href="https://www.facebook.com/officialTIET">
-              <i class="fa fa-facebook"></i>
+              <i className="fa fa-facebook"></i>
             </a>
             <a href="https://www.instagram.com/tietofficial/">
-              <i class="fa fa-twitter"></i>
+              <i className="fa fa-twitter"></i>
             </a>
             <a href="https://in.pinterest.com/pin/1061160730921621150/">
-              <i class="fa fa-pinterest"></i>
+              <i className="fa fa-pinterest"></i>
             </a>
             <a href="https://www.linkedin.com/school/tietofficial/">
-              <i class="fa fa-linkedin"></i>
+              <i className="fa fa-linkedin"></i>
             </a>
           </div>
         </div>
