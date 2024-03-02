@@ -29,8 +29,8 @@ const App = () => {
 };
 
 const SubTopicQuestionWithId = () => {
-  const { id } = useParams();
-  if(id === "free"){
+  const { subTopic, id } = useParams();
+  if (id === "free" && subTopic === "1") {
     localStorage.setItem("user", JSON.stringify(DEFAULTUSER));
   }
   useEffect(() => {

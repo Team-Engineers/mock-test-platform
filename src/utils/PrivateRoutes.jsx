@@ -4,8 +4,8 @@ import { DEFAULTUSER } from "./constants";
 import { useParams } from "react-router-dom";
 
 const PrivateRoutes = () => {
-  const { id } = useParams();
-  if (id === "free") {
+  const { subTopic , id } = useParams();
+  if (id === "free" && subTopic === "1") {
     localStorage.setItem("user", JSON.stringify(DEFAULTUSER));
   }
   const isUserSignedIn = () => {
