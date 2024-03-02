@@ -1,31 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router";
-import { DEFAULTUSER, USERAPI } from "./constants";
 import { useParams } from "react-router-dom";
+import { DEFAULTUSER, USERAPI } from "./constants";
 import axios from "axios";
+import TietLoader from "../component/Loader/Loader";
 
 const PrivateRoutes = () => {
-  const { subTopic, id } = useParams();
-  let accessibleRoute = false;
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const { topic, subTopic, id } = useParams();
 
-  const fetchUser = async () => {
-    if (id === "free" && subTopic === "1") {
-      localStorage.setItem("user", JSON.stringify(DEFAULTUSER));
-      accessibleRoute = true;
-    } else {
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (
+        id === "free" &&
+        topic === "general_english_mock_test" &&
+        subTopic === "1"
+      ) {
+        localStorage.setItem("user", JSON.stringify(DEFAULTUSER));
+
+        setIsAuthorized(true);
+        setIsLoading(false);
+        return;
+      }
+
       try {
-        const response = await axios.get(`${USERAPI}/users/find/${id}`);
-        localStorage.setItem("user", JSON.stringify(response.data));
-        accessibleRoute = true;
+        await axios.get(`${USERAPI}/users/find/${id}`);
+        setIsAuthorized(true);
+        setIsLoading(false);
+        console.log("User is authorized for mock test");
       } catch (err) {
-        accessibleRoute = false;
-
+        setIsAuthorized(false);
+        setIsLoading(false);
+        console.log("User not found or not authorized for mock test");
         localStorage.clear();
       }
-    }
-  };
-  fetchUser();
-  return accessibleRoute ? <Outlet /> : <Navigate to="/notfound" />;
+    };
+
+    fetchUser();
+  }, [id, subTopic, topic]);
+
+  if (isLoading) {
+    return <TietLoader />;
+  }
+
+  return isAuthorized ? <Outlet /> : <Navigate to="/notfound" />;
 };
 
 export default PrivateRoutes;
