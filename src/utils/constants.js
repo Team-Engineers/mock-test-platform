@@ -29,8 +29,7 @@ export const DEFAULTUSER = {
   _id: "6553c02f67bc141365a64a6c",
   email: "user123@gmail.com",
   name: "User",
-  profilePic:
-    "https://firebasestorage.googleapis.com/v0/b/questionbank-d0788.appspot.com/o/userProfileImages%2F1700211132396-9.jpg?alt=media&token=d9f8a675-61ba-4ea4-8574-72c457e80ba3",
+  profilePic: "",
   isAdmin: true,
   branch: "",
   year: "",
