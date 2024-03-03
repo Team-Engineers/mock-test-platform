@@ -3,19 +3,19 @@ import "./question.css";
 import { MathText } from "../mathJax/MathText";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import CustomModal from "../popupmodal/CustomModal";
+import { setTestCompleted } from "../../utils/userSlice";
 
 const QuestionV2 = ({ data }) => {
-  // const timeTaken = useSelector((state) => state.user.mock_test.timeTaken);
-  // console.log(
-  //   "timetaken is",
-  //   Math.floor(timeTaken / 60) + " minus",
-  //   timeTaken % 60
-  // );
-  const totalQuestion = useSelector(
-    (state) => state.user.mock_test.totalQuestion
-  );
+  // console.log("ddaaata", data);
+  const dispatch = useDispatch();
+  // const storeOptionsUI = useSelector((state) => state.user.mock_test.optionsUI);
+  // console.log("storeoptionui", storeOptionsUI);
+  // const timeLeft = useSelector((state) => state.user.mock_test.timeTaken);
+
+  const totalQuestion = data?.length;
+  // console.log("total question",totalQuestion)
   let totalPages = 0;
   const [isOnline, setIsOnline] = useState(true);
   const [showPallet, setShowPallet] = useState(true);
@@ -41,8 +41,7 @@ const QuestionV2 = ({ data }) => {
   });
 
   const [currentPage, setCurrentPage] = useState(0);
-  const { topic } = useParams();
-
+  const { topic, subTopic } = useParams();
   useEffect(() => {
     const storedPage = localStorage.getItem("currentPage");
     const parsedPage = parseInt(storedPage, 10);
@@ -62,6 +61,7 @@ const QuestionV2 = ({ data }) => {
         setIsOnline(false);
       }
     };
+
     const intervalId = setInterval(checkConnectivity, 5000);
     return () => {
       clearInterval(intervalId);
@@ -70,19 +70,25 @@ const QuestionV2 = ({ data }) => {
   }, []);
 
   const handleOptionSelect = (questionIndex, optionIndex) => {
-    const updatedSelectedOptions = [...selectedOptions];
-    updatedSelectedOptions[questionIndex] = optionIndex;
-    setSelectedOptions(updatedSelectedOptions);
+    if (attemptedCount >= totalQuestion - 10) {
+      setShowModal(true);
+      console.log("attempted maximum quesion");
+      return;
+    } else {
+      const updatedSelectedOptions = [...selectedOptions];
+      updatedSelectedOptions[questionIndex] = optionIndex;
+      setSelectedOptions(updatedSelectedOptions);
 
-    const updatedOptionsUI = [...optionsUI];
-    updatedOptionsUI[questionIndex] = optionIndex;
-    setOptionsUI(updatedOptionsUI);
+      const updatedOptionsUI = [...optionsUI];
+      updatedOptionsUI[questionIndex] = optionIndex;
+      setOptionsUI(updatedOptionsUI);
 
-    const currentStatus = questionStatus[questionIndex];
-    if (currentStatus === "not_visited") {
-      const updatedStatusArray = [...questionStatus];
-      updatedStatusArray[questionIndex] = "not_answered";
-      setQuestionStatus(updatedStatusArray);
+      const currentStatus = questionStatus[questionIndex];
+      if (currentStatus === "not_visited") {
+        const updatedStatusArray = [...questionStatus];
+        updatedStatusArray[questionIndex] = "not_answered";
+        setQuestionStatus(updatedStatusArray);
+      }
     }
   };
 
@@ -98,6 +104,7 @@ const QuestionV2 = ({ data }) => {
     updatedOptionsUI[questionIndex] = undefined;
     setOptionsUI(updatedOptionsUI);
 
+    console.log(updatedOptionsUI);
     const updatedStatusArray = [...questionStatus];
     updatedStatusArray[questionIndex] = "not_answered";
     setQuestionStatus(updatedStatusArray);
@@ -136,6 +143,12 @@ const QuestionV2 = ({ data }) => {
       window.scrollTo(0, 0);
       scrollToQuestion(pageIndex % totalPages);
       localStorage.setItem("currentPage", pageIndex);
+      dispatch(
+        setTestCompleted({
+          optionsUI: optionsUI,
+          questionStatus: updatedStatusArray,
+        })
+      );
     }
   };
 
@@ -161,17 +174,22 @@ const QuestionV2 = ({ data }) => {
       window.scrollTo(0, 0);
       scrollToQuestion(pageIndex % totalPages);
       localStorage.setItem("currentPage", pageIndex);
+      dispatch(
+        setTestCompleted({
+          optionsUI: optionsUI,
+          questionStatus: updatedStatusArray,
+        })
+      );
     }
   };
 
   const handleSaveNext = () => {
-    console.log("attempted count object", attemptedCount);
+    // console.log("attempted count object", attemptedCount);
     if (attemptedCount >= totalQuestion - 10) {
       setShowModal(true);
       console.log("attempted maximum quesion");
       return;
     } else {
-      console.log("why it is runnig still");
       const questionIndex = currentPage;
 
       const updatedStatusArray = [...questionStatus];
@@ -188,6 +206,12 @@ const QuestionV2 = ({ data }) => {
       window.scrollTo(0, 0);
       scrollToQuestion(pageIndex % totalPages);
       localStorage.setItem("currentPage", pageIndex);
+      dispatch(
+        setTestCompleted({
+          optionsUI: optionsUI,
+          questionStatus: updatedStatusArray,
+        })
+      );
     }
   };
 
@@ -230,12 +254,6 @@ const QuestionV2 = ({ data }) => {
       }
     }
     setAttemptedCount(new_count.answered + new_count.review_answered);
-    // if (new_count.answered +  new_count.review_answered >= 5) {
-    //   setShowModal(true);
-    //   console.log("attempted maximum quesion");
-    // } else {
-    //   setShowModal(false);
-    // }
     return new_count;
   }, [questionStatus]);
 
@@ -272,6 +290,63 @@ const QuestionV2 = ({ data }) => {
       setQuestionStatus(updatedStatusArray);
     }
   }, [currentPage, countStatusOccurrences, data, questionStatus]);
+
+  // const testSubmitted = useSelector(
+  //   (state) => state.user.mock_test.testSubmitted
+  // );
+
+  // console.log("optionui of question", optionsUI);
+  // console.log("questionstauts of question", questionStatus);
+  // let time = "60";
+  // if (topic.toLowerCase() === "general_english_mock_test") {
+  //   time = "45";
+  // }
+
+  // const timeLeft = useSelector((state) => state.user.mock_test.timeTaken);
+  // const hours = Math.floor(timeLeft / 3600);
+  // const minutes = Math.floor((timeLeft % 3600) / 60);
+  // const seconds = timeLeft % 60;
+  // // console.log("timesleft", timeLeft);
+  // const testSubmitted = useSelector(
+  //   (state) => state.user.mock_test.testSubmitted
+  // );
+
+  // const updateTimeTaken = () => {
+  //   let timeTaken = time * 60;
+  //   if (timeLeft !== 0) timeTaken = timeLeft;
+  //   dispatch(setTestCompleted({ testSubmitted: true }));
+  //   localStorage.setItem("optionsUI", JSON.stringify(optionsUI));
+  //   localStorage.setItem("questionStatus", JSON.stringify(questionStatus));
+  //   localStorage.setItem("timeTaken", timeTaken);
+  // };
+
+  // const onSubmit = () => {
+  //   timeLeft
+  //     ? confirmAlert({
+  //         title: "Confirm",
+  //         message: `You have ${hours
+  //           .toString()
+  //           .padStart(2, "0")} : ${minutes
+  //           .toString()
+  //           .padStart(2, "0")} : ${seconds
+  //           .toString()
+  //           .padStart(
+  //             2,
+  //             "0"
+  //           )} left. Clicking SUBMIT will end test, and you will not be allowed to attempt any more questions. Are you sure you want to End the test?`,
+  //         buttons: [
+  //           {
+  //             label: "Submit",
+  //             onClick: updateTimeTaken, // Remove the parentheses here
+  //           },
+  //           {
+  //             label: "Cancel",
+  //             // onClick: () => alert("Click No"),
+  //           },
+  //         ],
+  //       })
+  //     : alert("mock test completed");
+  // };
 
   return (
     <section className="question-practice-v2">
@@ -503,7 +578,11 @@ const QuestionV2 = ({ data }) => {
                     </div>
                   </div>
                   <div className="pallet-section-title">
-                    <div className="qp-title">{topic.split("_").join(" ")}</div>
+                    <div className="qp-title">
+                      {topic.split("_").join(" ").toUpperCase() +
+                        " " +
+                        subTopic}
+                    </div>
                     <div className="qp-label">Choose a Question</div>
                   </div>
                   <div className="pallet-list-body">
@@ -525,55 +604,54 @@ const QuestionV2 = ({ data }) => {
             </div>
           </div>
 
-          <div
-            className="button-container w-100"
-            style={{ display: "inline-flex" }}
-          >
+          <div className="d-flex justify-content-between w-100 align-items-center">
             <div
-              className="d-flex justify-content-between align-items-center mx-2"
-              style={{ width: "80%" }}
+              className="button-container "
+              style={{ display: "inline-flex", width: "82%" }}
             >
-              <div className="d-flex align-center gap-3 p-2">
-                {questionStatus[currentPage] === "review_answered" ||
-                questionStatus[currentPage] === "review" ? (
-                  <button className="test-button" onClick={handleUnMarkNext}>
-                    Unmark and Next
-                  </button>
-                ) : (
-                  <button className="test-button" onClick={handleReviewNext}>
-                    Mark for review & next
-                  </button>
-                )}
-
-                <>
-                  <button
-                    className="test-button d-none d-md-block"
-                    onClick={handleClearResponse}
-                  >
-                    Clear Response
-                  </button>
-                  <div className="text-center  d-md-none d-block">
-                    <span className="sp-link" role="presentation">
-                      ↻ Clear Response
-                    </span>
-                  </div>
-                </>
-              </div>
-              <button
-                className="next-button test-button"
-                onClick={handleSaveNext}
+              <div
+                className="d-flex justify-content-between w-100 align-items-center mx-2"
+                style={{ width: "82%" }}
               >
-                Save & Next
-              </button>
+                <div className="d-flex align-center gap-3 p-2 ">
+                  {questionStatus[currentPage] === "review_answered" ||
+                  questionStatus[currentPage] === "review" ? (
+                    <button className="test-button" onClick={handleUnMarkNext}>
+                      Unmark and Next
+                    </button>
+                  ) : (
+                    <button className="test-button" onClick={handleReviewNext}>
+                      Mark for review & next
+                    </button>
+                  )}
+
+                  <>
+                    <button
+                      className="test-button d-none d-md-block"
+                      onClick={handleClearResponse}
+                    >
+                      Clear Response
+                    </button>
+                    <div className="text-center  d-md-none d-block">
+                      <span className="sp-link" role="presentation">
+                        ↻ Clear Response
+                      </span>
+                    </div>
+                  </>
+                </div>
+                <button
+                  className="next-button test-button"
+                  onClick={handleSaveNext}
+                >
+                  Save & Next
+                </button>
+              </div>
             </div>
             {/* <div
               className="d-flex flex-column justify-content-center align-items-center"
-              style={{ width: "20%" }}
+              style={{ width: "18%" }}
             >
-              <button
-                className="btn-success btn"
-                // onClick={handleSaveNext}
-              >
+              <button className="btn-success btn" onClick={onSubmit}>
                 Submit Test
               </button>
             </div> */}
@@ -711,7 +789,11 @@ const QuestionV2 = ({ data }) => {
                     </div>
                   </div>
                   <div className="pallet-section-title">
-                    <div className="qp-title">{topic.split("_").join(" ")}</div>
+                    <div className="qp-title">
+                      {topic.split("_").join(" ").toUpperCase() +
+                        " " +
+                        subTopic}
+                    </div>
                     <div className="qp-label">Choose a Question</div>
                   </div>
                   <div className="pallet-list-body">
@@ -732,59 +814,59 @@ const QuestionV2 = ({ data }) => {
               </div>
             </div>
           </div>
-          <div
-            className="button-container w-100"
-            style={{ display: "inline-flex" }}
-          >
+          <div className="d-flex justify-content-between w-100 align-items-center">
             <div
-              className="d-flex justify-content-between align-items-center mx-2"
-              style={{ width: "80%" }}
+              className="button-container "
+              style={{ display: "inline-flex", width: "82%" }}
             >
-              <div className="d-flex align-center gap-3 p-2">
-                {questionStatus[currentPage] === "review_answered" ||
-                questionStatus[currentPage] === "review" ? (
-                  <button className="test-button" onClick={handleUnMarkNext}>
-                    Unmark and Next
-                  </button>
-                ) : (
-                  <button className="test-button" onClick={handleReviewNext}>
-                    Mark for review & next
-                  </button>
-                )}
-
-                <>
-                  <button
-                    className="test-button d-none d-md-block"
-                    onClick={handleClearResponse}
-                  >
-                    Clear Response
-                  </button>
-                  <div className="text-center  d-md-none d-block">
-                    <span className="sp-link" role="presentation">
-                      ↻ Clear Response
-                    </span>
-                  </div>
-                </>
-              </div>
-              <button
-                className="next-button test-button"
-                onClick={handleSaveNext}
+              <div
+                className="d-flex justify-content-between w-100 align-items-center mx-2"
+                style={{ width: "82%" }}
               >
-                Save & Next
-              </button>
+                <div className="d-flex align-center gap-3 p-2 ">
+                  {questionStatus[currentPage] === "review_answered" ||
+                  questionStatus[currentPage] === "review" ? (
+                    <button className="test-button" onClick={handleUnMarkNext}>
+                      Unmark and Next
+                    </button>
+                  ) : (
+                    <button className="test-button" onClick={handleReviewNext}>
+                      Mark for review & next
+                    </button>
+                  )}
+
+                  <>
+                    <button
+                      className="test-button d-none d-md-block"
+                      onClick={handleClearResponse}
+                    >
+                      Clear Response
+                    </button>
+                    <div className="text-center  d-md-none d-block">
+                      <span className="sp-link" role="presentation">
+                        ↻ Clear Response
+                      </span>
+                    </div>
+                  </>
+                </div>
+                <button
+                  className="next-button test-button"
+                  onClick={handleSaveNext}
+                >
+                  Save & Next
+                </button>
+              </div>
             </div>
             {/* <div
               className="d-flex flex-column justify-content-center align-items-center"
-              style={{ width: "20%" }}
+              style={{ width: "18%" }}
             >
-              <button
-                className="btn-success btn"
-                // onClick={handleSaveNext}
-              >
+              <button className="btn-success btn" onClick={onSubmit}>
                 Submit Test
               </button>
             </div> */}
           </div>
+
           <div className={`pb-1 offline ${isOnline ? "d-none" : "d-block"}`}>
             <span>You are offline right now. Check your connection.</span>
           </div>
