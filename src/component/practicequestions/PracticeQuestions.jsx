@@ -50,7 +50,7 @@ const PracticeQuestions = () => {
     };
 
     fetchData();
-  }, [topic, subTopic,dispatch]);
+  }, [topic, subTopic, dispatch]);
 
   const toggleInstructions = () => {
     setShowInstructions(!showInstructions);
@@ -104,20 +104,24 @@ const PracticeQuestions = () => {
                 </div>
                 <div className="ps-2 testknock-right">
                   <div className="d-flex justify-content-center align-items-center gap-3">
-                    <div className="text-nowrap gap-2 d-flex justify-content-center align-items-center ">
-                      <button
-                        className="modal-button"
-                        onClick={toggleQuestionPaperModal}
-                      >
-                        Question Paper
-                      </button>
-                      <button
-                        className="modal-button"
-                        onClick={toggleInstructions}
-                      >
-                        Instructions
-                      </button>
-                    </div>
+                    {!testSubmitted ? (
+                      <div className="text-nowrap gap-2 d-flex justify-content-center align-items-center ">
+                        <button
+                          className="modal-button"
+                          onClick={toggleQuestionPaperModal}
+                        >
+                          Question Paper
+                        </button>
+                        <button
+                          className="modal-button"
+                          onClick={toggleInstructions}
+                        >
+                          Instructions
+                        </button>
+                      </div>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </div>
@@ -125,26 +129,28 @@ const PracticeQuestions = () => {
                 <div className="testknock-left pe-0">
                   <RecommendedSubTopics />
                 </div>
-                <div className="ps-0 testknock-right">
-                  <div className="ct-right">
-                    <div className="ct-profile-image">
-                      <img
-                        src="https://kananprep-assets.s3.ap-south-1.amazonaws.com/testengine/testengine-items/catlayout/NewCandidateImage.jpg"
-                        alt="profile"
-                      />
-                    </div>
-                    <div className="ct-profile-details">
-                      <div className="ct-username">{user?.name}</div>
+                {!testSubmitted && (
+                  <div className="ps-0 testknock-right">
+                    <div className="ct-right">
+                      <div className="ct-profile-image">
+                        <img
+                          src="https://kananprep-assets.s3.ap-south-1.amazonaws.com/testengine/testengine-items/catlayout/NewCandidateImage.jpg"
+                          alt="profile"
+                        />
+                      </div>
+                      <div className="ct-profile-details">
+                        <div className="ct-username">{user?.name}</div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
 
               <div className="w-100">
                 {testSubmitted ? (
                   <AnswerScreen data={data} />
-                  // <div className=""></div>
                 ) : (
+                  // <div className=""></div>
                   <QuestionV2 data={data} />
                 )}
               </div>
