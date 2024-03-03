@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./question.css";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { API } from "../../utils/constants";
 import QuestionV2 from "./QuestionV2";
 import axios from "axios";
@@ -120,7 +120,21 @@ const PracticeQuestions = () => {
                         </button>
                       </div>
                     ) : (
-                      ""
+                      <div className="text-nowrap mt-2 gap-2 d-flex justify-content-center align-items-center ">
+                        <button
+                          className="score-card-btn"
+                          onClick={() => window.location.reload()}
+                        >
+                          Retake Test
+                        </button>
+                        <Link
+                          className=" score-card-btn"
+                          style={{ textDecoration: "none" }}
+                          to="https://cuet-alpha.vercel.app/"
+                        >
+                          Home
+                        </Link>
+                      </div>
                     )}
                   </div>
                 </div>

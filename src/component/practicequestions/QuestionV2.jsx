@@ -122,97 +122,78 @@ const QuestionV2 = ({ data }) => {
   };
 
   const handleReviewNext = () => {
-    if (attemptedCount >= totalQuestion - 10) {
-      setShowModal(true);
-      console.log("attempted maximum quesion");
-      return;
+    const questionIndex = currentPage;
+
+    const updatedStatusArray = [...questionStatus];
+
+    if (optionsUI[questionIndex] !== undefined) {
+      updatedStatusArray[questionIndex] = "review_answered";
     } else {
-      const questionIndex = currentPage;
-
-      const updatedStatusArray = [...questionStatus];
-
-      if (optionsUI[questionIndex] !== undefined) {
-        updatedStatusArray[questionIndex] = "review_answered";
-      } else {
-        updatedStatusArray[questionIndex] = "review";
-      }
-      setQuestionStatus(updatedStatusArray);
-      const pageIndex = currentPage + 1;
-      setSelectedOptions([]);
-      setCurrentPage(pageIndex % totalPages);
-      window.scrollTo(0, 0);
-      scrollToQuestion(pageIndex % totalPages);
-      localStorage.setItem("currentPage", pageIndex);
-      dispatch(
-        setTestCompleted({
-          optionsUI: optionsUI,
-          questionStatus: updatedStatusArray,
-        })
-      );
+      updatedStatusArray[questionIndex] = "review";
     }
+    setQuestionStatus(updatedStatusArray);
+    const pageIndex = currentPage + 1;
+    setSelectedOptions([]);
+    setCurrentPage(pageIndex % totalPages);
+    window.scrollTo(0, 0);
+    scrollToQuestion(pageIndex % totalPages);
+    localStorage.setItem("currentPage", pageIndex);
+    dispatch(
+      setTestCompleted({
+        optionsUI: optionsUI,
+        questionStatus: updatedStatusArray,
+      })
+    );
   };
 
   const handleUnMarkNext = () => {
-    if (attemptedCount >= totalQuestion - 10) {
-      setShowModal(true);
-      console.log("attempted maximum quesion");
-      return;
+    const questionIndex = currentPage;
+
+    const updatedStatusArray = [...questionStatus];
+
+    if (optionsUI[questionIndex] !== undefined) {
+      updatedStatusArray[questionIndex] = "answered";
     } else {
-      const questionIndex = currentPage;
-
-      const updatedStatusArray = [...questionStatus];
-
-      if (optionsUI[questionIndex] !== undefined) {
-        updatedStatusArray[questionIndex] = "answered";
-      } else {
-        updatedStatusArray[questionIndex] = "not_answered";
-      }
-      setQuestionStatus(updatedStatusArray);
-      const pageIndex = currentPage + 1;
-      setSelectedOptions([]);
-      setCurrentPage(pageIndex % totalPages);
-      window.scrollTo(0, 0);
-      scrollToQuestion(pageIndex % totalPages);
-      localStorage.setItem("currentPage", pageIndex);
-      dispatch(
-        setTestCompleted({
-          optionsUI: optionsUI,
-          questionStatus: updatedStatusArray,
-        })
-      );
+      updatedStatusArray[questionIndex] = "not_answered";
     }
+    setQuestionStatus(updatedStatusArray);
+    const pageIndex = currentPage + 1;
+    setSelectedOptions([]);
+    setCurrentPage(pageIndex % totalPages);
+    window.scrollTo(0, 0);
+    scrollToQuestion(pageIndex % totalPages);
+    localStorage.setItem("currentPage", pageIndex);
+    dispatch(
+      setTestCompleted({
+        optionsUI: optionsUI,
+        questionStatus: updatedStatusArray,
+      })
+    );
   };
 
   const handleSaveNext = () => {
-    // console.log("attempted count object", attemptedCount);
-    if (attemptedCount >= totalQuestion - 10) {
-      setShowModal(true);
-      console.log("attempted maximum quesion");
-      return;
-    } else {
-      const questionIndex = currentPage;
+    const questionIndex = currentPage;
 
-      const updatedStatusArray = [...questionStatus];
-      if (optionsUI[questionIndex] !== undefined) {
-        updatedStatusArray[questionIndex] = "answered";
-      } else {
-        if (updatedStatusArray[questionIndex] === undefined)
-          updatedStatusArray[questionIndex] = "not_answered";
-      }
-      setQuestionStatus(updatedStatusArray);
-      const pageIndex = currentPage + 1;
-      setSelectedOptions([]);
-      setCurrentPage(pageIndex % totalPages);
-      window.scrollTo(0, 0);
-      scrollToQuestion(pageIndex % totalPages);
-      localStorage.setItem("currentPage", pageIndex);
-      dispatch(
-        setTestCompleted({
-          optionsUI: optionsUI,
-          questionStatus: updatedStatusArray,
-        })
-      );
+    const updatedStatusArray = [...questionStatus];
+    if (optionsUI[questionIndex] !== undefined) {
+      updatedStatusArray[questionIndex] = "answered";
+    } else {
+      if (updatedStatusArray[questionIndex] === undefined)
+        updatedStatusArray[questionIndex] = "not_answered";
     }
+    setQuestionStatus(updatedStatusArray);
+    const pageIndex = currentPage + 1;
+    setSelectedOptions([]);
+    setCurrentPage(pageIndex % totalPages);
+    window.scrollTo(0, 0);
+    scrollToQuestion(pageIndex % totalPages);
+    localStorage.setItem("currentPage", pageIndex);
+    dispatch(
+      setTestCompleted({
+        optionsUI: optionsUI,
+        questionStatus: updatedStatusArray,
+      })
+    );
   };
 
   const handlePageChange = (pageIndex) => {

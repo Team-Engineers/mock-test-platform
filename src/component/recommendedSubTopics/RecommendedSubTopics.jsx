@@ -175,7 +175,13 @@ const RecommendedSubTopics = () => {
         </div>
       )}
       <div className="ct-timer-block">
-        <div className="ct-timer-left">Section</div>
+      {!testSubmitted ? (
+          <div className="ct-timer-left">Section</div>
+        ) : (
+          <h6 className="ms-2 ct-timer-left mb-0">
+            {topic.split("_").join(" ").toUpperCase() + " " + subTopic}
+          </h6>
+        )}
         {!testSubmitted ? (
           <div className="ct-timer-right">
             <span className="mr-1"> Time Left :</span>
@@ -188,7 +194,7 @@ const RecommendedSubTopics = () => {
         ) : (
           <div className="ct-timer-right">
             <span className="mr-1"> Time Taken : </span>
-            <span id="timer">
+            <span id="timer" className="fs-4">
               {timeTaken !== undefined && timeTaken !== null ? (
                 timeTaken !== 0 ? (
                   <span>

@@ -239,7 +239,7 @@
 .question-practice .item-content {
   max-height: 68vh;
   overflow: auto;
-  padding: 0 5px;
+  padding: 0 12px;
 }
 
 .question-practice .question-text-container {

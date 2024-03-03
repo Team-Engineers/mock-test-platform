@@ -123,6 +123,7 @@
   min-height: 79.5vh;
   max-height: 79.5vh;
   overflow-y: scroll;
+  padding-right: 12px;
 }
 
 .answer-screen .review-button-container {
@@ -133,6 +134,8 @@
   overflow-y: scroll;
   min-height: 79.5vh;
   max-height: 79.5vh;
+  padding-left: 12px;
+  padding-right: 0px;
 }
 .information,
 .p-value-info {
