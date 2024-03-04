@@ -425,12 +425,14 @@
 .question-practice-v2 .pallet-list-body {
   overflow-y: auto;
   /* min-height: calc(100vh - 476px); */
-  min-height: calc(var(--vh, 1vh) * 100 - 532px);
+  /* min-height: calc(var(--vh, 1vh) * 100 - 532px); */
   /* max-height: calc(100vh - 476px); */
-  max-height: calc(var(--vh, 1vh) * 100 - 532px);
+  /* max-height: calc(var(--vh, 1vh) * 100 - 532px); */
   /* min-height: 184px; */
   padding: 0 3px;
   /* max-height: 184px; */
+  min-height: 31.2vh;
+  max-height: 31.2vh;
 }
 
 .testknock-left .question-box {
