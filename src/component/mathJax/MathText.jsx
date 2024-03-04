@@ -5,34 +5,47 @@ export const MathText = ({ text, textTag = "p" }) => {
   const TextTag = textTag || "p";
 
   if (typeof text !== "string") {
-    text = text[0];
+    text = text.toString();
   }
 
-  const hasHTMLTags = /<.*?>/.test(text);
+  const parts = text.split(/\n/);
 
-  if (hasHTMLTags) {
-    return (
-      <TextTag
-        className="text-spacing"
-        dangerouslySetInnerHTML={{ __html: text }}
-      />
-    );
-  }
+  const jsxElements = parts.flatMap((part, index) => {
+    const hasMathExpression = /\$.+?\$/.test(part);
 
-  const parts = text.split(/\$(.*?)\$/);
+    const hasHTMLTags = /<.*?>/.test(part);
 
-  const jsxElements = parts.map((part, index) => {
-    if (index % 2 === 0) {
-      return <span key={index}>{part}</span>;
+    if (hasMathExpression) {
+      const subparts = part.split(/\$(.*?)\$/);
+
+      return subparts.map((subpart, subIndex) => {
+        if (subIndex % 2 !== 0) {
+          return (
+            <MathComponent
+              key={`${index}_${subIndex}`}
+              tex={subpart}
+              display={false}
+              className="math-expression"
+            />
+          );
+        } else {
+          return <span key={`${index}_${subIndex}`}>{subpart}</span>;
+        }
+      }).concat(<br key={`br_${index}`} className="minimal-space" />);
+    } else if (hasHTMLTags) {
+      return [
+        <TextTag
+          key={`html_${index}`}
+          className="text-spacing"
+          dangerouslySetInnerHTML={{ __html: part }}
+        />,
+        <br key={`br_${index}`} className="minimal-space" />,
+      ];
     } else {
-      return (
-        <MathComponent
-          key={index}
-          tex={part}
-          display={false}
-          className="math-expression"
-        />
-      );
+      return [
+        <span key={index}>{part}</span>,
+        <br key={`br_${index}`} className="minimal-space" />,
+      ];
     }
   });
 
