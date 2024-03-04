@@ -3,9 +3,10 @@ import "./question.css";
 import { MathText } from "../mathJax/MathText";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CustomModal from "../popupmodal/CustomModal";
 import { setTestCompleted } from "../../utils/userSlice";
+import { confirmAlert } from "react-confirm-alert";
 
 const QuestionV2 = ({ data }) => {
   // console.log("ddaaata", data);
@@ -21,6 +22,7 @@ const QuestionV2 = ({ data }) => {
   const [showPallet, setShowPallet] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [attemptedCount, setAttemptedCount] = useState(0);
+  const [timerExpired, setTimerExpired] = useState(false);
   // const [allQuestions, setAllQuestions] = useState([]);
   const [selectedOptions, setSelectedOptions] = useState(
     Array(data?.length).fill(undefined)
@@ -31,6 +33,11 @@ const QuestionV2 = ({ data }) => {
   const [questionStatus, setQuestionStatus] = useState(
     Array(data?.length).fill("not_visited")
   );
+  const { topic, subTopic } = useParams();
+  let time = "60";
+  if (topic.toLowerCase() === "general_english_mock_test") {
+    time = "45";
+  }
 
   const [counts, setCounts] = useState({
     not_visited: 0,
@@ -41,7 +48,7 @@ const QuestionV2 = ({ data }) => {
   });
 
   const [currentPage, setCurrentPage] = useState(0);
-  const { topic, subTopic } = useParams();
+  
   useEffect(() => {
     const storedPage = localStorage.getItem("currentPage");
     const parsedPage = parseInt(storedPage, 10);
@@ -272,9 +279,7 @@ const QuestionV2 = ({ data }) => {
     }
   }, [currentPage, countStatusOccurrences, data, questionStatus]);
 
-  // const testSubmitted = useSelector(
-  //   (state) => state.user.mock_test.testSubmitted
-  // );
+  
 
   // console.log("optionui of question", optionsUI);
   // console.log("questionstauts of question", questionStatus);
@@ -282,52 +287,75 @@ const QuestionV2 = ({ data }) => {
   // if (topic.toLowerCase() === "general_english_mock_test") {
   //   time = "45";
   // }
-
-  // const timeLeft = useSelector((state) => state.user.mock_test.timeTaken);
-  // const hours = Math.floor(timeLeft / 3600);
-  // const minutes = Math.floor((timeLeft % 3600) / 60);
-  // const seconds = timeLeft % 60;
-  // // console.log("timesleft", timeLeft);
+  const [timeLeft, setTimeLeft] = useState(time * 60);
+  const hours = Math.floor(timeLeft / 3600);
+  const minutes = Math.floor((timeLeft % 3600) / 60);
+  const seconds = timeLeft % 60;
+  // console.log("timesleft", timeLeft);
   // const testSubmitted = useSelector(
   //   (state) => state.user.mock_test.testSubmitted
   // );
 
-  // const updateTimeTaken = () => {
-  //   let timeTaken = time * 60;
-  //   if (timeLeft !== 0) timeTaken = timeLeft;
-  //   dispatch(setTestCompleted({ testSubmitted: true }));
-  //   localStorage.setItem("optionsUI", JSON.stringify(optionsUI));
-  //   localStorage.setItem("questionStatus", JSON.stringify(questionStatus));
-  //   localStorage.setItem("timeTaken", timeTaken);
-  // };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (timeLeft > 0) {
+        setTimeLeft((prevTimeLeft) => prevTimeLeft - 1);
+      }
+    }, 1000);
 
-  // const onSubmit = () => {
-  //   timeLeft
-  //     ? confirmAlert({
-  //         title: "Confirm",
-  //         message: `You have ${hours
-  //           .toString()
-  //           .padStart(2, "0")} : ${minutes
-  //           .toString()
-  //           .padStart(2, "0")} : ${seconds
-  //           .toString()
-  //           .padStart(
-  //             2,
-  //             "0"
-  //           )} left. Clicking SUBMIT will end test, and you will not be allowed to attempt any more questions. Are you sure you want to End the test?`,
-  //         buttons: [
-  //           {
-  //             label: "Submit",
-  //             onClick: updateTimeTaken, // Remove the parentheses here
-  //           },
-  //           {
-  //             label: "Cancel",
-  //             // onClick: () => alert("Click No"),
-  //           },
-  //         ],
-  //       })
-  //     : alert("mock test completed");
-  // };
+    return () => clearInterval(interval);
+  }, [timeLeft]);
+
+  
+
+  const updateTimeTaken = useCallback(() => {
+    console.log("i am coming in updateTimetaken")
+    let timeTaken = time * 60;
+    if (timeLeft !== 0) timeTaken = timeLeft;
+    dispatch(setTestCompleted({ testSubmitted: true }));
+    localStorage.setItem("optionsUI", JSON.stringify(optionsUI));
+    localStorage.setItem("questionStatus", JSON.stringify(questionStatus));
+    localStorage.setItem("timeTaken", timeTaken);
+  }, [dispatch, timeLeft, time, optionsUI, questionStatus]);
+
+
+  useEffect(() => {
+    // Check if time left is 0
+    if (timeLeft === 0) {
+      // setTimerExpired(true);
+      console.log("by default submitting test to true");
+      updateTimeTaken();
+    }
+  }, [timeLeft, updateTimeTaken, time]);
+
+  const submit = () => {
+    setShowModal(false)
+    !timerExpired
+      ? confirmAlert({
+          title: "Confirm",
+          message: `You have ${hours
+            .toString()
+            .padStart(2, "0")} : ${minutes
+            .toString()
+            .padStart(2, "0")} : ${seconds
+            .toString()
+            .padStart(
+              2,
+              "0"
+            )} left. Clicking SUBMIT will end test, and you will not be allowed to attempt any more questions. Are you sure you want to End the test?`,
+          buttons: [
+            {
+              label: "Submit",
+              onClick: () => updateTimeTaken(),
+            },
+            {
+              label: "Cancel",
+              // onClick: () => alert("Click No")
+            },
+          ],
+        })
+      : alert("mock test completed");
+  };
 
   return (
     <section className="question-practice-v2">
@@ -347,7 +375,7 @@ const QuestionV2 = ({ data }) => {
             {
               label: "Submit Test",
               className: "btn-success",
-              onClick: toggleAlert,
+              onClick: submit,
             },
             {
               label: "Resume Test",
@@ -628,14 +656,14 @@ const QuestionV2 = ({ data }) => {
                 </button>
               </div>
             </div>
-            {/* <div
+            <div
               className="d-flex flex-column justify-content-center align-items-center"
               style={{ width: "18%" }}
             >
-              <button className="btn-success btn" onClick={onSubmit}>
+              <button className="btn-success btn" onClick={() => submit()}>
                 Submit Test
               </button>
-            </div> */}
+            </div>
           </div>
           <div className={`pb-1 offline ${isOnline ? "d-none" : "d-block"}`}>
             <span>You are offline right now. Check your connection.</span>
@@ -838,14 +866,14 @@ const QuestionV2 = ({ data }) => {
                 </button>
               </div>
             </div>
-            {/* <div
+            <div
               className="d-flex flex-column justify-content-center align-items-center"
               style={{ width: "18%" }}
             >
-              <button className="btn-success btn" onClick={onSubmit}>
+              <button className="btn-success btn" onClick={() => submit()}>
                 Submit Test
               </button>
-            </div> */}
+            </div>
           </div>
 
           <div className={`pb-1 offline ${isOnline ? "d-none" : "d-block"}`}>

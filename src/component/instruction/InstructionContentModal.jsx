@@ -2,8 +2,18 @@ import React from "react";
 import Modal from "react-modal";
 import "./Instruction.css";
 import questionSymbol from "../../assets/images/question_symbol.jpeg";
+import { useParams } from "react-router-dom";
 
 const InstructionModal = ({ isOpen, toggleInstruction }) => {
+  const { topic } = useParams();
+  let totalQuestion = "60";
+  let time = "60";
+  let marks = "300";
+  if (topic.toLowerCase() === "general_english_mock_test") {
+    totalQuestion = "50";
+    time = "45";
+    marks = "200";
+  }
   return (
     <Modal
       isOpen={isOpen}
@@ -55,6 +65,127 @@ const InstructionModal = ({ isOpen, toggleInstruction }) => {
         </button>
       </div>
       <div className="ct-ins-wrapper" style={{ maxHeight: "80vh" }}>
+        <div className="ct-ins-wrapper">
+          <div className=" d-flex justify-content-between align-items-center">
+            <strong>Duration: {time} Mins</strong>
+            <strong>Maximum Marks : {marks}</strong>
+          </div>
+          <div className="ct-ins-page">
+            <p>
+              <p></p>
+              <p>
+                <br />
+                <strong>Read the following instructions carefully.</strong>
+                <br />
+                &nbsp;
+              </p>
+              <p>
+                1. The Test contains {totalQuestion} questions out of which{" "}
+                {totalQuestion - 10} questions are to be attempted.
+              </p>
+              <p>
+                2. The candidate can not attempt more than {totalQuestion - 10}{" "}
+                Questions, however they can change the already attempted
+                Question among the {totalQuestion} Questions.
+              </p>
+
+              <p>&nbsp;</p>
+              <p>
+                3.Each question has 4 options out of which only one is
+                correct.Each question has 4 options out of which only one is
+                correct.
+              </p>
+              <p>4. You have to finish the test in {time} minutes.</p>
+              <p>
+                5.You will be awarded 5 marks for each correct answer and there
+                will be 1 negative marking
+              </p>
+              <p>
+                6.There is no penalty for the questions that you have not
+                attempted.
+              </p>
+              <p>
+                7. Once you start the test, you will not be allowed to reattempt
+                it. Make sure that you complete the test before you submit the
+                test and/or close the browser.
+                <br />
+                <br />
+              </p>
+            </p>
+            <u>
+              <b>About Question Paper:</b>
+            </u>
+            <br />
+            <br />1 The Question Paper consists of multiple choice objective
+            type questions with 4 options out of which only 1 is correct.
+            <br />
+            <br />2 There is a TIMER (Clock) available on the TOP RIGHT HAND
+            CORNER of the Screen; you are requested to keep an eye on it for
+            knowing the time remaining for the completion of the exam.
+            <br />
+            <br />3 The questions can be answered in any order within the given
+            time frame. The candidate should click with the mouse on the correct
+            choice, from 4 options given. In case, the candidate does not wish
+            to attempt any question, it can be left blank.
+            <br />
+            <br />4 The candidate can change the option of a question later by
+            selecting a new option in case he/she wishes to. In case candidate
+            does not want to answer the question, he/she can deselect the answer
+            by clicking <button className="test-button">Clear</button> provided
+            against the question.
+            <br />
+            <br />
+            5 The question palette at the right of the screen shows the
+            following status of each of the questions numbered
+            <br />
+            <br />
+            <ul className="que-ans-states">
+              <li>
+                <span className="label skipped"></span> You have not answered
+                the question.
+              </li>
+              <li>
+                <span className="label attempted"></span> You have answered the
+                question.
+              </li>
+              <li>
+                <span className="label bookmarked"></span> You have NOT answered
+                the question, but have marked the question for review.
+              </li>
+              <li>
+                <span className="label attempted bookmarked"></span> You have
+                answered the question, but marked it for review.
+              </li>
+            </ul>
+            <br />
+            <b>
+              PS: Questions which are attempted and marked for review would be
+              treated as attempted questions only as long as the candidate does
+              not <button className="test-button ">Clear</button> the option
+              selected.
+            </b>
+            <br />
+            <br />6 On the completion of the test duration, even if the
+            candidate does not click on an answer or does not click on the{" "}
+            <button type="button" className="btn btn-success">
+              Submit Test
+            </button>{" "}
+            button, a NIL result will be saved automatically by the computer.
+            <br />
+            <br />7 The candidate will only be able to submit the test on
+            completion of the stipulated {time} Minutes. In case a candidate not
+            completed his/her test at the completion of stipulated {time}{" "}
+            Minutes, the system shall automatically submit the test.
+            <br />
+            <br />
+            <div align="center">
+              <b>"ALL THE BEST"</b>
+              <br />
+            </div>
+            <br />
+            <br />
+          </div>
+        </div>
         <div className="ct-ins-page">
           <p>
             <strong>General Instructions for Candidate:</strong>

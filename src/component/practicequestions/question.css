@@ -96,6 +96,7 @@
   gap: 0.3rem;
   margin-top: 0.7rem;
   cursor: pointer;
+  position : relative;
 }
 
 .question-practice .option-box:hover{
@@ -433,6 +434,7 @@
   /* max-height: 184px; */
   min-height: 31.2vh;
   max-height: 31.2vh;
+  
 }
 
 .testknock-left .question-box {
@@ -454,6 +456,7 @@
 
 .question-practice-v2 .optionitem ,.question-practice-v2 label{
   cursor: pointer;
+
 }
 
 .question-practice-v2 .pallet-item span {

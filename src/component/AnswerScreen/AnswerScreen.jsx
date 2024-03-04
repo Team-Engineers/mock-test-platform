@@ -112,7 +112,6 @@ const AnswerScreen = ({ data }) => {
     setIsAccordionCollapsed(false);
     localStorage.setItem("currentPage", currentPage);
     setShowCorrectAnswer(false);
-
   };
   let attemptedQuestions = 0;
   let score = 0;
@@ -275,17 +274,30 @@ const AnswerScreen = ({ data }) => {
                           (option, optionIndex) => (
                             <div key={optionIndex} className="option-box">
                               <div className="optionitem">
-                                <input
-                                  type="radio"
-                                  name={`question-${currentPage}`}
-                                  id={optionIndex}
-                                  checked={
-                                    showCorrectAnswer
-                                      ? answers[currentPage] === optionIndex
-                                      : optionsUI?.[currentPage] === optionIndex
-                                  }
-                                />
+                                {optionsUI &&
+                                  optionsUI[currentPage] !== undefined && (
+                                    <input
+                                      type="radio"
+                                      name={`question-${currentPage}`}
+                                      id={optionIndex}
+                                      checked={
+                                        !showCorrectAnswer &&
+                                        optionsUI[currentPage] === optionIndex
+                                      }
+                                    />
+                                  )}
                               </div>
+                              {showCorrectAnswer && (
+                                <label
+                                  htmlFor={optionIndex}
+                                  className="correct-answer-label"
+                                >
+                                  {showCorrectAnswer &&
+                                  answers[currentPage] === optionIndex
+                                    ? "✔"
+                                    : ""}
+                                </label>
+                              )}
                               <label
                                 htmlFor={optionIndex}
                                 className="optionLabel"
@@ -367,14 +379,21 @@ const AnswerScreen = ({ data }) => {
                                         name={`question-${currentPage}`}
                                         id={optionIndex}
                                         checked={
-                                          showCorrectAnswer
-                                            ? answers[currentPage] ===
-                                              optionIndex
-                                            : optionsUI?.[currentPage] ===
-                                              optionIndex
+                                          !showCorrectAnswer &&
+                                          optionsUI[currentPage] === optionIndex
                                         }
                                       />
                                     </div>
+
+                                    <label
+                                      htmlFor={optionIndex}
+                                      className="correct-answer-label"
+                                    >
+                                      {showCorrectAnswer &&
+                                      answers[currentPage] === optionIndex
+                                        ? "✔"
+                                        : ""}
+                                    </label>
                                     <label
                                       htmlFor={optionIndex}
                                       className="optionLabel"
@@ -529,18 +548,22 @@ const AnswerScreen = ({ data }) => {
             </div>
 
             <div className="next-prev-btn-container">
-              <button
-                onClick={() => handleButtonPageChange(currentPage, false)}
-                className="next-prev-btn"
-              >
-                Previous
-              </button>
-              <button
-                onClick={() => handleButtonPageChange(currentPage, true)}
-                className="next-prev-btn"
-              >
-                Next
-              </button>
+              {currentPage !== 0 && (
+                <button
+                  onClick={() => handleButtonPageChange(currentPage, false)}
+                  className="next-prev-btn"
+                >
+                  Previous
+                </button>
+              )}
+              {currentPage !== totalPages - 1 && (
+                <button
+                  onClick={() => handleButtonPageChange(currentPage, true)}
+                  className="next-prev-btn"
+                >
+                  Next
+                </button>
+              )}
             </div>
           </div>
         </div>
