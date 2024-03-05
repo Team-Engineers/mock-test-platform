@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import CustomModal from "../popupmodal/CustomModal";
 import { setTestCompleted } from "../../utils/userSlice";
 import { confirmAlert } from "react-confirm-alert";
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 const QuestionV2 = ({ data }) => {
   // console.log("ddaaata", data);
