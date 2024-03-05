@@ -259,10 +259,6 @@
   line-height: 1.5rem;
 }
 
-.question-practice .question-container .paragraph {
-  /* padding: 2rem; */
-}
-
 .question-practice .question-box .para-type {
   /* padding: 2rem 2rem 0 2rem; */
   display: flex;
@@ -350,16 +346,14 @@
 
 .question-practice-v2 .Legend {
   background: #fff;
-  max-height: 27vh;
-  min-height: 27vh;
+  /* max-height: 27vh;
+  min-height: 27vh; */
 }
 
-.question-practice-v2 .pallet-section-title{
-
+/* .question-practice-v2 .pallet-section-title{
   max-height: 10vh;
   min-height: 10vh;
-
-}
+} */
 
 .question-practice-v2 .legend-block {
   display: flex;
@@ -441,8 +435,8 @@
   /* min-height: 184px; */
   padding: 0 3px;
   /* max-height: 184px; */
-  min-height: 29vh;
-  max-height: 29vh;
+  min-height: 28vh;
+  max-height: 28vh;
   
 }
 

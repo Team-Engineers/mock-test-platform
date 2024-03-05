@@ -10,23 +10,18 @@ h6 {
   margin-bottom: 0px;
 }
 
-.level-0{
+/* .level-0{
   max-height: 4vh;
   min-height: 4vh;
-
 }
-
 .level-1{
   max-height: 15vh;
   min-height: 15vh;
 }
-
-
 .level-2{
   max-height: 79vh;
   min-height: 79vh;
 }
-
 .level-3-navigation-button{
   min-height: 7vh;
   max-height: 7vh;
@@ -34,6 +29,5 @@ h6 {
 .level-3-question , .level-3-pallet{
   min-height: 70vh;
   max-height: 70vh;
-  /* overflow-y: scroll ; */
 }
-
+ */
