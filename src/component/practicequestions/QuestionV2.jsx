@@ -3,7 +3,7 @@ import "./question.css";
 import { MathText } from "../mathJax/MathText";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import CustomModal from "../popupmodal/CustomModal";
 import { setTestCompleted } from "../../utils/userSlice";
 import { confirmAlert } from "react-confirm-alert";
@@ -322,7 +322,7 @@ const QuestionV2 = ({ data }) => {
   useEffect(() => {
     // Check if time left is 0
     if (timeLeft === 0) {
-      // setTimerExpired(true);
+      setTimerExpired(true);
       console.log("by default submitting test to true");
       updateTimeTaken();
     }

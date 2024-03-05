@@ -2,8 +2,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Calculator from "../practicequestions/Calculator";
-import { confirmAlert } from "react-confirm-alert";
-import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { useDispatch, useSelector } from "react-redux";
 import { setTestCompleted } from "../../utils/userSlice";
 const TopicCard = styled.li`
@@ -75,7 +73,7 @@ const RecommendedSubTopics = () => {
   const [showCalculator, setShowCalculator] = useState(false);
 
   const [timeLeft, setTimeLeft] = useState(time * 60);
-  const [timerExpired, setTimerExpired] = useState(false);
+  // const [timerExpired, setTimerExpired] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {

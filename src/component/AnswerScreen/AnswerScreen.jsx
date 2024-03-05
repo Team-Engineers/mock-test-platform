@@ -484,6 +484,15 @@ const AnswerScreen = ({ data }) => {
                                             />
                                           )
                                         )}
+                                        {explanation?.image ? (
+                                          <img
+                                            className="question-image"
+                                            src={explanation?.image}
+                                            alt={`Img ${explanationIndex + 1}`}
+                                          />
+                                        ) : (
+                                          ""
+                                        )}
                                       </div>
                                     )
                                   )}
