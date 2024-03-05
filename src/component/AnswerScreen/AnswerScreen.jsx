@@ -9,6 +9,7 @@ const AnswerScreen = ({ data }) => {
 
   let optionsUI;
   let questionStatus;
+  const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
   const storedOptionsUI = localStorage.getItem("optionsUI");
   // console.log("storedoptionui", storedOptionsUI);
@@ -474,6 +475,25 @@ const AnswerScreen = ({ data }) => {
                                         className="explanation-box"
                                         style={{ margin: "0 20px" }}
                                       >
+                                        <div className=" d-flex flex-row gap-2 justify-content-start align-items-center">
+                                          <h6 className="mb-0 text-primary fw-bold">
+                                            Answer:
+                                          </h6>
+                                          <h6 className="mb-0  fw-bold text-secondary">
+                                            Option{" "}
+                                            {data[currentPage]?.subQuestions[0]
+                                              ?.correctOptionIndex !== undefined
+                                              ? alphabets[
+                                                  data[currentPage]
+                                                    ?.subQuestions[0]
+                                                    ?.correctOptionIndex
+                                                ]
+                                              : ""}
+                                          </h6>
+                                        </div>
+                                        <h6 className="text-primary fw-bold">
+                                          Solution:
+                                        </h6>
                                         {explanation.text.map(
                                           (text, textIndex) => (
                                             <MathText
