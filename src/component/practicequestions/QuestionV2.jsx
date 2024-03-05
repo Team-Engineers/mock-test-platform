@@ -670,7 +670,7 @@ const QuestionV2 = ({ data }) => {
           <div className="w-100 d-flex">
             <div className={`testknock-left ${showPallet ? "" : "w-100"}`}>
               <div className="border-wrapper">
-                <div className="question-box level-3-question overflow-y-scroll ms-2 pe-2">
+                <div className="question-box level-3-question overflow-y-scroll ms-2">
                   <div className="question-number-container">
                     <span
                       className={`question-number id-${data[currentPage]?._id}`}
@@ -679,7 +679,7 @@ const QuestionV2 = ({ data }) => {
                       {`${1 + currentPage} `}
                     </span>
                   </div>
-                  <div className="question-option">
+                  <div className="question-option pe-3">
                     <div className="question">
                       <div className="question-text-container">
                         {data[
