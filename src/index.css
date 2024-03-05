@@ -31,3 +31,8 @@ h6 {
   max-height: 70vh;
 }
  */
+
+ .level-3-question{
+  min-height: 67vh !important;
+  max-height: 67vh !important;
+ }
