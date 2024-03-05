@@ -65,8 +65,8 @@
 }
 
 .question-practice .modal-button {
-  padding: 3px;
-  margin-top: 2px;
+  /* padding: 3px;
+  margin-top: 2px; */
   border-radius: 5px;
   border: 1px solid #bababa;
 }
@@ -350,6 +350,15 @@
 
 .question-practice-v2 .Legend {
   background: #fff;
+  max-height: 29vh;
+  min-height: 29vh;
+}
+
+.question-practice-v2 .pallet-section-title{
+
+  max-height: 10vh;
+  min-height: 10vh;
+
 }
 
 .question-practice-v2 .legend-block {
@@ -432,8 +441,8 @@
   /* min-height: 184px; */
   padding: 0 3px;
   /* max-height: 184px; */
-  min-height: 31.2vh;
-  max-height: 31.2vh;
+  min-height: 31vh;
+  max-height: 31vh;
   
 }
 

@@ -88,8 +88,8 @@ const PracticeQuestions = () => {
       {
         <section className="question-practice">
           {data ? (
-            <section className="testknock-mock-test w-100">
-              <div className="d-flex justify-content-center align-items-center">
+            <section className="testknock-mock-test w-100 ">
+              <div className="d-flex justify-content-center level-0 align-items-center">
                 <div className="testknock-left">
                   <div className="text-center test-title">
                     <div className="d-flex justify-content-center align-items-center gap-2">
@@ -139,7 +139,7 @@ const PracticeQuestions = () => {
                   </div>
                 </div>
               </div>
-              <div className="d-flex">
+              <div className="d-flex level-1">
                 <div className="testknock-left pe-0">
                   <RecommendedSubTopics />
                 </div>
@@ -160,7 +160,7 @@ const PracticeQuestions = () => {
                 )}
               </div>
 
-              <div className="w-100">
+              <div className="w-100 level-2">
                 {testSubmitted ? (
                   <AnswerScreen data={data} />
                 ) : (

@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import CustomModal from "../popupmodal/CustomModal";
 import { setTestCompleted } from "../../utils/userSlice";
 import { confirmAlert } from "react-confirm-alert";
-import 'react-confirm-alert/src/react-confirm-alert.css'; 
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 const QuestionV2 = ({ data }) => {
   // console.log("ddaaata", data);
@@ -49,7 +49,7 @@ const QuestionV2 = ({ data }) => {
   });
 
   const [currentPage, setCurrentPage] = useState(0);
-  
+
   useEffect(() => {
     const storedPage = localStorage.getItem("currentPage");
     const parsedPage = parseInt(storedPage, 10);
@@ -280,8 +280,6 @@ const QuestionV2 = ({ data }) => {
     }
   }, [currentPage, countStatusOccurrences, data, questionStatus]);
 
-  
-
   // console.log("optionui of question", optionsUI);
   // console.log("questionstauts of question", questionStatus);
   // let time = "60";
@@ -307,10 +305,8 @@ const QuestionV2 = ({ data }) => {
     return () => clearInterval(interval);
   }, [timeLeft]);
 
-  
-
   const updateTimeTaken = useCallback(() => {
-    console.log("i am coming in updateTimetaken")
+    console.log("i am coming in updateTimetaken");
     let timeTaken = time * 60;
     if (timeLeft !== 0) timeTaken = timeLeft;
     dispatch(setTestCompleted({ testSubmitted: true }));
@@ -318,7 +314,6 @@ const QuestionV2 = ({ data }) => {
     localStorage.setItem("questionStatus", JSON.stringify(questionStatus));
     localStorage.setItem("timeTaken", timeTaken);
   }, [dispatch, timeLeft, time, optionsUI, questionStatus]);
-
 
   useEffect(() => {
     // Check if time left is 0
@@ -330,7 +325,7 @@ const QuestionV2 = ({ data }) => {
   }, [timeLeft, updateTimeTaken, time]);
 
   const submit = () => {
-    setShowModal(false)
+    setShowModal(false);
     !timerExpired
       ? confirmAlert({
           title: "Confirm",
@@ -675,7 +670,7 @@ const QuestionV2 = ({ data }) => {
           <div className="w-100 d-flex">
             <div className={`testknock-left ${showPallet ? "" : "w-100"}`}>
               <div className="border-wrapper">
-                <div className="question-box overflow-y-scroll ms-2 pe-2">
+                <div className="question-box level-3-question overflow-y-scroll ms-2 pe-2">
                   <div className="question-number-container">
                     <span
                       className={`question-number id-${data[currentPage]?._id}`}
@@ -759,10 +754,9 @@ const QuestionV2 = ({ data }) => {
               </div>
             </div>
             <div
-              className="testknock-right position-relative "
+              className="testknock-right level-3-pallet position-relative "
               style={{
                 width: `${showPallet ? "" : "0%"} `,
-                maxHeight: "fit-content",
               }}
             >
               <div className="LeftBlock" style={{ maxHeight: "fit-content" }}>
@@ -824,7 +818,7 @@ const QuestionV2 = ({ data }) => {
               </div>
             </div>
           </div>
-          <div className="d-flex justify-content-between w-100 align-items-center">
+          <div className=" level-3-navigation-button d-flex justify-content-between w-100 align-items-center">
             <div
               className="button-container "
               style={{ display: "inline-flex", width: "82%" }}
