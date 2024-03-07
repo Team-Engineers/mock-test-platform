@@ -5,12 +5,11 @@ import "./AnswerScreen.css";
 import ScoreCardModal from "./ScoreCardModal";
 
 const AnswerScreen = ({ data }) => {
-  // const [showModal, setShowModal] = useState(true);
-
   let dataLength = data?.length || 0;
 
   let optionsUI;
   let questionStatus;
+  const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
   const storedOptionsUI = localStorage.getItem("optionsUI");
   // console.log("storedoptionui", storedOptionsUI);
@@ -276,17 +275,30 @@ const AnswerScreen = ({ data }) => {
                           (option, optionIndex) => (
                             <div key={optionIndex} className="option-box">
                               <div className="optionitem">
-                                <input
-                                  type="radio"
-                                  name={`question-${currentPage}`}
-                                  id={optionIndex}
-                                  checked={
-                                    showCorrectAnswer
-                                      ? answers[currentPage] === optionIndex
-                                      : optionsUI?.[currentPage] === optionIndex
-                                  }
-                                />
+                                {optionsUI &&
+                                  optionsUI[currentPage] !== undefined && (
+                                    <input
+                                      type="radio"
+                                      name={`question-${currentPage}`}
+                                      id={optionIndex}
+                                      checked={
+                                        !showCorrectAnswer &&
+                                        optionsUI[currentPage] === optionIndex
+                                      }
+                                    />
+                                  )}
                               </div>
+                              {showCorrectAnswer && (
+                                <label
+                                  htmlFor={optionIndex}
+                                  className="correct-answer-label"
+                                >
+                                  {showCorrectAnswer &&
+                                  answers[currentPage] === optionIndex
+                                    ? "✔"
+                                    : ""}
+                                </label>
+                              )}
                               <label
                                 htmlFor={optionIndex}
                                 className="optionLabel"
@@ -368,14 +380,21 @@ const AnswerScreen = ({ data }) => {
                                         name={`question-${currentPage}`}
                                         id={optionIndex}
                                         checked={
-                                          showCorrectAnswer
-                                            ? answers[currentPage] ===
-                                              optionIndex
-                                            : optionsUI?.[currentPage] ===
-                                              optionIndex
+                                          !showCorrectAnswer &&
+                                          optionsUI[currentPage] === optionIndex
                                         }
                                       />
                                     </div>
+
+                                    <label
+                                      htmlFor={optionIndex}
+                                      className="correct-answer-label"
+                                    >
+                                      {showCorrectAnswer &&
+                                      answers[currentPage] === optionIndex
+                                        ? "✔"
+                                        : ""}
+                                    </label>
                                     <label
                                       htmlFor={optionIndex}
                                       className="optionLabel"
@@ -456,6 +475,25 @@ const AnswerScreen = ({ data }) => {
                                         className="explanation-box"
                                         style={{ margin: "0 20px" }}
                                       >
+                                        <div className=" d-flex flex-row gap-2 justify-content-start align-items-center">
+                                          <h6 className="mb-0 text-primary fw-bold">
+                                            Answer:
+                                          </h6>
+                                          <h6 className="mb-0  fw-bold text-secondary">
+                                            Option{" "}
+                                            {data[currentPage]?.subQuestions[0]
+                                              ?.correctOptionIndex !== undefined
+                                              ? alphabets[
+                                                  data[currentPage]
+                                                    ?.subQuestions[0]
+                                                    ?.correctOptionIndex
+                                                ]
+                                              : ""}
+                                          </h6>
+                                        </div>
+                                        <h6 className="text-primary fw-bold">
+                                          Solution:
+                                        </h6>
                                         {explanation.text.map(
                                           (text, textIndex) => (
                                             <MathText
@@ -465,6 +503,15 @@ const AnswerScreen = ({ data }) => {
                                               textTag="h6"
                                             />
                                           )
+                                        )}
+                                        {explanation?.image ? (
+                                          <img
+                                            className="question-image"
+                                            src={explanation?.image}
+                                            alt={`Img ${explanationIndex + 1}`}
+                                          />
+                                        ) : (
+                                          ""
                                         )}
                                       </div>
                                     )
@@ -530,18 +577,22 @@ const AnswerScreen = ({ data }) => {
             </div>
 
             <div className="next-prev-btn-container">
-              <button
-                onClick={() => handleButtonPageChange(currentPage, false)}
-                className="next-prev-btn"
-              >
-                Previous
-              </button>
-              <button
-                onClick={() => handleButtonPageChange(currentPage, true)}
-                className="next-prev-btn"
-              >
-                Next
-              </button>
+              {currentPage !== 0 && (
+                <button
+                  onClick={() => handleButtonPageChange(currentPage, false)}
+                  className="next-prev-btn"
+                >
+                  Previous
+                </button>
+              )}
+              {currentPage !== totalPages - 1 && (
+                <button
+                  onClick={() => handleButtonPageChange(currentPage, true)}
+                  className="next-prev-btn"
+                >
+                  Next
+                </button>
+              )}
             </div>
           </div>
         </div>
