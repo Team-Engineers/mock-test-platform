@@ -60,7 +60,7 @@ const Box2 = styled.h6`
 `;
 
 const RecommendedSubTopics = () => {
-  const { topic , subTopic } = useParams();
+  const { topic, subTopic } = useParams();
   let time = "60";
   if (topic.toLowerCase() === "general_english_mock_test") {
     time = "45";
@@ -107,6 +107,7 @@ const RecommendedSubTopics = () => {
     }
   }, [timeLeft, updateTimeTaken, time]);
 
+
   const hours = Math.floor(timeLeft / 3600);
   const minutes = Math.floor((timeLeft % 3600) / 60);
   const seconds = timeLeft % 60;
@@ -144,7 +145,7 @@ const RecommendedSubTopics = () => {
         </div>
       )}
       <div className="ct-timer-block">
-      {!testSubmitted ? (
+        {!testSubmitted ? (
           <div className="ct-timer-left"></div>
         ) : (
           <h6 className="ms-2 ct-timer-left mb-0">
@@ -164,8 +165,8 @@ const RecommendedSubTopics = () => {
           <div className="ct-timer-right">
             <span className="mr-1"> Time Taken : </span>
             <span id="timer" className="fs-4">
-              {timeTaken !== undefined && timeTaken !== null ? (
-                timeTaken !== 0 ? (
+              {timeLeft !== undefined && timeLeft !== null ? (
+                timeLeft !== 0 ? (
                   <span>
                     {Math.floor((time * 60 - timeTaken) / 3600)
                       .toString()
@@ -181,21 +182,23 @@ const RecommendedSubTopics = () => {
                   </span>
                 ) : (
                   <span>
-                    {Math.floor(time / 3600)
+                    {Math.floor((time * 60) / 3600)
                       .toString()
                       .padStart(2, "0")}
                     :
-                    {Math.floor((time % 3600) / 60)
+                    {Math.floor(((time * 60) % 3600) / 60)
                       .toString()
                       .padStart(2, "0")}
                     :
-                    {Math.floor(time % 60)
+                    {Math.floor((time * 60) % 60)
                       .toString()
                       .padStart(2, "0")}
                   </span>
                 )
               ) : (
-                <span>00:00:00</span>
+                <span>
+                  00:00:00
+                </span>
               )}
             </span>
           </div>

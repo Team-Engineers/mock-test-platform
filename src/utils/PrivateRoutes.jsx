@@ -11,6 +11,13 @@ const PrivateRoutes = () => {
   const { topic, subTopic, id } = useParams();
 
   useEffect(() => {
+  localStorage.removeItem("timeTaken");
+  localStorage.removeItem("optionsUI");
+  localStorage.removeItem("questionStatus");
+  localStorage.removeItem("timeTaken");
+  localStorage.removeItem("user");
+
+
     const fetchUser = async () => {
       if (
         id === "free" &&
