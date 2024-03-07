@@ -1,8 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Modal } from "react-bootstrap"; 
+import { Modal } from "react-bootstrap";
 const ScoreCardModal = ({ isOpen, onClose, attempted, correct, score }) => {
-
   return (
     <Modal show={isOpen} onHide={onClose}>
       <Modal.Header closeButton>
@@ -27,6 +26,13 @@ const ScoreCardModal = ({ isOpen, onClose, attempted, correct, score }) => {
         </table>
       </Modal.Body>
       <Modal.Footer>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={() => window.location.reload()}
+        >
+          Retake Test
+        </button>
         <button type="button" className="btn btn-secondary" onClick={onClose}>
           Close
         </button>

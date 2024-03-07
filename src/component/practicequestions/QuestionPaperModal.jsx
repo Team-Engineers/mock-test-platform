@@ -54,7 +54,7 @@ const QuestionPaperModal = ({ isOpen, toggleQuestionPaper, data }) => {
               borderRadius: "50%",
             }}
           >
-            ❌
+            ✖
           </span>{" "}
           {/* Cross icon for close */}
         </button>
@@ -74,23 +74,23 @@ const QuestionPaperModal = ({ isOpen, toggleQuestionPaper, data }) => {
                   key={`${itemIndex}-${subQuestionIndex}`}
                   className="sub-question"
                 >
-                  <div>
-                    <br />
-                    <strong>Q. {questionNumber}:</strong>
+                  <div class="d-flex">
+                    <div className="instruction-question-number-container">
+                      <br />
+                      <strong>{`Q.${questionNumber}: `}</strong>
+                    </div>
+                    {subQuestion.questionTextAndImages.map(
+                      (textAndImages, textAndImagesIndex) => (
+                        <div key={textAndImagesIndex}>
+                          <br />
+                          {textAndImages.text.map((text, index) => (
+                            <p key={index}>{text}</p>
+                          ))}
+                        </div>
+                      )
+                    )}
                   </div>
-                  {subQuestion.questionTextAndImages.map(
-                    (textAndImages, textAndImagesIndex) => (
-                      <div
-                        className="d-flex flex-column"
-                        key={textAndImagesIndex}
-                      >
-                        {textAndImages.text.map((text, index) => (
-                          <p key={index}>{text}</p>
-                        ))}
-                      </div>
-                    )
-                  )}
-                  {/* Add a line after each question */}
+
                   <hr />
                 </div>
               );

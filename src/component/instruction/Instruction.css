@@ -2,16 +2,16 @@
     background-color: #2b6dba;
     height: 36px;
     padding: 0;
-}
-.instruction .ct-ins-main {
+  }
+  .instruction .ct-ins-main {
     display: flex;
-}
-
-.instruction .ct-ins-left {
+  }
+  
+  .instruction .ct-ins-left {
     width: 82%;
-}
-
-.instruction .ct-ins-content {
+  }
+  
+  .instruction .ct-ins-content {
     height: 40px;
     line-height: 40px;
     font-size: 20px;
@@ -21,33 +21,32 @@
     padding-left: 10px;
     display: flex;
     justify-content: space-between;
-}
-
-.instruction .ct-ins-wrapper {
+  }
+  
+  .instruction .ct-ins-wrapper {
     max-height: 58vh;
     overflow: auto;
     padding: 10px;
-}
-.instruction p {
+  }
+  .instruction p {
     margin: 0;
     padding: 0;
-}
-
-
-.instruction .ct-inst-footer {
+  }
+  
+  .instruction .ct-inst-footer {
     position: fixed;
     bottom: 0;
     width: 80.2%;
     border-top: 1px solid #ddd;
     padding: 10px;
     background: #fff;
-}
-
-.instruction .ct-inst-button {
+  }
+  
+  .instruction .ct-inst-button {
     text-align: end;
-}
-
-.instruction .ct-inst-button .btn{
+  }
+  
+  .instruction .ct-inst-button .btn {
     border: 1px solid #c8c8c8;
     background-color: #fff;
     color: #252525;
@@ -57,39 +56,53 @@
     height: 39px;
     padding-left: 20px;
     padding-right: 20px;
-}
-
-.instruction .ct-ins-right {
+  }
+  
+  .instruction .ct-inst-button .btn:hover {
+    background-color: #38aae9 !important;
+    border-color: #38aae9 !important;
+    color: #fff !important;
+  }
+  
+  .instruction .ct-ins-right {
     width: 18%;
     border-left: 1px solid #000;
     width: 20%;
     height: 95vh;
     text-align: center;
     padding-top: 30px;
-}
-
-.instruction .ct-inst-profilename {
+  }
+  
+  .instruction .ct-inst-profilename {
     font-weight: 700;
     font-size: 18px;
     margin-top: 12px;
-}
-
-.instruction .btn-submit-side {
-    background-color: #38aae9!important;
-    border-color: #38aae9!important;
-    color: #fff!important;
-}
-
-.instruction .ct-inst-agree {
+  }
+  
+  .instruction .btn-submit-side {
+    background-color: #38aae9 !important;
+    border-color: #38aae9 !important;
+    color: #fff !important;
+  }
+  
+  .instruction .ct-inst-agree {
     display: flex;
     margin-left: 15px;
-}
-
-.instruction .ct-inst-agree input {
+  }
+  
+  .instruction .ct-inst-agree input {
     margin-right: 6px;
-}
-
-.instruction label {
+  }
+  
+  .instruction label {
     display: inline-block;
     margin-bottom: 0.5rem;
-}
+  }
+  
+  .general-instruction {
+    margin-bottom: 20px;
+  }
+  
+  .instruction-question-number-container {
+    margin-right: 10px;
+  }

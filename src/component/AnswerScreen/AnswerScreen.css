@@ -23,7 +23,7 @@
 .answer-screen .question-grid-wrapper {
   overflow: auto;
   max-width: 100%;
-  max-height: 90%;
+  max-height: 70%;
   margin: 10px;
 }
 
@@ -80,23 +80,23 @@
 }
 
 .answer-screen .unanswered {
-  border: solid 1px #b6c6cd;
-  color: #b6c6cd;
+  border: solid 1px #3498db;
+  color: #3498db;
 }
 
 .answer-screen .correct {
-  border: 1px solid #52b22c;
-  color: #52b22c;
+  border: 1px solid #2ecc71;
+  color: #2ecc71;
 }
 
 .answer-screen .incorrect {
-  border: 1px solid #ff5757;
-  color: #ff5757;
+  border: 1px solid #e74c3c;
+  color: #e74c3c;
 }
 
 .answer-screen .skipped {
-  border: 1px solid #e8ce17;
-  color: #e8ce17;
+  border: 2px solid #f39c12;
+  color: #f39c12;
 }
 
 .answer-screen .question-status {
@@ -129,6 +129,7 @@
 
 .answer-screen .review-button-container {
   border: 1px solid #bababa;
+  max-height: max-content;
 }
 
 .question-practice .question-box .para-type .right-review {
@@ -288,4 +289,21 @@
   left: -3px;
   color: #52b22c;
   font-weight: bolder;
+}
+
+
+.tooltip__box--correct {
+  border: 2px solid #2ecc71; /* Darker green border */
+}
+
+.tooltip__box--incorrect {
+  border: 2px solid #e74c3c; /* Darker red border */
+}
+
+.tooltip__box--skipped {
+  border: 2px solid #f39c12; /* Darker orange border */
+}
+
+.tooltip__box--unanswered {
+  border: 2px solid #3498db; /* Darker blue border */
 }

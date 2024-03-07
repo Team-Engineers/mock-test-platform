@@ -73,7 +73,6 @@ const RecommendedSubTopics = () => {
   const [showCalculator, setShowCalculator] = useState(false);
 
   const [timeLeft, setTimeLeft] = useState(time * 60);
-  // const [timerExpired, setTimerExpired] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -103,7 +102,6 @@ const RecommendedSubTopics = () => {
   useEffect(() => {
     // Check if time left is 0
     if (timeLeft === 0) {
-      // setTimerExpired(true);
       console.log("by default submitting test to true");
       updateTimeTaken();
     }
@@ -112,33 +110,6 @@ const RecommendedSubTopics = () => {
   const hours = Math.floor(timeLeft / 3600);
   const minutes = Math.floor((timeLeft % 3600) / 60);
   const seconds = timeLeft % 60;
-  // const submit = () => {
-  //   !timerExpired
-  //     ? confirmAlert({
-  //         title: "Confirm",
-  //         message: `You have ${hours
-  //           .toString()
-  //           .padStart(2, "0")} : ${minutes
-  //           .toString()
-  //           .padStart(2, "0")} : ${seconds
-  //           .toString()
-  //           .padStart(
-  //             2,
-  //             "0"
-  //           )} left. Clicking SUBMIT will end test, and you will not be allowed to attempt any more questions. Are you sure you want to End the test?`,
-  //         buttons: [
-  //           {
-  //             label: "Submit",
-  //             onClick: () => updateTimeTaken(),
-  //           },
-  //           {
-  //             label: "Cancel",
-  //             // onClick: () => alert("Click No"),
-  //           },
-  //         ],
-  //       })
-  //     : alert("mock test completed");
-  // };
 
   return (
     <section className=" ">
@@ -174,7 +145,7 @@ const RecommendedSubTopics = () => {
       )}
       <div className="ct-timer-block">
       {!testSubmitted ? (
-          <div className="ct-timer-left">Section</div>
+          <div className="ct-timer-left"></div>
         ) : (
           <h6 className="ms-2 ct-timer-left mb-0">
             {topic.split("_").join(" ").toUpperCase() + " " + subTopic}
@@ -229,17 +200,6 @@ const RecommendedSubTopics = () => {
             </span>
           </div>
         )}
-        {/* {!testSubmitted && (
-          <button
-            className="ms-2 btn btn-success"
-            style={{ position: "absolute", bottom: "3%", right: "5%" }}
-            onClick={submit}
-          >
-            Submit Test
-          </button>
-        )} */}
-
-        {/* <button onClick={submit()}>Confirm dialog</button> */}
       </div>
       {!testSubmitted && (
         <div className="ct-marks-sections">

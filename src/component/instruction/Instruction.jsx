@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./Instruction.css";
 import TestProfile from "../../assets/images/test-profile.jpg";
 import questionSymbol from "../../assets/images/question_symbol.jpeg";
-import forward from "../../assets/images/forward.png";
-import backward from "../../assets/images/backward.png";
 import PracticeQuestions from "../practicequestions/PracticeQuestions";
 import { useParams } from "react-router-dom";
 const Instruction = () => {
@@ -26,7 +24,7 @@ const Instruction = () => {
     // console.log("elements what is", element);
     if (element) {
       // console.log("it is scrolling");
-      element.scrollTo(0, 0); 
+      element.scrollTo(0, 0);
     }
   }, [ready]);
 
@@ -158,8 +156,8 @@ const Instruction = () => {
                         <br />6 On the completion of the test duration, even if
                         the candidate does not click on an answer or does not
                         click on the{" "}
-                        <button type="button" className="btn btn-success">
-                          Submit Test
+                        <button className="test-button">
+                          Submit Test{" "}
                         </button>{" "}
                         button, a NIL result will be saved automatically by the
                         computer.
@@ -181,11 +179,13 @@ const Instruction = () => {
                     </div>
                     <div className="ct-inst-footer">
                       <div className="ct-inst-agree">
-                        <input
-                          type="checkbox"
-                          id="ct-inst"
-                          onChange={(e) => setBegin(e.target.checked)}
-                        />
+                        <div>
+                          <input
+                            type="checkbox"
+                            id="ct-inst"
+                            onChange={(e) => setBegin(e.target.checked)}
+                          />
+                        </div>
                         <label for="ct-inst">
                           I have read and understood all the above instructions.
                           I have also read and understood clearly the
@@ -211,7 +211,6 @@ const Instruction = () => {
                           type="button"
                           onClick={() => setReady(false)}
                         >
-                          <img src={backward} alt=">" width="25" height="18" />
                           <strong>Previous</strong>
                         </button>
                         <button
@@ -233,10 +232,10 @@ const Instruction = () => {
                     >
                       <div className="ct-ins-page">
                         <p>
-                          <p>
+                          <div class="general-instruction">
                             <strong>General Instructions for Candidate:</strong>
                             <br />
-                          </p>
+                          </div>
                           <p>
                             1. The clock will be set at the server. The
                             countdown timer at the top right corner of screen
@@ -395,12 +394,11 @@ const Instruction = () => {
                     >
                       <div className="ct-inst-button">
                         <button
-                          className="btn btn-mark btn-right"
+                          className="btn btn-mark btn-right  "
                           type="button"
                           onClick={() => setReady(true)}
                         >
                           <strong>Next</strong>
-                          <img src={forward} alt=">" width="25" height="18" />
                         </button>
                       </div>
                     </div>
