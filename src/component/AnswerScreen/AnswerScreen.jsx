@@ -139,6 +139,9 @@ const AnswerScreen = ({ data }) => {
     calculateScore();
     console.log("score is calucalting");
   }
+
+  const timeForEachQues = JSON.parse(localStorage.getItem("timeForEachQues"));
+  // console.log("time for each question", timeForEachQues);
   return (
     <section className="answer-screen question-practice-v2">
       {data ? (
@@ -148,7 +151,7 @@ const AnswerScreen = ({ data }) => {
               <div className="question-box paragraph ms-2">
                 <div className="question-number-container">
                   <span
-                    className={`question-number b-none mb-0 id-${data[currentPage]?._id}`}
+                    className={`d-flex question-number b-none mb-0 id-${data[currentPage]?._id}`}
                   >
                     Question No. {`${currentPage + 1} `}
                     <span className={`question-status`}>
@@ -164,6 +167,11 @@ const AnswerScreen = ({ data }) => {
                           status: questionStatus?.[currentPage],
                           index: currentPage,
                         }).toUpperCase()}
+                      </span>
+                      <span className="m-5 fw-bold">
+                        {`Question Time: ${(
+                          timeForEachQues[currentPage] / 1000
+                        ).toFixed(1)} seconds`}
                       </span>
                     </span>
                   </span>

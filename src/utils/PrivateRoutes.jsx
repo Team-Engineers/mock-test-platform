@@ -11,12 +11,12 @@ const PrivateRoutes = () => {
   const { topic, subTopic, id } = useParams();
 
   useEffect(() => {
-  localStorage.removeItem("timeTaken");
-  localStorage.removeItem("optionsUI");
-  localStorage.removeItem("questionStatus");
-  localStorage.removeItem("timeTaken");
-  localStorage.removeItem("user");
-
+    localStorage.removeItem("timeTaken");
+    localStorage.removeItem("optionsUI");
+    localStorage.removeItem("questionStatus");
+    localStorage.removeItem("timeTaken");
+    localStorage.removeItem("user");
+    localStorage.removeItem("timeForEachQues");
 
     const fetchUser = async () => {
       if (
@@ -34,7 +34,7 @@ const PrivateRoutes = () => {
 
       try {
         const response = await axios.get(`${USERAPI}/users/find/${id}`);
-        console.log("response",response)
+        console.log("response", response);
         localStorage.setItem("user", JSON.stringify(response.data));
 
         setIsAuthorized(true);

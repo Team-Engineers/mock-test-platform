@@ -163,7 +163,7 @@ const RecommendedSubTopics = () => {
           </div>
         ) : (
           <div className="ct-timer-right">
-            <span className="mr-1"> Time Taken : </span>
+            <span className="mr-1"> Total Time : </span>
             <span id="timer" className="fs-4">
               {timeLeft !== undefined && timeLeft !== null ? (
                 timeLeft !== 0 ? (

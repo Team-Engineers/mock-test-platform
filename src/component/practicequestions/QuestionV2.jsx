@@ -49,6 +49,13 @@ const QuestionV2 = ({ data }) => {
   });
 
   const [currentPage, setCurrentPage] = useState(0);
+  const [timeForEachQues, setTimeForEachQues] = useState(
+    Array(data?.length).fill(0)
+  );
+  const [questionStartTime, setQuestionStartTime] = useState(
+    Array(data?.length).fill(0)
+  );
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   useEffect(() => {
     const storedPage = localStorage.getItem("currentPage");
@@ -58,6 +65,7 @@ const QuestionV2 = ({ data }) => {
     } else {
       setCurrentPage(0);
     }
+
 
     const checkConnectivity = async () => {
       try {
@@ -76,6 +84,9 @@ const QuestionV2 = ({ data }) => {
       localStorage.removeItem("currentPage");
     };
   }, []);
+
+  // console.log("question index", currentQuestionIndex, currentPage)
+
 
   const handleOptionSelect = (questionIndex, optionIndex) => {
     if (attemptedCount >= totalQuestion - 10) {
@@ -131,6 +142,7 @@ const QuestionV2 = ({ data }) => {
 
   const handleReviewNext = () => {
     const questionIndex = currentPage;
+    handleTime(questionIndex+1);
 
     const updatedStatusArray = [...questionStatus];
 
@@ -156,6 +168,7 @@ const QuestionV2 = ({ data }) => {
 
   const handleUnMarkNext = () => {
     const questionIndex = currentPage;
+    handleTime(questionIndex+1);
 
     const updatedStatusArray = [...questionStatus];
 
@@ -181,7 +194,7 @@ const QuestionV2 = ({ data }) => {
 
   const handleSaveNext = () => {
     const questionIndex = currentPage;
-
+    handleTime(questionIndex+1);
     const updatedStatusArray = [...questionStatus];
     if (optionsUI[questionIndex] !== undefined) {
       updatedStatusArray[questionIndex] = "answered";
@@ -205,6 +218,7 @@ const QuestionV2 = ({ data }) => {
   };
 
   const handlePageChange = (pageIndex) => {
+    handleTime(pageIndex);
     setSelectedOptions([]);
     setCurrentPage(pageIndex % totalPages);
     window.scrollTo(0, 0);
@@ -325,6 +339,8 @@ const QuestionV2 = ({ data }) => {
   }, [timeLeft, updateTimeTaken, time]);
 
   const submit = () => {
+    localStorage.setItem("timeForEachQues", JSON.stringify(timeForEachQues));
+    handleTime(currentPage + 1);
     setShowModal(false);
     !timerExpired
       ? confirmAlert({
@@ -352,6 +368,37 @@ const QuestionV2 = ({ data }) => {
         })
       : alert("mock test completed");
   };
+
+  const handleTime = (index) => {
+    console.log("index", index);
+    const endTime = Date.now();
+    const duration = endTime - questionStartTime[currentQuestionIndex];
+
+    // Update the time spent on the current question
+    setTimeForEachQues((prevTimeForEachQues) => {
+      const updatedTimeForEachQues = [...prevTimeForEachQues];
+      updatedTimeForEachQues[currentQuestionIndex] += duration;
+      return updatedTimeForEachQues;
+    });
+
+    // Set the start time for the new question
+    setQuestionStartTime((prevQuestionStartTime) => {
+      const updatedQuestionStartTime = [...prevQuestionStartTime];
+      updatedQuestionStartTime[index] = Date.now();
+      return updatedQuestionStartTime;
+    });
+
+    setCurrentQuestionIndex(index);
+  };
+
+  useEffect(() => {
+    const startTime = Date.now();
+    setQuestionStartTime([startTime]);
+  }, []);
+
+  useEffect(() => {
+    console.log("timeForEachQues", timeForEachQues);
+  }, [timeForEachQues]);
 
   return (
     <section className="question-practice-v2">
