@@ -8,6 +8,8 @@ export const MathText = ({ text, textTag = "p" }) => {
     text = text.toString();
   }
 
+  text = text.trim();
+
   const parts = text.split(/\n/);
 
   const jsxElements = parts.flatMap((part, index) => {
@@ -20,27 +22,35 @@ export const MathText = ({ text, textTag = "p" }) => {
       return subparts.map((subpart, subIndex) => {
         if (subIndex % 2 !== 0) {
           return (
-            <MathComponent
-              key={`${index}_${subIndex}`}
-              tex={subpart}
-              display={false}
-              className="math-expression"
-            />
+            <React.Fragment key={`${index}_${subIndex}`}>
+              <MathComponent
+                tex={subpart}
+                display={false}
+                className="math-expression"
+              />
+              <br className="minimal-space" />
+            </React.Fragment>
           );
         } else {
           return <span key={`${index}_${subIndex}`}>{subpart}</span>;
         }
       });
     } else if (hasHTMLTags) {
-      return (
+      return [
         <TextTag
           key={`html_${index}`}
           className="text-spacing"
           dangerouslySetInnerHTML={{ __html: part }}
-        />
-      );
+        />,
+      ];
     } else {
-      return <span key={index}>{part}</span>;
+      // Replace line breaks with a space character
+      const contentWithSpaces = part.replace(/\n/g, " ");
+
+      return [
+        <span key={index}>{contentWithSpaces}</span>,
+        <br key={`br_${index}`} className="minimal-space" />,
+      ];
     }
   });
 
