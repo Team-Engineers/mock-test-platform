@@ -19,7 +19,7 @@ const PracticeQuestions = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showInstructions, setShowInstructions] = useState(false);
   const [showQuestionPaperModal, setShowQuestionPaperModal] = useState(false);
-  const { topic, subTopic } = useParams();
+  const { subject, topic, subTopic } = useParams();
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -28,15 +28,18 @@ const PracticeQuestions = () => {
     const fetchData = async () => {
       localStorage.setItem("currentSubTopic", subTopic);
       const params = {
+        subject: subject,
         topic: topic.toLowerCase(),
-        subTopic: subTopic,
       };
+      if (subTopic) {
+        params.subTopic = subTopic;
+      }
       try {
         const response = await axios.get(`${API}/question/mock_test/`, {
           params: params,
         });
         let truncatedData;
-        if (topic === "general_english_mock_test") {
+        if (subject === "general_english" && topic === "mock_test") {
           truncatedData = response.data.data.slice(0, 50);
           dispatch(setTestCompleted({ totalQuestion: "50" }));
         } else {
@@ -50,7 +53,7 @@ const PracticeQuestions = () => {
     };
 
     fetchData();
-  }, [topic, subTopic, dispatch]);
+  }, [topic, subTopic, subject,dispatch]);
 
   const toggleInstructions = () => {
     setShowInstructions(!showInstructions);

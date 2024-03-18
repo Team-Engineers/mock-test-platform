@@ -5,11 +5,14 @@ import questionSymbol from "../../assets/images/question_symbol.jpeg";
 import { useParams } from "react-router-dom";
 
 const InstructionModal = ({ isOpen, toggleInstruction }) => {
-  const { topic } = useParams();
+  const { subject, topic } = useParams();
   let totalQuestion = "60";
   let time = "60";
   let marks = "300";
-  if (topic.toLowerCase() === "general_english_mock_test") {
+  if (
+    subject.toLowerCase() === "general_english" &&
+    topic.toLowerCase() === "mock_test"
+  ) {
     totalQuestion = "50";
     time = "45";
     marks = "200";

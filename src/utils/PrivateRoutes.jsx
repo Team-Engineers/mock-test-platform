@@ -8,7 +8,7 @@ import CuetLoader from "../component/Loader/Loader";
 const PrivateRoutes = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const { topic, subTopic, id } = useParams();
+  const { subject, topic, subTopic, id } = useParams();
 
   useEffect(() => {
     localStorage.removeItem("timeTaken");
@@ -21,9 +21,9 @@ const PrivateRoutes = () => {
     const fetchUser = async () => {
       if (
         id === "free" &&
-        (topic === "general_english_mock_test" ||
-          topic === "general_test_mock_test") &&
-        subTopic === "1"
+        (subject === "general_english" || subject === "general_test") &&
+        subTopic === "1" &&
+        topic === "mock_test"
       ) {
         localStorage.setItem("user", JSON.stringify(DEFAULTUSER));
 
@@ -49,7 +49,7 @@ const PrivateRoutes = () => {
     };
 
     fetchUser();
-  }, [id, subTopic, topic]);
+  }, [id, subTopic,subject, topic]);
 
   if (isLoading) {
     return <CuetLoader />;

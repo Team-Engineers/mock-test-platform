@@ -9,12 +9,15 @@ const Instruction = () => {
   const candidateName = JSON.parse(localStorage.getItem("user"));
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [begin, setBegin] = useState(false);
-  const { topic } = useParams();
+  const { subject, topic } = useParams();
   localStorage.removeItem("currentPage");
   let totalQuestion = "60";
   let time = "60";
   let marks = "300";
-  if (topic.toLowerCase() === "general_english_mock_test") {
+  if (
+    subject.toLowerCase() === "general_english" &&
+    topic.toLowerCase() === "mock_test"
+  ) {
     totalQuestion = "50";
     time = "45";
     marks = "200";

@@ -34,9 +34,12 @@ const QuestionV2 = ({ data }) => {
   const [questionStatus, setQuestionStatus] = useState(
     Array(data?.length).fill("not_visited")
   );
-  const { topic, subTopic } = useParams();
+  const { subject, topic, subTopic } = useParams();
   let time = "60";
-  if (topic.toLowerCase() === "general_english_mock_test") {
+  if (
+    subject.toLowerCase() === "general_english" &&
+    topic.toLowerCase === "mock_test"
+  ) {
     time = "45";
   }
 
@@ -66,7 +69,6 @@ const QuestionV2 = ({ data }) => {
       setCurrentPage(0);
     }
 
-
     const checkConnectivity = async () => {
       try {
         const response = await axios.head(`https://cuet-alpha.vercel.app/`);
@@ -86,7 +88,6 @@ const QuestionV2 = ({ data }) => {
   }, []);
 
   // console.log("question index", currentQuestionIndex, currentPage)
-
 
   const handleOptionSelect = (questionIndex, optionIndex) => {
     if (attemptedCount >= totalQuestion - 10) {
@@ -142,7 +143,7 @@ const QuestionV2 = ({ data }) => {
 
   const handleReviewNext = () => {
     const questionIndex = currentPage;
-    handleTime(questionIndex+1);
+    handleTime(questionIndex + 1);
 
     const updatedStatusArray = [...questionStatus];
 
@@ -168,7 +169,7 @@ const QuestionV2 = ({ data }) => {
 
   const handleUnMarkNext = () => {
     const questionIndex = currentPage;
-    handleTime(questionIndex+1);
+    handleTime(questionIndex + 1);
 
     const updatedStatusArray = [...questionStatus];
 
@@ -194,7 +195,7 @@ const QuestionV2 = ({ data }) => {
 
   const handleSaveNext = () => {
     const questionIndex = currentPage;
-    handleTime(questionIndex+1);
+    handleTime(questionIndex + 1);
     const updatedStatusArray = [...questionStatus];
     if (optionsUI[questionIndex] !== undefined) {
       updatedStatusArray[questionIndex] = "answered";
@@ -294,20 +295,10 @@ const QuestionV2 = ({ data }) => {
     }
   }, [currentPage, countStatusOccurrences, data, questionStatus]);
 
-  // console.log("optionui of question", optionsUI);
-  // console.log("questionstauts of question", questionStatus);
-  // let time = "60";
-  // if (topic.toLowerCase() === "general_english_mock_test") {
-  //   time = "45";
-  // }
   const [timeLeft, setTimeLeft] = useState(time * 60);
   const hours = Math.floor(timeLeft / 3600);
   const minutes = Math.floor((timeLeft % 3600) / 60);
   const seconds = timeLeft % 60;
-  // console.log("timesleft", timeLeft);
-  // const testSubmitted = useSelector(
-  //   (state) => state.user.mock_test.testSubmitted
-  // );
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -631,7 +622,8 @@ const QuestionV2 = ({ data }) => {
                   </div>
                   <div className="pallet-section-title">
                     <div className="qp-title">
-                      {topic.split("_").join(" ").toUpperCase() +
+                      {subject.split("_").join(" ").toUpperCase() +
+                        topic.split("_").join(" ").toUpperCase() +
                         " " +
                         subTopic}
                     </div>

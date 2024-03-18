@@ -62,7 +62,7 @@ const Box2 = styled.h6`
 const RecommendedSubTopics = () => {
   const { topic, subTopic } = useParams();
   let time = "60";
-  if (topic.toLowerCase() === "general_english_mock_test") {
+  if (subject.toLowerCase() === "general_english" && topic === "mock_test") {
     time = "45";
   }
   const testSubmitted = useSelector(
@@ -107,7 +107,6 @@ const RecommendedSubTopics = () => {
     }
   }, [timeLeft, updateTimeTaken, time]);
 
-
   const hours = Math.floor(timeLeft / 3600);
   const minutes = Math.floor((timeLeft % 3600) / 60);
   const seconds = timeLeft % 60;
@@ -124,7 +123,10 @@ const RecommendedSubTopics = () => {
               <TopicCard isCurrentTopic={true}>
                 <Box>
                   <Box2 isCurrentTopic={true}>
-                    {topic.split("_").join(" ") + " " + subTopic}
+                    {subject.split("_").join(" ") +
+                      topic.split("_").join(" ") +
+                      " " +
+                      subTopic}
                   </Box2>
                 </Box>
               </TopicCard>
@@ -196,9 +198,7 @@ const RecommendedSubTopics = () => {
                   </span>
                 )
               ) : (
-                <span>
-                  00:00:00
-                </span>
+                <span>00:00:00</span>
               )}
             </span>
           </div>
