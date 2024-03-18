@@ -102,7 +102,6 @@ const RecommendedSubTopics = () => {
   useEffect(() => {
     // Check if time left is 0
     if (timeLeft === 0) {
-      console.log("by default submitting test to true");
       updateTimeTaken();
     }
   }, [timeLeft, updateTimeTaken, time]);
@@ -152,7 +151,11 @@ const RecommendedSubTopics = () => {
           <div className="ct-timer-left"></div>
         ) : (
           <h6 className="ms-2 ct-timer-left mb-0">
-            {topic.split("_").join(" ").toUpperCase() + " " + subTopic}
+            {subject.split("_").join(" ").toUpperCase() +
+              " " +
+              topic.split("_").join(" ").toUpperCase() +
+              " " +
+              subTopic}
           </h6>
         )}
         {!testSubmitted ? (

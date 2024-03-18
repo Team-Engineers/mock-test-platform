@@ -28,7 +28,6 @@ export const MathText = ({ text, textTag = "p" }) => {
                 display={false}
                 className="math-expression"
               />
-              <br className="minimal-space" />
             </React.Fragment>
           );
         } else {
