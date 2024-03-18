@@ -623,6 +623,7 @@ const QuestionV2 = ({ data }) => {
                   <div className="pallet-section-title">
                     <div className="qp-title">
                       {subject.split("_").join(" ").toUpperCase() +
+                        " " +
                         topic.split("_").join(" ").toUpperCase() +
                         " " +
                         subTopic}
