@@ -473,10 +473,7 @@ const AnswerScreen = ({ data }) => {
                                 aria-labelledby={`heading${currentPage}`}
                                 data-bs-parent={`#accordionExample${currentPage}`}
                               >
-                                <div
-                                  className="accordion-body "
-                                  style={{ padding: "0 10px" }}
-                                >
+                                <div className="accordion-body ">
                                   <div className=" d-flex flex-row gap-2 justify-content-start align-items-center">
                                     <h6 className="mb-0 text-primary fw-bold">
                                       Answer:

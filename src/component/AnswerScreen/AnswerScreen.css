@@ -75,7 +75,7 @@
 }
 
 .answer-screen .accordion-body {
-  padding: 0px !important;
+  padding: 0px 10px !important;
   margin-top: 15px;
 }
 
@@ -290,7 +290,6 @@
   color: #52b22c;
   font-weight: bolder;
 }
-
 
 .tooltip__box--correct {
   border: 2px solid #2ecc71; /* Darker green border */
