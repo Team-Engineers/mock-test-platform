@@ -333,7 +333,10 @@ const AnswerScreen = ({ data }) => {
                   <div className="item-content right-review">
                     <div className="options-container">
                       <div className="options-grid">
-                        <div className="question-box right-review-content">
+                        <div
+                          className="question-box right-review-content"
+                          style={{ paddingRight: "12px" }}
+                        >
                           {data[currentPage]?.questionTextAndImages[0]
                             ?.text[0] ? (
                             <div className="question-option">
