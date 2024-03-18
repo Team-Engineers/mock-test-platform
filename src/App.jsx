@@ -1,16 +1,11 @@
 import React from "react";
-import {
-  Route,
-  BrowserRouter,
-  Routes,
-} from "react-router-dom";
+import { Route, BrowserRouter, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import SubTopicQuestion from "./pages/subtopicQuestion/SubTopicQuestion";
 import Nopage from "./pages/nopage/Nopage";
 import ScrollToTop from "./component/scrolltotop/ScrollToTop";
 import PrivateRoutes from "./utils/PrivateRoutes";
-
 
 const App = () => {
   return (
@@ -20,7 +15,7 @@ const App = () => {
         <Routes>
           <Route element={<PrivateRoutes />}>
             <Route
-              path="/:topic/:subTopic/:id"
+              path="/:subject/:topic/:subTopic/:id"
               element={<SubTopicQuestion />}
             />
           </Route>
