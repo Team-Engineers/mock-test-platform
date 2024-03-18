@@ -7,6 +7,7 @@ export const MathText = ({ text, textTag = "p" }) => {
   if (typeof text !== "string") {
     text = text.toString();
   }
+  text = text.trim();
 
   const parts = text.split(/\n/);
 
