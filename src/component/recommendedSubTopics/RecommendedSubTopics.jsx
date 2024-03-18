@@ -60,7 +60,7 @@ const Box2 = styled.h6`
 `;
 
 const RecommendedSubTopics = () => {
-  const { topic, subTopic } = useParams();
+  const {subject, topic, subTopic } = useParams();
   let time = "60";
   if (subject.toLowerCase() === "general_english" && topic === "mock_test") {
     time = "45";
