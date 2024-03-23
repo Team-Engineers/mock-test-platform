@@ -19,16 +19,20 @@ const Instruction = () => {
   const [begin, setBegin] = useState(false);
   const { subject, topic, subTopic } = useParams();
   localStorage.removeItem("currentPage");
-  let totalQuestion = "60";
-  let time = "60";
-  let marks = "300";
+  let totalQuestion = "50";
+  let time = "45";
+  let marks = "200";
   if (
-    subject.toLowerCase() === "general_english" &&
+    (subject.toLowerCase() === "general_test" ||
+      subject.toLowerCase() === "mathematics" ||
+      subject.toLowerCase() === "accountancy" ||
+      subject.toLowerCase() === "physics" ||
+      subject.toLowerCase() === "chemistry") &&
     topic.toLowerCase() === "mock_test"
   ) {
-    totalQuestion = "50";
-    time = "45";
-    marks = "200";
+    totalQuestion = "60";
+    time = "60";
+    marks = "300";
   }
   useEffect(() => {
     const element = document.querySelector(".ct-ins-wrapper");
@@ -55,11 +59,18 @@ const Instruction = () => {
           params: params,
         });
         let truncatedData;
-        if (subject === "general_english" && topic === "mock_test") {
-          truncatedData = response.data.data.slice(0, 50);
+        if (
+          (subject.toLowerCase() === "general_test" ||
+            subject.toLowerCase() === "mathematics" ||
+            subject.toLowerCase() === "accountancy" ||
+            subject.toLowerCase() === "physics" ||
+            subject.toLowerCase() === "chemistry") &&
+          topic === "mock_test"
+        ) {
+          truncatedData = response.data.data.slice(0, 60);
           dispatch(setTestCompleted({ totalQuestion: "50" }));
         } else {
-          truncatedData = response.data.data.slice(0, 60);
+          truncatedData = response.data.data.slice(0, 50);
         }
         setData(truncatedData);
         setIsLoading(false);

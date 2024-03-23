@@ -61,9 +61,16 @@ const Box2 = styled.h6`
 
 const RecommendedSubTopics = () => {
   const { subject, topic, subTopic } = useParams();
-  let time = "60";
-  if (subject.toLowerCase() === "general_english" && topic === "mock_test") {
-    time = "45";
+  let time = "45";
+  if (
+    (subject.toLowerCase() === "general_test" ||
+      subject.toLowerCase() === "mathematics" ||
+      subject.toLowerCase() === "accountancy" ||
+      subject.toLowerCase() === "physics" ||
+      subject.toLowerCase() === "chemistry") &&
+    topic.toLowerCase() === "mock_test"
+  ) {
+    time = "60";
   }
   const testSubmitted = useSelector(
     (state) => state.user.mock_test.testSubmitted

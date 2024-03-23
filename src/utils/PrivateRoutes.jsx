@@ -34,7 +34,7 @@ const PrivateRoutes = () => {
 
       try {
         const response = await axios.get(`${USERAPI}/users/find/${id}`);
-        console.log("response", response);
+        // console.log("response", response);
         localStorage.setItem("user", JSON.stringify(response.data));
 
         setIsAuthorized(true);
@@ -49,7 +49,7 @@ const PrivateRoutes = () => {
     };
 
     fetchUser();
-  }, [id, subTopic,subject, topic]);
+  }, [id, subTopic, subject, topic]);
 
   if (isLoading) {
     return <CuetLoader />;

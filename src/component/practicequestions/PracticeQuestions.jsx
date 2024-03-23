@@ -96,7 +96,7 @@ const PracticeQuestions = ({data}) => {
                         <Link
                           className=" score-card-btn"
                           style={{ textDecoration: "none" }}
-                          to="https://cuet-alpha.vercel.app/"
+                          to="https://cuet.testknock.com/"
                         >
                           Home
                         </Link>

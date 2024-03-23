@@ -6,16 +6,20 @@ import { useParams } from "react-router-dom";
 
 const InstructionModal = ({ isOpen, toggleInstruction }) => {
   const { subject, topic } = useParams();
-  let totalQuestion = "60";
-  let time = "60";
-  let marks = "300";
+  let totalQuestion = "50";
+  let time = "45";
+  let marks = "200";
   if (
-    subject.toLowerCase() === "general_english" &&
+    (subject.toLowerCase() === "general_test" ||
+      subject.toLowerCase() === "mathematics" ||
+      subject.toLowerCase() === "accountancy" ||
+      subject.toLowerCase() === "physics" ||
+      subject.toLowerCase() === "chemistry") &&
     topic.toLowerCase() === "mock_test"
   ) {
-    totalQuestion = "50";
-    time = "45";
-    marks = "200";
+    totalQuestion = "60";
+    time = "60";
+    marks = "300";
   }
   return (
     <Modal

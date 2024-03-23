@@ -35,12 +35,16 @@ const QuestionV2 = ({ data }) => {
     Array(data?.length).fill("not_visited")
   );
   const { subject, topic, subTopic } = useParams();
-  let time = "60";
+  let time = "45";
   if (
-    subject.toLowerCase() === "general_english" &&
-    topic.toLowerCase === "mock_test"
+    (subject.toLowerCase() === "general_test" ||
+      subject.toLowerCase() === "mathematics" ||
+      subject.toLowerCase() === "accountancy" ||
+      subject.toLowerCase() === "physics" ||
+      subject.toLowerCase() === "chemistry") &&
+    topic.toLowerCase() === "mock_test"
   ) {
-    time = "45";
+    time = "60";
   }
 
   const [counts, setCounts] = useState({
@@ -324,7 +328,7 @@ const QuestionV2 = ({ data }) => {
     // Check if time left is 0
     if (timeLeft === 0) {
       setTimerExpired(true);
-      console.log("by default submitting test to true");
+      // console.log("by default submitting test to true");
       updateTimeTaken();
     }
   }, [timeLeft, updateTimeTaken, time]);
