@@ -4,12 +4,20 @@ import TestProfile from "../../assets/images/test-profile.jpg";
 import questionSymbol from "../../assets/images/question_symbol.jpeg";
 import PracticeQuestions from "../practicequestions/PracticeQuestions";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { API } from "../../utils/constants";
+import CuetLoader from "../Loader/Loader";
+import { setTestCompleted } from "../../utils/userSlice";
 const Instruction = () => {
   const [ready, setReady] = useState(false);
+  const dispatch = useDispatch();
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const candidateName = JSON.parse(localStorage.getItem("user"));
   const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [begin, setBegin] = useState(false);
-  const { subject, topic } = useParams();
+  const { subject, topic, subTopic } = useParams();
   localStorage.removeItem("currentPage");
   let totalQuestion = "60";
   let time = "60";
@@ -31,6 +39,41 @@ const Instruction = () => {
     }
   }, [ready]);
 
+  useEffect(() => {
+    setIsLoading(true);
+    const fetchData = async () => {
+      localStorage.setItem("currentSubTopic", subTopic);
+      const params = {
+        subject: subject,
+        topic: topic.toLowerCase(),
+      };
+      if (subTopic) {
+        params.subTopic = subTopic;
+      }
+      try {
+        const response = await axios.get(`${API}/question/mock_test/`, {
+          params: params,
+        });
+        let truncatedData;
+        if (subject === "general_english" && topic === "mock_test") {
+          truncatedData = response.data.data.slice(0, 50);
+          dispatch(setTestCompleted({ totalQuestion: "50" }));
+        } else {
+          truncatedData = response.data.data.slice(0, 60);
+        }
+        setData(truncatedData);
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [topic, subTopic, subject, dispatch]);
+
+  if (isLoading) {
+    return <CuetLoader />;
+  }
   return (
     <>
       {isButtonClicked === false ? (
@@ -418,7 +461,7 @@ const Instruction = () => {
           </div>
         </section>
       ) : (
-        <PracticeQuestions />
+        <PracticeQuestions data={data} />
       )}
     </>
   );

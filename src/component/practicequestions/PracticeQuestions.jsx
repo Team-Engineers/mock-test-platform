@@ -1,59 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./question.css";
-import { Link, useParams } from "react-router-dom";
-import { API } from "../../utils/constants";
+import { Link } from "react-router-dom";
 import QuestionV2 from "./QuestionV2";
-import axios from "axios";
 import RecommendedSubTopics from "../recommendedSubTopics/RecommendedSubTopics";
 import NoData from "../Loader/NoData";
 import Logo from "../../assets/images/logo.png";
 import InstructionModal from "../instruction/InstructionContentModal";
 import QuestionPaperModal from "./QuestionPaperModal";
-import CuetLoader from "../Loader/Loader";
-import { useDispatch, useSelector } from "react-redux";
-import { setTestCompleted } from "../../utils/userSlice";
+import { useSelector } from "react-redux";
 import AnswerScreen from "../AnswerScreen/AnswerScreen";
 
-const PracticeQuestions = () => {
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+const PracticeQuestions = ({data}) => {
+
   const [showInstructions, setShowInstructions] = useState(false);
   const [showQuestionPaperModal, setShowQuestionPaperModal] = useState(false);
-  const { subject, topic, subTopic } = useParams();
-  const dispatch = useDispatch();
+  // const { subject, topic, subTopic } = useParams();
+  // const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("user"));
 
-  useEffect(() => {
-    setIsLoading(true);
-    const fetchData = async () => {
-      localStorage.setItem("currentSubTopic", subTopic);
-      const params = {
-        subject: subject,
-        topic: topic.toLowerCase(),
-      };
-      if (subTopic) {
-        params.subTopic = subTopic;
-      }
-      try {
-        const response = await axios.get(`${API}/question/mock_test/`, {
-          params: params,
-        });
-        let truncatedData;
-        if (subject === "general_english" && topic === "mock_test") {
-          truncatedData = response.data.data.slice(0, 50);
-          dispatch(setTestCompleted({ totalQuestion: "50" }));
-        } else {
-          truncatedData = response.data.data.slice(0, 60);
-        }
-        setData(truncatedData);
-        setIsLoading(false);
-      } catch (error) {
-        setIsLoading(false);
-      }
-    };
 
-    fetchData();
-  }, [topic, subTopic, subject,dispatch]);
 
   const toggleInstructions = () => {
     setShowInstructions(!showInstructions);
@@ -69,9 +34,7 @@ const PracticeQuestions = () => {
     (state) => state.user.mock_test.testSubmitted
   );
 
-  if (isLoading) {
-    return <CuetLoader />;
-  }
+
 
   // console.log("testSubmitted",testSubmitted)
 

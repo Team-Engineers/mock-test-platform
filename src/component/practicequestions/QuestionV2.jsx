@@ -311,13 +311,13 @@ const QuestionV2 = ({ data }) => {
   }, [timeLeft]);
 
   const updateTimeTaken = useCallback(() => {
-    console.log("i am coming in updateTimetaken");
+    // console.log("i am coming in updateTimetaken");
     let timeTaken = time * 60;
     if (timeLeft !== 0) timeTaken = timeLeft;
     dispatch(setTestCompleted({ testSubmitted: true }));
     localStorage.setItem("optionsUI", JSON.stringify(optionsUI));
     localStorage.setItem("questionStatus", JSON.stringify(questionStatus));
-    localStorage.setItem("timeTaken", timeTaken);
+    localStorage.setItem("timeTaken", time * 60 - timeTaken);
   }, [dispatch, timeLeft, time, optionsUI, questionStatus]);
 
   useEffect(() => {
@@ -361,7 +361,7 @@ const QuestionV2 = ({ data }) => {
   };
 
   const handleTime = (index) => {
-    console.log("index", index);
+    // console.log("index", index);
     const endTime = Date.now();
     const duration = endTime - questionStartTime[currentQuestionIndex];
 
@@ -386,10 +386,6 @@ const QuestionV2 = ({ data }) => {
     const startTime = Date.now();
     setQuestionStartTime([startTime]);
   }, []);
-
-  useEffect(() => {
-    console.log("timeForEachQues", timeForEachQues);
-  }, [timeForEachQues]);
 
   return (
     <section className="question-practice-v2">

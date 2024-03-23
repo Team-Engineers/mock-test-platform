@@ -104,7 +104,7 @@ const RecommendedSubTopics = () => {
     if (timeLeft === 0) {
       updateTimeTaken();
     }
-  }, [timeLeft, updateTimeTaken, time]);
+  }, [timeLeft, updateTimeTaken]);
 
   const hours = Math.floor(timeLeft / 3600);
   const minutes = Math.floor((timeLeft % 3600) / 60);
@@ -173,21 +173,21 @@ const RecommendedSubTopics = () => {
             <span id="timer" className="fs-4">
               {timeLeft !== undefined && timeLeft !== null ? (
                 timeLeft !== 0 ? (
-                  <span>
-                    {Math.floor((time * 60 - timeTaken) / 3600)
+                  <span className="time not equal to 0">
+                    {Math.floor((timeTaken) / 3600)
                       .toString()
                       .padStart(2, "0")}
                     :
-                    {Math.floor(((time * 60 - timeTaken) % 3600) / 60)
+                    {Math.floor(((timeTaken) % 3600) / 60)
                       .toString()
                       .padStart(2, "0")}
                     :
-                    {Math.floor((time * 60 - timeTaken) % 60)
+                    {Math.floor((timeTaken) % 60)
                       .toString()
                       .padStart(2, "0")}
                   </span>
                 ) : (
-                  <span>
+                  <span className="time had automatically over">
                     {Math.floor((time * 60) / 3600)
                       .toString()
                       .padStart(2, "0")}
