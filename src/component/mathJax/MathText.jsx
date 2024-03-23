@@ -8,9 +8,8 @@ export const MathText = ({ text, textTag = "p" }) => {
     text = text.toString();
   }
   text = text.trim();
-
-  const parts = text.split(/\n/);
-
+  const parts = text.split(/\n|\s{2,}/);
+  
   const jsxElements = parts.flatMap((part, index) => {
     const hasMathExpression = /\$.+?\$/.test(part);
 
@@ -27,7 +26,7 @@ export const MathText = ({ text, textTag = "p" }) => {
                 key={`${index}_${subIndex}`}
                 tex={subpart}
                 display={false}
-                className="math-expression"
+                className="text-spacing math-expression"
               />
             );
           } else {

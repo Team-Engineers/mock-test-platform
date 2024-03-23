@@ -41,3 +41,8 @@ h6 {
   height : 3px;
   width : 100%;
 }
+
+
+.text-spacing {
+  white-space: pre-wrap;
+}
