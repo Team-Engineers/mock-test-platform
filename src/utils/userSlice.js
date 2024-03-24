@@ -13,7 +13,7 @@ const userSlice = createSlice({
       selectedOptions: [],
       optionsUI: [],
       questionStatus: [],
-      totalQuestion: 60,
+      totalQuestion: 50,
       testSubmitted: false,
     },
   },

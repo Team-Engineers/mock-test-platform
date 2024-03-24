@@ -23,16 +23,21 @@ const Instruction = () => {
   let time = "45";
   let marks = "200";
   if (
-    (subject.toLowerCase() === "general_test" ||
-      subject.toLowerCase() === "mathematics" ||
-      subject.toLowerCase() === "accountancy" ||
-      subject.toLowerCase() === "physics" ||
-      subject.toLowerCase() === "chemistry") &&
+    subject.toLowerCase() === "general_test" &&
     topic.toLowerCase() === "mock_test"
   ) {
     totalQuestion = "60";
     time = "60";
     marks = "300";
+  }
+  if (
+    (subject.toLowerCase() === "mathematics" ||
+      subject.toLowerCase() === "accountancy" ||
+      subject.toLowerCase() === "physics" ||
+      subject.toLowerCase() === "chemistry") &&
+    topic.toLowerCase() === "mock_test"
+  ) {
+    time = "60";
   }
   useEffect(() => {
     const element = document.querySelector(".ct-ins-wrapper");
@@ -59,16 +64,9 @@ const Instruction = () => {
           params: params,
         });
         let truncatedData;
-        if (
-          (subject.toLowerCase() === "general_test" ||
-            subject.toLowerCase() === "mathematics" ||
-            subject.toLowerCase() === "accountancy" ||
-            subject.toLowerCase() === "physics" ||
-            subject.toLowerCase() === "chemistry") &&
-          topic === "mock_test"
-        ) {
+        if (subject.toLowerCase() === "general_test" && topic === "mock_test") {
           truncatedData = response.data.data.slice(0, 60);
-          dispatch(setTestCompleted({ totalQuestion: "50" }));
+          dispatch(setTestCompleted({ totalQuestion: "60" }));
         } else {
           truncatedData = response.data.data.slice(0, 50);
         }
